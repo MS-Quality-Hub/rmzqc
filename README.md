@@ -1,2 +1,3 @@
 # rmzqc
-R package for reading, validating, and writing mzQC files
+
+An R package for reading, validating, and writing mzQC files
