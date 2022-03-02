@@ -1,0 +1,14 @@
+Package: rmzqc
+Title: R for mzQC creation and validation
+Version: 0.0.1
+Date: 2022-03-01
+Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Reads, validates, and writes mzQC files, the reporting 
+    and exchange format for mass spectrometry quality control data
+License: MIT + file LICENSE
+URL: https://github.com/MS-Quality-hub/rmzqc
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
