@@ -5,12 +5,12 @@ Date: 2022-03-22
 Authors@R: 
     c(
       person("Chris", "Bielow", email = "chris.bielow@bsc.fu-berlin.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5756-3988")),
-      person("David", "Jimenez-Morales", email = "david.jimenez-morales@stanford.edu", role = c("aut", "cre"), comment = c())
+      person("David", "Jimenez-Morales", email = "biodavidjm@gmail.com", role = c("aut", "ctb"), comment = c(ORCID = "0000-0003-4356-6461"))
     )
-Description: Reads, validates, and writes mzQC files, the reporting 
-    and exchange format for mass spectrometry quality control data
+Description: Reads, validates, and writes mzQC files. The mzQC format is a standardfile format for the exchange, transmission, and archiving of quality metrics derived from biological mass spectrometry, as defined by the HUPO-PSI (Human Proteome Organisation - Proteomics Standards Initiative) Quality Control working group.
 Imports:
   jsonlite,
+  ontologyIndex,
   R6,
   R6P
 License: MIT + file LICENSE
