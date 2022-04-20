@@ -1,14 +1,21 @@
 Package: rmzqc
 Title: R for mzQC creation and validation
-Version: 0.0.1
-Date: 2022-03-01
+Version: 0.0.2
+Date: 2022-03-22
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Reads, validates, and writes mzQC files, the reporting 
-    and exchange format for mass spectrometry quality control data
+    c(
+      person("Chris", "Bielow", email = "chris.bielow@bsc.fu-berlin.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5756-3988")),
+      person("David", "Jimenez-Morales", email = "biodavidjm@gmail.com", role = c("aut", "ctb"), comment = c(ORCID = "0000-0003-4356-6461"))
+    )
+Description: Reads, validates, and writes mzQC files. The mzQC format is a standardized file format for the exchange, transmission, and archiving of quality metrics derived from biological mass spectrometry, as defined by the HUPO-PSI (Human Proteome Organisation - Proteomics Standards Initiative) Quality Control working group.
+Imports:
+  jsonlite,
+  ontologyIndex,
+  R6,
+  R6P
 License: MIT + file LICENSE
 URL: https://github.com/MS-Quality-hub/rmzqc
+BugReports: https://github.com/MS-Quality-hub/rmzqc/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
