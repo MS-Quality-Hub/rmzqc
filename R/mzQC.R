@@ -47,15 +47,18 @@ asJSON <- jsonlite:::asJSON
 #'
 isUndefined = function(s, ..., verbose = TRUE)
 {
-  # anchor
-  if (missing(s)) return(FALSE)
-
   r = (is.na(s) || is.null(s))
   name_of_var = deparse(substitute(s))
   # omit the '.self' part of the variable's name
   name_of_var = gsub("^.self\\$", "", name_of_var)
   if (verbose && r) warning(paste0("Variable '", name_of_var, "' is NA/NULL!"), immediate. = TRUE, call. = FALSE)
-  ## check remaining args from ... by using '+' (force evaluation)
+
+  # anchor
+  if (...length() == 0) return(r);
+
+  ## check remaining args from ... by using '+'
+  ## This forces evaluation, since we want the error messages for all arguments
+  ## , not just the first which failed
   return(r + isUndefined(..., verbose = verbose) > 0)
 }
 
