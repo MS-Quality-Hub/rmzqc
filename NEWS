@@ -1,0 +1,11 @@
+This NEWS file mainly serves as a changelog file,
+i.e. a list of new features / bugfixes by version number.
+
+Versions uploaded to CRAN are marked with [CRAN].
+
+#################################
+#########   CHANGELOG  ##########
+#################################
+
+[CRAN] v0.01.00 -- 2022/08/10
+  - initial release (core mzQC datastructures; writing mzQC JSON; tests)
