@@ -21,7 +21,7 @@ Details of the software used to create the QC metrics
 
 \item{\code{description}}{(optional) Definition of the controlled vocabulary term.}
 
-\item{\code{value}}{(optional) Value of the software tool.}
+\item{\code{value}}{(optional) Name of the software tool.}
 }}
 
 

@@ -76,7 +76,9 @@ isUndefined = function(s, ..., verbose = TRUE)
   name_of_var = deparse(substitute(s))
   # omit the '.self' part of the variable's name
   name_of_var = gsub("^.self\\$", "", name_of_var)
-  if (verbose && r) warning(paste0("Variable '", name_of_var, "' is NA/NULL!"), immediate. = TRUE, call. = FALSE)
+  if (verbose && r) {
+    warning(paste0("Variable '", name_of_var, "' is NA/NULL!"), immediate. = TRUE, call. = FALSE)
+  }
 
   # anchor
   if (...length() == 0) return(r);
@@ -141,5 +143,38 @@ hasFileSuffix = function(filepath, suffix)
 
   return(suffix == tools::file_ext(filepath))
 }
+
+#'
+#' Checks the value's class type, which should match at least of the types given in
+#' any_expected_class_types.
+#'
+#' @param value A certain value (e.g. a single value, data.frame etc)
+#' @param any_expected_class_types A vector of valid class types, any of which the @p value should have
+#' @param expected_length The expected length of value (usually to check if its a single value); 0 (default) indicates that length can be ignored
+#'
+#' @examples
+#'   check_type(1, "numeric", 1)   # TRUE
+#'   check_type("1", "numeric", 1) # FALSE
+#'   check_type(1, "numeric", 2)   # FALSE
+#'   check_type("ABC", "character", 1)             # TRUE
+#'   check_type("ABC", "character")                # TRUE
+#'   check_type("ABC", "character", 2)             # FALSE
+#'   check_type(c("ABC", "DEF"), "character", 2)   # TRUE
+#'   check_type(1.1, c("numeric", "double"))    # TRUE
+#'   check_type(1.1, c("numeric", "double"), 1) # TRUE
+#'   check_type(matrix(1:9, nrow=3), "matrix")   # TRUE
+#'   check_type(data.frame(a=1:3, b=4:6), c("something", "data.frame"))   # TRUE
+#'
+#' @export
+#'
+check_type = function(value, any_expected_class_types, expected_length = 0)
+{
+  class_ok = length(intersect(any_expected_class_types, class(value))) > 0
+  length_ok = (expected_length == 0) || (length(value) == expected_length)
+  return (class_ok & length_ok)
+}
+
+
+
 
 

@@ -341,7 +341,7 @@ setMethod('asJSON', 'MzQCinputFile', function(x, ...) x$toJSON(...))
 #' @field version Version number of the software tool.
 #' @field uri Publicly accessible URI of the software tool or documentation.
 #' @field description (optional) Definition of the controlled vocabulary term.
-#' @field value (optional) Value of the software tool.
+#' @field value (optional) Name of the software tool.
 #'
 #' @exportClass MzQCanalysisSoftware
 #' @export MzQCanalysisSoftware
@@ -385,8 +385,8 @@ MzQCanalysisSoftware = setRefClass(
                "name" = .self$name,
                "version" = .self$version,
                "uri" = .self$uri)
-      if (!isUndefined(.self$description)) r$description = .self$description
-      if (!isUndefined(.self$value)) r$value = .self$value
+      if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
+      if (!isUndefined(.self$value, verbose = FALSE)) r$value = .self$value
       return (jsonlite:::asJSON(r, ...))
     },
     fromData = function(.self, data)
@@ -568,7 +568,9 @@ setMethod('asJSON', 'MzQCbaseQuality', function(x, ...) x$toJSON(...))
 
 
 #'
-#' The runQuality object. Use to report metrics for individual runs which are independent of other runs.
+#' A runQuality object. Use to report metrics for individual runs which are independent of other runs.
+#'
+#' The object is an alias for MzQCbaseQuality.
 #'
 #' @exportClass MzQCrunQuality
 #' @export MzQCrunQuality
@@ -579,8 +581,10 @@ MzQCrunQuality =  setRefClass(
 )
 
 #'
-#' The setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
+#' A setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
 #' only make sense in the set context and cannot be stored as runQuality (see mzQC spec doc).
+#'
+#' The object is an alias for MzQCbaseQuality.
 #'
 #' @exportClass MzQCsetQuality
 #' @export MzQCsetQuality
@@ -656,12 +660,12 @@ MzQCmzQC = setRefClass(
 
       r = list("version" = .self$version,
                "creationDate" = .self$creationDate)
-      if (!isUndefined(.self$contactName)) r$contactName = .self$contactName
-      if (!isUndefined(.self$contactAddress)) r$contactAddress = .self$contactAddress
-      if (!isUndefined(.self$description)) r$description = .self$description
+      if (!isUndefined(.self$contactName, verbose = FALSE)) r$contactName = .self$contactName
+      if (!isUndefined(.self$contactAddress, verbose = FALSE)) r$contactAddress = .self$contactAddress
+      if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
       ## do not write them out if they are empty (leads to 'runQuality: []', which is invalid)
-      if (length(.self$runQualities) > 0) r$runQualities = list(.self$runQualities) ## wrap in extra list for the enclosing '[ { ...} ]'
-      if (length(.self$setQualities) > 0) r$setQualities = list(.self$setQualities) ## wrap in extra list for the enclosing '[ { ...} ]'
+      if (length(.self$runQualities) > 0) r$runQualities = (.self$runQualities)
+      if (length(.self$setQualities) > 0) r$setQualities = (.self$setQualities)
       r$controlledVocabularies = .self$controlledVocabularies
       return (jsonlite:::asJSON(list("mzQC" = r), ...))
     },

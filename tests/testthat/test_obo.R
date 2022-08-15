@@ -10,9 +10,16 @@ test_that("getCVDictionary = function()", {
 })
 
 
+test_that("getDefaultCVVersion = function()", {
+  expect_true(getDefaultCVVersion() == "4.1.95")
+})
+
 test_that("CV_ <- R6::R6Class...", {
   d1 = CV_$new()
   d2 = CV_$new()
   expect_true(identical(d1$data, d2$data))
+  entry = d1$byID("MS:1000563")
+  expect_true(entry$parents == "MS:1000560")
+  suppressWarnings(expect_null(d1$byID("does_not_exit")))
 })
 

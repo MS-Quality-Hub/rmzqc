@@ -2,13 +2,13 @@
 % Please edit documentation in R/obo.R
 \name{getCVDictionary}
 \alias{getCVDictionary}
-\title{Parse the content of 'qc-cv.obo' and 'psi-ms.obo' from the 'rmzqc/cv/' folder and return their union as ontology}
+\title{Parse the content of 'psi-ms.obo', 'pato.obo', and 'uo.obo' from the 'rmzqc/cv/' folder as ontology and return their union}
 \usage{
 getCVDictionary()
 }
 \value{
-a list with 'id', 'name', 'def', 'parents', 'children' which contains the CV entries
+a data.frame with columns 'id', 'name', 'def', 'parents', 'children' (and many more) which contains the CV entries
 }
 \description{
-See CVDictionarySingleton to use this function efficiently.
+See CV_ class to use this function efficiently.
 }

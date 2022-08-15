@@ -10,6 +10,8 @@
 #' @param filepath A filename (with path) to write to.
 #' @param mzqc_obj An mzQC object, which is serialized to JSON and then written to disk
 #'
+#' @export
+#'
 writeMZQC = function(filepath, mzqc_obj)
 {
 
