@@ -1,17 +1,4 @@
 
-test_that("isUndefined = function(s, ..., verbose = TRUE)", {
-  expect_true(isUndefined(NA, verbose = FALSE))
-  expect_true(isUndefined(NULL, verbose = FALSE))
-  expect_true(isUndefined(NA, NULL, verbose = FALSE))
-  expect_false(isUndefined("", verbose = FALSE))
-  expect_true(isUndefined("", NA, verbose = FALSE))
-  expect_true(isUndefined(NA, "", verbose = FALSE))
-  expect_false(isUndefined(1, verbose = FALSE))
-  myVar = NA
-  expect_warning(out <- isUndefined(myVar), "Variable 'myVar' is NA/NULL!")
-  expect_true(out)
-})
-
 test_that("isValidMzQC = function(x, ...)", {
   suppressWarnings(## the expression below yields more than one warning, but expect_warning only catches a single one
    expect_warning(out <- isValidMzQC(MzQCcvParameter$new("MS:4000059")))

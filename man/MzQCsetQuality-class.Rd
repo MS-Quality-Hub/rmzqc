@@ -4,10 +4,9 @@
 \name{MzQCsetQuality-class}
 \alias{MzQCsetQuality-class}
 \alias{MzQCsetQuality}
-\title{The setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
+\title{A setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
 only make sense in the set context and cannot be stored as runQuality (see mzQC spec doc).}
 \description{
-The setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
-only make sense in the set context and cannot be stored as runQuality (see mzQC spec doc).
+The object is an alias for MzQCbaseQuality.
 }
 

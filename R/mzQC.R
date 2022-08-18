@@ -6,10 +6,6 @@
 ##
 ## We provide initialize() functions for all RefClasses to enable unnamed construction (shorter syntax)
 ##
-##
-##
-##
-##
 
 
 
@@ -19,48 +15,6 @@
 #  which allows to use
 # jsonlite::toJSON(mzQC$new(content))
 asJSON <- jsonlite:::asJSON
-
-
-#'
-#' Tell if a string is undefined (NA or NULL); If yes, and its required by the mzQC standard,
-#' we can raise an error.
-#'
-#' You can pass multiple strings, which are all checked.
-#' If **any** of them is undefined, the function returns TRUE
-#'
-#' @param s A string to be checked for NA/NULL
-#' @param ... More strings to be checked
-#' @param verbose If TRUE and 's' is NULL/NA, will print the name of the variable which was passed in
-#'
-#' @examples
-#' isUndefined(NA)       ## TRUE
-#' isUndefined(NULL)     ## TRUE
-#' isUndefined(NA, NULL) ## TRUE
-#' isUndefined("")       ## FALSE
-#' isUndefined("", NA)   ## TRUE
-#' isUndefined(NA, "")   ## TRUE
-#' isUndefined(1)        ## FALSE
-#' myVar = NA
-#' isUndefined(myVar)    ## TRUE, with warning "Variable 'myVar' is NA/NULL!"
-#'
-#' @export
-#'
-isUndefined = function(s, ..., verbose = TRUE)
-{
-  r = (is.na(s) || is.null(s))
-  name_of_var = deparse(substitute(s))
-  # omit the '.self' part of the variable's name
-  name_of_var = gsub("^.self\\$", "", name_of_var)
-  if (verbose && r) warning(paste0("Variable '", name_of_var, "' is NA/NULL!"), immediate. = TRUE, call. = FALSE)
-
-  # anchor
-  if (...length() == 0) return(r);
-
-  ## check remaining args from ... by using '+'
-  ## This forces evaluation, since we want the error messages for all arguments
-  ## , not just the first which failed
-  return(r + isUndefined(..., verbose = verbose) > 0)
-}
 
 
 #'
@@ -144,47 +98,6 @@ fromDatatoMzQC = function(mzqc_class, data)
   obj = mzqc_class$new()
   obj$fromData(data)
   return(obj)
-}
-
-#'
-#' Converts a NULL to NA_character_; or returns the argument unchanged otherwise
-#'
-#' This is useful for missing list elements (which returns NULL),
-#' but when the missing element in refClass should be NA_character_ (and NULL would return an error)
-#'
-#' @param char_or_NULL A string or NULL
-#'
-#' @examples
-#'   NULL_to_charNA(NA)   ## NA
-#'   NULL_to_charNA(NULL) ## NA_character_
-#'   NULL_to_charNA("hi") ## "hi"
-#'
-#' @export
-#'
-NULL_to_charNA = function(char_or_NULL) {
-  if (is.null(char_or_NULL)) return(NA_character_)
-  return(char_or_NULL)
-}
-
-
-#'
-#' Converts a NULL to NA; or returns the argument unchanged otherwise
-#'
-#' This is useful for missing list elements (which returns NULL),
-#' but when the missing element in refClass should be NA (and NULL would return an error)
-#'
-#' @param var_or_NULL A variable of any kind or NULL
-#'
-#' @examples
-#'   NULL_to_NA(NA)   ## NA
-#'   NULL_to_NA(NULL) ## NA
-#'   NULL_to_NA("hi") ## "hi"
-#'
-#' @export
-#'
-NULL_to_NA = function(var_or_NULL) {
-  if (is.null(var_or_NULL)) return(NA)
-  return(var_or_NULL)
 }
 
 
@@ -428,7 +341,7 @@ setMethod('asJSON', 'MzQCinputFile', function(x, ...) x$toJSON(...))
 #' @field version Version number of the software tool.
 #' @field uri Publicly accessible URI of the software tool or documentation.
 #' @field description (optional) Definition of the controlled vocabulary term.
-#' @field value (optional) Value of the software tool.
+#' @field value (optional) Name of the software tool.
 #'
 #' @exportClass MzQCanalysisSoftware
 #' @export MzQCanalysisSoftware
@@ -472,8 +385,8 @@ MzQCanalysisSoftware = setRefClass(
                "name" = .self$name,
                "version" = .self$version,
                "uri" = .self$uri)
-      if (!isUndefined(.self$description)) r$description = .self$description
-      if (!isUndefined(.self$value)) r$value = .self$value
+      if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
+      if (!isUndefined(.self$value, verbose = FALSE)) r$value = .self$value
       return (jsonlite:::asJSON(r, ...))
     },
     fromData = function(.self, data)
@@ -655,7 +568,9 @@ setMethod('asJSON', 'MzQCbaseQuality', function(x, ...) x$toJSON(...))
 
 
 #'
-#' The runQuality object. Use to report metrics for individual runs which are independent of other runs.
+#' A runQuality object. Use to report metrics for individual runs which are independent of other runs.
+#'
+#' The object is an alias for MzQCbaseQuality.
 #'
 #' @exportClass MzQCrunQuality
 #' @export MzQCrunQuality
@@ -666,8 +581,10 @@ MzQCrunQuality =  setRefClass(
 )
 
 #'
-#' The setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
+#' A setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
 #' only make sense in the set context and cannot be stored as runQuality (see mzQC spec doc).
+#'
+#' The object is an alias for MzQCbaseQuality.
 #'
 #' @exportClass MzQCsetQuality
 #' @export MzQCsetQuality
@@ -743,12 +660,12 @@ MzQCmzQC = setRefClass(
 
       r = list("version" = .self$version,
                "creationDate" = .self$creationDate)
-      if (!isUndefined(.self$contactName)) r$contactName = .self$contactName
-      if (!isUndefined(.self$contactAddress)) r$contactAddress = .self$contactAddress
-      if (!isUndefined(.self$description)) r$description = .self$description
+      if (!isUndefined(.self$contactName, verbose = FALSE)) r$contactName = .self$contactName
+      if (!isUndefined(.self$contactAddress, verbose = FALSE)) r$contactAddress = .self$contactAddress
+      if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
       ## do not write them out if they are empty (leads to 'runQuality: []', which is invalid)
-      if (length(.self$runQualities) > 0) r$runQualities = list(.self$runQualities) ## wrap in extra list for the enclosing '[ { ...} ]'
-      if (length(.self$setQualities) > 0) r$setQualities = list(.self$setQualities) ## wrap in extra list for the enclosing '[ { ...} ]'
+      if (length(.self$runQualities) > 0) r$runQualities = (.self$runQualities)
+      if (length(.self$setQualities) > 0) r$setQualities = (.self$setQualities)
       r$controlledVocabularies = .self$controlledVocabularies
       return (jsonlite:::asJSON(list("mzQC" = r), ...))
     },

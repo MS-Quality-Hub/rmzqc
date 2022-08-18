@@ -27,11 +27,26 @@ To get started, see the help and/or vignettes:
 
 Please feel free to report bugs (see below), or issue pull requests!    
 
+### Latest changes / ChangeLog
 
+  - v0.01.00 - Aug 2022: initial release on CRAN
+
+See [NEWS][News_File] file for a version history.
 
 ## Usage
 
-...
+The package vignettes provide examples on how to use rmzqc. *After* the package is installed (see below),
+you can browse the vignettes using either of these commands within R:
+
+    help(package="rmzqc")
+    browseVignettes(package = 'rmzqc')
+  
+If you do not want to wait that long, you can look at the 
+[latest online vignette at CRAN](https://cran.r-project.org/package=rmzqc)
+
+Currently, there are vignettes on:
+ - Creating and storing a basic mzQC document using rmzqc
+ (more to come)
 
 ### Bug reporting / Feature requests
 
@@ -61,7 +76,5 @@ There are many ways to get involved, _you do not need to be a developer_!
 
 See https://github.com/HUPO-PSI/mzQC/ for the specification details of the mzQC format.
 
-
   [issuetracker]: https://github.com/MS-Quality-hub/rmzqc/issues
   [PullRequest]: https://github.com/MS-Quality-hub/rmzqc/pulls
-

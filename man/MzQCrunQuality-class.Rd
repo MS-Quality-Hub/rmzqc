@@ -4,8 +4,8 @@
 \name{MzQCrunQuality-class}
 \alias{MzQCrunQuality-class}
 \alias{MzQCrunQuality}
-\title{The runQuality object. Use to report metrics for individual runs which are independent of other runs.}
+\title{A runQuality object. Use to report metrics for individual runs which are independent of other runs.}
 \description{
-The runQuality object. Use to report metrics for individual runs which are independent of other runs.
+The object is an alias for MzQCbaseQuality.
 }
 
