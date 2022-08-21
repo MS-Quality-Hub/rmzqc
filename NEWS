@@ -7,5 +7,9 @@ Versions uploaded to CRAN are marked with [CRAN].
 #########   CHANGELOG  ##########
 #################################
 
+
+[CRAN] v0.01.01 -- 2022/08/21
+  - fix: make the CV singleton object available outside the package (via 'getCVSingleton()')
+
 [CRAN] v0.01.00 -- 2022/08/18
   - initial release (core mzQC datastructures; writing mzQC JSON; tests)
