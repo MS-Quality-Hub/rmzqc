@@ -81,7 +81,7 @@ getDefaultCVVersion = function()
 #'   cv_dict = CV_$new() ## uses 'getCVDictionary()' to populate the singleton
 #'   cv_2 = CV_$new() ## uses the same data without parsing again
 #'
-#' Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data'
+#' Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton() from outside the package)
 #'
 #' @import R6
 #' @import R6P
@@ -105,3 +105,15 @@ CV_ <- R6::R6Class(classname = "CV_",
     return(self$data[idx,])
   }
 ))
+
+
+#'
+#' Returns the CV singleton. See CV_.
+#'
+#' @export
+#'
+getCVSingleton = function()
+{
+  cv_dict = CV_$new()
+  return(cv_dict)
+}
