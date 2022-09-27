@@ -1,11 +1,11 @@
-This NEWS file mainly serves as a changelog file,
-i.e. a list of new features / bugfixes by version number.
+# v0.2.0 (2022/09/26)
 
-Versions uploaded to CRAN are marked with [CRAN].
+* Add jupyter notebook with links to Google Colab
+* Add a pkgdown website
+* Update documentation
 
-#################################
-#########   CHANGELOG  ##########
-#################################
 
-[CRAN] v0.01.00 -- 2022/08/18
-  - initial release (core mzQC datastructures; writing mzQC JSON; tests)
+# [CRAN] v0.1.0 (2022/08/18)
+
+* initial release (core mzQC data structures; writing mzQC JSON; tests)
+* Versions uploaded to CRAN are marked with [CRAN].
