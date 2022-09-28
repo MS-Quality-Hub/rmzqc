@@ -1,3 +1,7 @@
+# v0.2.1 (2022/09/28)
+
+* Update documentation
+
 # v0.2.0 (2022/09/26)
 
 * Add jupyter notebook with links to Google Colab

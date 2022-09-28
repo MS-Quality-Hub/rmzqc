@@ -28,7 +28,7 @@ To get started, see the help and/or vignettes:
 
 Please feel free to report bugs (see below), or issue pull requests!    
 
-### Latest changes / ChangeLog
+## Latest changes / ChangeLog
 
 Check the version history in 
 [NEWS.md](https://ms-quality-hub.github.io/rmzqc/news/index.html).
@@ -48,7 +48,7 @@ Currently, there are vignettes on:
  - Creating and storing a basic mzQC document using `rmzqc`
  (more to come)
 
-### Bug reporting / Feature requests
+## Bug reporting / Feature requests
 
 If you encounter a bug, please use the [GitHub issue tracker][issuetracker] and file a report.
 
@@ -62,7 +62,12 @@ just imagine what kind of information you would like to have in order
 to track down the issue.
 In certain situations, the input/output file you are trying to read/write is helpful.
 
-### Contributing - Get Involved!
+## Test the package
+
+The package can be tested on Google Colab. Just follow the link [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MS-Quality-hub/rmzqc/blob/mwalzer-add-R-notebooks-and-containers/notebooks/babysteps_in_rmzqc.ipynb)
+
+
+## Contributing - Get Involved!
 
 We welcome input from our user base!
 `rmzqc` has a very permissive **MIT License** (see [DESCRIPTION](DESCRIPTION) file), so feel free to fork, patch and contribute!
