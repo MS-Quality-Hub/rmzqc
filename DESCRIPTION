@@ -1,13 +1,22 @@
 Package: rmzqc
 Title: Creation, Reading and Validation of 'mzqc' Files 
-Version: 0.1.1
-Date: 2022-08-21
+Version: 0.2.2
+Date: 2022-10-01
 Authors@R: 
-    c(
-      person("Chris", "Bielow", email = "chris.bielow@bsc.fu-berlin.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5756-3988")),
-      person("David", "Jimenez-Morales", email = "biodavidjm@gmail.com", role = c("rev"), comment = c(ORCID = "0000-0003-4356-6461"))
-    )
-Description: Reads, writes and validates 'mzQC' files. The 'mzQC' format is a standardized file format for the exchange, transmission, and archiving of quality metrics derived from biological mass spectrometry data, as defined by the HUPO-PSI (Human Proteome Organisation - Proteomics Standards Initiative) Quality Control working group. See <https://hupo-psi.github.io/mzQC/> for details.
+    c(person("Chris", "Bielow", 
+              email = "chris.bielow@bsc.fu-berlin.de", 
+              role = c("aut", "cre"), 
+              comment = c(ORCID = "0000-0001-5756-3988")),
+      person("David", "Jimenez-Morales", 
+              email = "biodavidjm@gmail.com", 
+              role = c("rev", "ctb"), 
+              comment = c(ORCID = "0000-0003-4356-6461")))
+Description: Reads, writes and validates 'mzQC' files. The 'mzQC' format is a 
+  standardized file format for the exchange, transmission, and archiving of 
+  quality metrics derived from biological mass spectrometry data, as defined 
+  by the HUPO-PSI (Human Proteome Organisation - Proteomics Standards Initiative) 
+  Quality Control working group. 
+  See <https://hupo-psi.github.io/mzQC/> for details.
 Imports:
   jsonlite,
   knitr,
