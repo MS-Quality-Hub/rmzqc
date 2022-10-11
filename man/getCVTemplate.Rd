@@ -5,7 +5,7 @@
 \title{Fills a MzQCcvParameter object with id(accession) and name.
 The value (if any) needs to be set afterwards.}
 \usage{
-getCVTemplate(accession, mzcv_dict = CV_$new()$data)
+getCVTemplate(accession, mzcv_dict = getCVSingleton()$data)
 }
 \arguments{
 \item{accession}{The ID (=accession) of the term in the CV}

@@ -50,7 +50,7 @@ toQCMetric = function(id, value, on_violation = c("error", "warn"))
   }
 
 
-  CV = CV_$new()
+  CV = getCVSingleton()
   entry = CV$byID(id)
   is_a = CV$byID(entry$is_a)
   if (is_a$id == "MS:4000006") {        # matrix
@@ -88,7 +88,7 @@ toQCMetric = function(id, value, on_violation = c("error", "warn"))
 #'
 toAnalysisSoftware = function(id, version = "unknown", uri = NULL, value = NA_character_)
 {
-  CV = CV_$new()
+  CV = getCVSingleton()
   entry = CV$byID(id)
   if (is.null(uri))
   { # e.g.

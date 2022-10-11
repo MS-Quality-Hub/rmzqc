@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rmzqc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
       </span>
     </div>
 
@@ -61,67 +61,14 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="CV_.html">CV_</a></code> </p>
-        </td>
-        <td><p>Define a Singleton class which can hold a CV dictionary (so we do not have to load the .obo files over and over again)</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCDateTime-class.html">MzQCDateTime-class</a></code> <code><a href="MzQCDateTime-class.html">MzQCDateTime</a></code> </p>
-        </td>
-        <td><p>An mzQC-formatted date+time in ISO8601 format, as required by the mzQC spec doc.</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCanalysisSoftware-class.html">MzQCanalysisSoftware-class</a></code> <code><a href="MzQCanalysisSoftware-class.html">MzQCanalysisSoftware</a></code> </p>
-        </td>
-        <td><p>Details of the software used to create the QC metrics</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCbaseQuality-class.html">MzQCbaseQuality-class</a></code> <code><a href="MzQCbaseQuality-class.html">MzQCbaseQuality</a></code> </p>
-        </td>
-        <td><p>Base class of runQuality/setQuality</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCcontrolledVocabulary-class.html">MzQCcontrolledVocabulary-class</a></code> <code><a href="MzQCcontrolledVocabulary-class.html">MzQCcontrolledVocabulary</a></code> </p>
-        </td>
-        <td><p>A controlled vocabulary document, usually pointing to an .obo file</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCcvParameter-class.html">MzQCcvParameter-class</a></code> <code><a href="MzQCcvParameter-class.html">MzQCcvParameter</a></code> </p>
-        </td>
-        <td><p>A controlled vocabulary parameter, as detailed in the OBO file</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCinputFile-class.html">MzQCinputFile-class</a></code> <code><a href="MzQCinputFile-class.html">MzQCinputFile</a></code> </p>
-        </td>
-        <td><p>An inputfile within metadata for a run/setQuality</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCmetadata-class.html">MzQCmetadata-class</a></code> <code><a href="MzQCmetadata-class.html">MzQCmetadata</a></code> </p>
-        </td>
-        <td><p>The metadata for a run/setQuality</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCmzQC-class.html">MzQCmzQC-class</a></code> <code><a href="MzQCmzQC-class.html">MzQCmzQC</a></code> </p>
-        </td>
-        <td><p>Root element of an mzQC document</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCqualityMetric-class.html">MzQCqualityMetric-class</a></code> <code><a href="MzQCqualityMetric-class.html">MzQCqualityMetric</a></code> </p>
-        </td>
-        <td><p>The central class to store QC information</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCrunQuality-class.html">MzQCrunQuality-class</a></code> <code><a href="MzQCrunQuality-class.html">MzQCrunQuality</a></code> </p>
-        </td>
-        <td><p>A runQuality object. Use to report metrics for individual runs which are independent of other runs.</p></td>
-      </tr><tr><td>
-          <p><code><a href="MzQCsetQuality-class.html">MzQCsetQuality-class</a></code> <code><a href="MzQCsetQuality-class.html">MzQCsetQuality</a></code> </p>
-        </td>
-        <td><p>A setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
-only make sense in the set context and cannot be stored as runQuality (see mzQC spec doc).</p></td>
-      </tr><tr><td>
-          <p><code><a href="NULL_to_NA.html">NULL_to_NA()</a></code> </p>
-        </td>
-        <td><p>Converts a NULL to NA; or returns the argument unchanged otherwise</p></td>
-      </tr><tr><td>
-          <p><code><a href="NULL_to_charNA.html">NULL_to_charNA()</a></code> </p>
-        </td>
-        <td><p>Converts a NULL to NA_character_; or returns the argument unchanged otherwise</p></td>
-      </tr><tr><td>
           <p><code><a href="check_type.html">check_type()</a></code> </p>
         </td>
         <td><p>Checks the value's class type, which should match at least of the types given in
 any_expected_class_types.</p></td>
+      </tr><tr><td>
+          <p><code><a href="CV_.html">CV_</a></code> </p>
+        </td>
+        <td><p>Define a Singleton class which can hold a CV dictionary (so we do not have to load the .obo files over and over again)</p></td>
       </tr><tr><td>
           <p><code><a href="filenameToCV.html">filenameToCV()</a></code> </p>
         </td>
@@ -134,6 +81,10 @@ any_expected_class_types.</p></td>
           <p><code><a href="getCVDictionary.html">getCVDictionary()</a></code> </p>
         </td>
         <td><p>Parse the content of 'psi-ms.obo', 'pato.obo', and 'uo.obo' from the 'rmzqc/cv/' folder as ontology and return their union</p></td>
+      </tr><tr><td>
+          <p><code><a href="getCVSingleton.html">getCVSingleton()</a></code> </p>
+        </td>
+        <td><p>Returns the CV singleton. See CV_.</p></td>
       </tr><tr><td>
           <p><code><a href="getCVTemplate.html">getCVTemplate()</a></code> </p>
         </td>
@@ -165,6 +116,59 @@ we can raise an error.</p></td>
           <p><code><a href="isValidMzQC.html">isValidMzQC()</a></code> </p>
         </td>
         <td><p>Checks validity (= completeness) of mzQC objects - or lists (JSON arrays) thereof</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCanalysisSoftware-class.html">MzQCanalysisSoftware-class</a></code> <code><a href="MzQCanalysisSoftware-class.html">MzQCanalysisSoftware</a></code> </p>
+        </td>
+        <td><p>Details of the software used to create the QC metrics</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCbaseQuality-class.html">MzQCbaseQuality-class</a></code> <code><a href="MzQCbaseQuality-class.html">MzQCbaseQuality</a></code> </p>
+        </td>
+        <td><p>Base class of runQuality/setQuality</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCcontrolledVocabulary-class.html">MzQCcontrolledVocabulary-class</a></code> <code><a href="MzQCcontrolledVocabulary-class.html">MzQCcontrolledVocabulary</a></code> </p>
+        </td>
+        <td><p>A controlled vocabulary document, usually pointing to an .obo file</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCcvParameter-class.html">MzQCcvParameter-class</a></code> <code><a href="MzQCcvParameter-class.html">MzQCcvParameter</a></code> </p>
+        </td>
+        <td><p>A controlled vocabulary parameter, as detailed in the OBO file</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCDateTime-class.html">MzQCDateTime-class</a></code> <code><a href="MzQCDateTime-class.html">MzQCDateTime</a></code> </p>
+        </td>
+        <td><p>An mzQC-formatted date+time in ISO8601 format, as required by the mzQC spec doc.</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCinputFile-class.html">MzQCinputFile-class</a></code> <code><a href="MzQCinputFile-class.html">MzQCinputFile</a></code> </p>
+        </td>
+        <td><p>An inputfile within metadata for a run/setQuality</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCmetadata-class.html">MzQCmetadata-class</a></code> <code><a href="MzQCmetadata-class.html">MzQCmetadata</a></code> </p>
+        </td>
+        <td><p>The metadata for a run/setQuality</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCmzQC-class.html">MzQCmzQC-class</a></code> <code><a href="MzQCmzQC-class.html">MzQCmzQC</a></code> </p>
+        </td>
+        <td><p>Root element of an mzQC document</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCqualityMetric-class.html">MzQCqualityMetric-class</a></code> <code><a href="MzQCqualityMetric-class.html">MzQCqualityMetric</a></code> </p>
+        </td>
+        <td><p>The central class to store QC information</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCrunQuality-class.html">MzQCrunQuality-class</a></code> <code><a href="MzQCrunQuality-class.html">MzQCrunQuality</a></code> </p>
+        </td>
+        <td><p>A runQuality object. Use to report metrics for individual runs which are independent of other runs.</p></td>
+      </tr><tr><td>
+          <p><code><a href="MzQCsetQuality-class.html">MzQCsetQuality-class</a></code> <code><a href="MzQCsetQuality-class.html">MzQCsetQuality</a></code> </p>
+        </td>
+        <td><p>A setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
+only make sense in the set context and cannot be stored as runQuality (see mzQC spec doc).</p></td>
+      </tr><tr><td>
+          <p><code><a href="NULL_to_charNA.html">NULL_to_charNA()</a></code> </p>
+        </td>
+        <td><p>Converts a NULL to NA_character_; or returns the argument unchanged otherwise</p></td>
+      </tr><tr><td>
+          <p><code><a href="NULL_to_NA.html">NULL_to_NA()</a></code> </p>
+        </td>
+        <td><p>Converts a NULL to NA; or returns the argument unchanged otherwise</p></td>
       </tr><tr><td>
           <p><code><a href="parseOBO.html">parseOBO()</a></code> </p>
         </td>

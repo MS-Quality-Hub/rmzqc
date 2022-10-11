@@ -4,9 +4,6 @@
     <loc>/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
     <loc>/articles/basic_guide.html</loc>
   </url>
   <url>
@@ -19,52 +16,16 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/LICENSE-text.html</loc>
+  </url>
+  <url>
     <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/CV_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCDateTime-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCanalysisSoftware-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCbaseQuality-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCcontrolledVocabulary-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCcvParameter-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCinputFile-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCmetadata-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCmzQC-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCqualityMetric-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCrunQuality-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MzQCsetQuality-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/NULL_to_NA.html</loc>
-  </url>
-  <url>
-    <loc>/reference/NULL_to_charNA.html</loc>
-  </url>
-  <url>
     <loc>/reference/check_type.html</loc>
+  </url>
+  <url>
+    <loc>/reference/CV_.html</loc>
   </url>
   <url>
     <loc>/reference/filenameToCV.html</loc>
@@ -74,6 +35,9 @@
   </url>
   <url>
     <loc>/reference/getCVDictionary.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getCVSingleton.html</loc>
   </url>
   <url>
     <loc>/reference/getCVTemplate.html</loc>
@@ -98,6 +62,45 @@
   </url>
   <url>
     <loc>/reference/isValidMzQC.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCanalysisSoftware-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCbaseQuality-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCcontrolledVocabulary-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCcvParameter-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCDateTime-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCinputFile-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCmetadata-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCmzQC-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCqualityMetric-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCrunQuality-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/MzQCsetQuality-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/NULL_to_charNA.html</loc>
+  </url>
+  <url>
+    <loc>/reference/NULL_to_NA.html</loc>
   </url>
   <url>
     <loc>/reference/parseOBO.html</loc>

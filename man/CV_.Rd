@@ -13,7 +13,7 @@ Usage:
 cv_dict = CV_$new() ## uses 'getCVDictionary()' to populate the singleton
 cv_2 = CV_$new() ## uses the same data without parsing again
 
-Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data'
+Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton() from outside the package)
 }
 \section{Super class}{
 \code{\link[R6P:Singleton]{R6P::Singleton}} -> \code{CV_}

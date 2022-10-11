@@ -14,9 +14,9 @@ test_that("getDefaultCVVersion = function()", {
   expect_true(getDefaultCVVersion() == "4.1.95")
 })
 
-test_that("CV_ <- R6::R6Class...", {
-  d1 = CV_$new()
-  d2 = CV_$new()
+test_that("getCVSingleton()", {
+  d1 = getCVSingleton()
+  d2 = getCVSingleton()
   expect_true(identical(d1$data, d2$data))
   entry = d1$byID("MS:1000563")
   expect_true(entry$parents == "MS:1000560")

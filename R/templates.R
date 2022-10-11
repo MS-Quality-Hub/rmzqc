@@ -13,7 +13,7 @@
 #'
 #' @export
 #'
-getQualityMetricTemplate = function(accession, mzcv_dict = CV_$new()$data)
+getQualityMetricTemplate = function(accession, mzcv_dict = getCVSingleton()$data)
 {
   idx = which(accession == mzcv_dict$id)
   if (length(idx) == 0) stop("Accession '", accession, "' is not a valid CV term in the current dictionary (", length(mzcv_dict$id), " entries].")
@@ -36,7 +36,7 @@ getQualityMetricTemplate = function(accession, mzcv_dict = CV_$new()$data)
 #'
 #' @export
 #'
-getCVTemplate = function(accession, mzcv_dict = CV_$new()$data)
+getCVTemplate = function(accession, mzcv_dict = getCVSingleton()$data)
 {
   idx = which(accession == mzcv_dict$id)
   if (length(idx) == 0) stop("Accession '", accession, "' is not a valid CV term in the current dictionary.")
