@@ -34,6 +34,9 @@
     <loc>/reference/fromDatatoMzQC.html</loc>
   </url>
   <url>
+    <loc>/reference/fromDatatoMzQCobj.html</loc>
+  </url>
+  <url>
     <loc>/reference/getCVDictionary.html</loc>
   </url>
   <url>
@@ -104,6 +107,9 @@
   </url>
   <url>
     <loc>/reference/parseOBO.html</loc>
+  </url>
+  <url>
+    <loc>/reference/readMZQC.html</loc>
   </url>
   <url>
     <loc>/reference/removeFileSuffix.html</loc>
