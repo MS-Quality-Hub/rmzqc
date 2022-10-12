@@ -68,36 +68,48 @@ isValidMzQC = function(x, ...)
 
 
 #'
-#' Allow conversion of plain named lists to mzQC objects
+#' Allow conversion of a plain R object (obtained from jSON) to an mzQC object
 #'
-#' The plain-R representation of your mzQC objects must be wrapped in an outer list,
-#' if your mzQC object representation is already a list
-#' because upon detecting lists, this function will call 'class$fromData(element)' for every element.
+#' If you have a list of elements, call fromDatatoMzQC.
 #'
 #' @param mzqc_class Prototype of the class to convert 'data' into
 #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
 #'
 #' @examples
 #'  data = MzQCcvParameter$new("acc", "myName", "value")
-#'  data_recovered = fromDatatoMzQC(MzQCcvParameter, list(jsonlite::fromJSON(jsonlite::toJSON(data))))
+#'  data_recovered = fromDatatoMzQCobj(MzQCcvParameter, jsonlite::fromJSON(jsonlite::toJSON(data)))
 #'  data_recovered
+#'
+#' @export
+#'
+fromDatatoMzQCobj = function(mzqc_class, data)
+{
+  ## if not a list or vector and NA/NULL --> return a list
+  if ((length(data) == 1) && (is.na(data) || is.null(data))) return(list())
+  obj = mzqc_class$new()
+  obj$fromData(data)
+  return(obj)
+}
+
+
+#'
+#' Allow conversion of plain named lists of R objects (from jSON) to mzQC objects
+#'
+#' @param mzqc_class Prototype of the class to convert 'data' into
+#' @param data A list of: A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+#'
+#' @examples
+#'     data = rmzqc::MzQCcvParameter$new("acc", "myName", "value")
+#'     data_recovered = rmzqc::fromDatatoMzQC(rmzqc::MzQCcvParameter,
+#'                          list(jsonlite::fromJSON(jsonlite::toJSON(data))))
 #'
 #' @export
 #'
 fromDatatoMzQC = function(mzqc_class, data)
 {
-  if (inherits(data, "list"))
-  {
-    return(sapply(data, function(x) {
-      obj = mzqc_class$new()
-      obj$fromData(x)
-      obj
+  return(sapply(data, function(x) {
+      fromDatatoMzQCobj(mzqc_class, x)
     }))
-  }
-  if (is.na(data) || is.null(data)) return(list())
-  obj = mzqc_class$new()
-  obj$fromData(data)
-  return(obj)
 }
 
 
@@ -145,6 +157,7 @@ MzQCDateTime = setRefClass(
     fromData = function(.self, data)
     {
       .self$set(data)
+      return(.self)
     }
   )
 )
@@ -198,6 +211,7 @@ MzQCcontrolledVocabulary = setRefClass(
       .self$name = data$name
       .self$uri = data$uri
       .self$version = NULL_to_charNA(data$version)
+      return(.self)
     }
   )
 )
@@ -256,6 +270,7 @@ MzQCcvParameter = setRefClass(
       .self$name = data$name
       .self$description = NULL_to_charNA(data$description)
       .self$value = NULL_to_NA(data$value)
+      return(.self)
     }
   )
 )
@@ -308,6 +323,7 @@ MzQCinputFile = setRefClass(
       .self$location = data$location
       .self$fileFormat$fromData(data$fileFormat)
       .self$fileProperties = fromDatatoMzQC(MzQCcvParameter, data$fileProperties) ## for lists, call the free function
+      return(.self)
     }
   )
 )
@@ -397,6 +413,7 @@ MzQCanalysisSoftware = setRefClass(
       .self$uri = data$uri
       .self$description = NULL_to_charNA(data$description)
       .self$value = NULL_to_charNA(data$value)
+      return(.self)
     }
   )
 )
@@ -423,7 +440,7 @@ MzQCmetadata = setRefClass(
                 cvParameters = 'list'      # optional array of MzQCcvParameter
   ),
   methods = list(
-    initialize = function(label = NA_character_, inputFiles =list(), analysisSoftware = list(), cvParameters = list())
+    initialize = function(label = NA_character_, inputFiles = list(), analysisSoftware = list(), cvParameters = list())
     {
       .self$label = label
       .self$inputFiles = inputFiles
@@ -453,6 +470,7 @@ MzQCmetadata = setRefClass(
       .self$inputFiles = fromDatatoMzQC(MzQCinputFile, data$inputFiles)
       .self$analysisSoftware = fromDatatoMzQC(MzQCanalysisSoftware, data$analysisSoftware)
       .self$cvParameters = fromDatatoMzQC(MzQCcvParameter, data$cvParameters)
+      return(.self)
     }
   )
 )
@@ -513,6 +531,7 @@ MzQCqualityMetric = setRefClass(
       .self$description = NULL_to_charNA(data$description)
       if (!is.na(data$value)) .self$value = data$value
       .self$unit = fromDatatoMzQC(MzQCcvParameter, data$unit) ## if data$unit is empty, or NA, the empty list will be returned
+      return(.self)
     }
   )
 )
@@ -556,10 +575,11 @@ MzQCbaseQuality = setRefClass(
                "qualityMetrics" = .self$qualityMetrics)
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data)
+    fromData = function(.self, mdata)
     {
-      .self$metadata = data$metadata
-      .self$qualityMetrics = fromDatatoMzQC(MzQCbaseQuality, data$qualityMetrics) ## if data$qualityMetrics is empty, or NA, the empty list will be returned
+      .self$metadata = fromDatatoMzQCobj(MzQCmetadata, mdata$metadata) ## metadata is a single element
+      .self$qualityMetrics = fromDatatoMzQC(MzQCqualityMetric, mdata$qualityMetrics) ## if mdata$qualityMetrics is empty, or NA, the empty list will be returned
+      return(.self)
     }
   )
 )
@@ -671,14 +691,17 @@ MzQCmzQC = setRefClass(
     },
     fromData = function(.self, data)
     {
-      .self$version = data$version
-      .self$creationDate = fromDatatoMzQC(MzQCDateTime, data$creationDate)
-      .self$contactName = NULL_to_charNA(data$contactName)
-      .self$contactAddress = NULL_to_charNA(data$contactAddress)
-      .self$description = NULL_to_charNA(data$description)
-      .self$runQualities = fromDatatoMzQC(MzQCrunQuality, data$runQualities) ## if data$runQualities is empty, or NA, the empty list will be returned
-      .self$setQualities = fromDatatoMzQC(MzQCsetQuality, data$setQualities) ## if data$setQualities is empty, or NA, the empty list will be returned
-      .self$controlledVocabularies = fromDatatoMzQC(MzQCcontrolledVocabulary, data$controlledVocabularies) ## if data$controlledVocabularies is empty, or NA, the empty list will be returned
+      root = data$mzQC
+      if (is.null(root)) stop(gettextf("No valid mzQC root %s found. Cannot read data.", sQuote("mzQC")))
+      .self$version = root$version
+      .self$creationDate = fromDatatoMzQCobj(MzQCDateTime, root$creationDate)
+      .self$contactName = NULL_to_charNA(root$contactName)
+      .self$contactAddress = NULL_to_charNA(root$contactAddress)
+      .self$description = NULL_to_charNA(root$description)
+      .self$runQualities = fromDatatoMzQC(MzQCrunQuality, root$runQualities) ## if root$runQualities is empty, or NA, the empty list will be returned
+      .self$setQualities = fromDatatoMzQC(MzQCsetQuality, root$setQualities) ## if root$setQualities is empty, or NA, the empty list will be returned
+      .self$controlledVocabularies = fromDatatoMzQC(MzQCcontrolledVocabulary, root$controlledVocabularies)
+      return(.self)
     }
   )
 )

@@ -2,23 +2,21 @@
 % Please edit documentation in R/mzQC.R
 \name{fromDatatoMzQC}
 \alias{fromDatatoMzQC}
-\title{Allow conversion of plain named lists to mzQC objects}
+\title{Allow conversion of plain named lists of R objects (from jSON) to mzQC objects}
 \usage{
 fromDatatoMzQC(mzqc_class, data)
 }
 \arguments{
 \item{mzqc_class}{Prototype of the class to convert 'data' into}
 
-\item{data}{A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'}
+\item{data}{A list of: A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'}
 }
 \description{
-The plain-R representation of your mzQC objects must be wrapped in an outer list,
-if your mzQC object representation is already a list
-because upon detecting lists, this function will call 'class$fromData(element)' for every element.
+Allow conversion of plain named lists of R objects (from jSON) to mzQC objects
 }
 \examples{
- data = MzQCcvParameter$new("acc", "myName", "value")
- data_recovered = fromDatatoMzQC(MzQCcvParameter, list(jsonlite::fromJSON(jsonlite::toJSON(data))))
- data_recovered
+    data = rmzqc::MzQCcvParameter$new("acc", "myName", "value")
+    data_recovered = rmzqc::fromDatatoMzQC(rmzqc::MzQCcvParameter,
+                         list(jsonlite::fromJSON(jsonlite::toJSON(data))))
 
 }
