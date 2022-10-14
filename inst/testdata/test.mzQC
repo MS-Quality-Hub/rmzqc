@@ -1,0 +1,84 @@
+{
+  "mzQC": {
+    "version": "1.0.0",
+    "creationDate": "2022-10-13T21:07:54",
+    "contactName": "bielow",
+    "contactAddress": "test@user.info",
+    "description": "A minimal mzQC test document with bogus data",
+    "runQualities": [
+      {
+        "metadata": {
+          "label": "c:\\data\\special.raw",
+          "inputFiles": [
+            {
+              "name": "special.raw",
+              "location": "c:\\data\\special.raw",
+              "fileFormat": {
+                "accession": "MS:1000563",
+                "name": "Thermo RAW format"
+              }
+            }
+          ],
+          "analysisSoftware": [
+            {
+              "accession": "MS:1003162",
+              "name": "PTX-QC",
+              "version": "1.0.13",
+              "uri": "https://github.com/cbielow/PTXQC/",
+              "description": "\"Proteomics (PTX) - QualityControl (QC) software for QC report generation and visualization.\" [DOI:10.1021/acs.jproteome.5b00780, PMID:26653327, https://github.com/cbielow/PTXQC/]"
+            }
+          ]
+        },
+        "qualityMetrics": [
+          {
+            "accession": "MS:4000059",
+            "name": "number of MS1 spectra",
+            "description": "\"The number of MS1 events in the run.\" [PSI:MS]",
+            "value": 13405
+          }
+        ]
+      }
+    ],
+    "setQualities": [
+      {
+        "metadata": {
+          "label": "c:\\data\\special.raw",
+          "inputFiles": [
+            {
+              "name": "special.raw",
+              "location": "c:\\data\\special.raw",
+              "fileFormat": {
+                "accession": "MS:1000563",
+                "name": "Thermo RAW format"
+              }
+            }
+          ],
+          "analysisSoftware": [
+            {
+              "accession": "MS:1003162",
+              "name": "PTX-QC",
+              "version": "1.0.13",
+              "uri": "https://github.com/cbielow/PTXQC/",
+              "description": "\"Proteomics (PTX) - QualityControl (QC) software for QC report generation and visualization.\" [DOI:10.1021/acs.jproteome.5b00780, PMID:26653327, https://github.com/cbielow/PTXQC/]"
+            }
+          ]
+        },
+        "qualityMetrics": [
+          {
+            "accession": "MS:4000059",
+            "name": "number of MS1 spectra",
+            "description": "\"The number of MS1 events in the run.\" [PSI:MS]",
+            "value": 13405
+          }
+        ]
+      }
+    ],
+    "controlledVocabularies": [
+      {
+        "name": "Proteomics Standards Initiative Mass Spectrometry Ontology",
+        "uri": "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.95/psi-ms.obo",
+        "version": "4.1.95"
+      }
+    ]
+  }
+}

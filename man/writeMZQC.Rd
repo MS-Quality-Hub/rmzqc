@@ -7,10 +7,14 @@
 writeMZQC(filepath, mzqc_obj)
 }
 \arguments{
-\item{filepath}{A filename (with path) to write to.}
+\item{filepath}{A filename (with optional path) to write to.}
 
-\item{mzqc_obj}{An mzQC object, which is serialized to JSON and then written to disk}
+\item{mzqc_obj}{An MzQCmzQC root object, which is serialized to JSON and then written to disk}
 }
 \description{
+You can in theory also provide any mzQC subelement,
+but the resulting mzQC file will not validate since its incomplete.
+}
+\details{
 The filename should have an '.mzQC' as suffix (warning otherwise).
 }

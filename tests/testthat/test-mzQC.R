@@ -23,9 +23,18 @@ test_that("isValidMzQC = function(x, ...)", {
 
 
 test_that("fromDatatoMzQC = function(mzqc_class, data)", {
-  data = MzQCcvParameter$new("acc", "myName", "value")
-  data_recovered = fromDatatoMzQC(MzQCcvParameter, list(jsonlite::fromJSON(jsonlite::toJSON(data))))
+  data = rmzqc::MzQCcvParameter$new("acc", "myName", "value")
+  data_recovered = rmzqc::fromDatatoMzQC(rmzqc::MzQCcvParameter, list(jsonlite::fromJSON(jsonlite::toJSON(data))))
   expect_equal(data_recovered[[1]]$accession, data$accession)
   expect_equal(data_recovered[[1]]$value, data$value)
   expect_equal(data_recovered[[1]]$description, data$description)
+})
+
+
+test_that("fromDatatoMzQCobj = function(mzqc_class, data)", {
+  data = rmzqc::MzQCcvParameter$new("acc", "myName", "value")
+  data_recovered = rmzqc::fromDatatoMzQCobj(rmzqc::MzQCcvParameter, jsonlite::fromJSON(jsonlite::toJSON(data)))
+  expect_equal(data_recovered$accession, data$accession)
+  expect_equal(data_recovered$value, data$value)
+  expect_equal(data_recovered$description, data$description)
 })

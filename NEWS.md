@@ -3,6 +3,9 @@ i.e. a list of new features / bugfixes by version number.
 
 Versions uploaded to CRAN are marked with [CRAN].
 
+# v0.3.0 (2022/10/11)
+
+* Feature: support reading mzQC files
 
 # v0.2.2 (2022/08/21)
 

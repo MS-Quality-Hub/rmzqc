@@ -49,6 +49,13 @@ mzQC_document = MzQCmzQC$new(version = "1.0.0",
 mzqc_filename = paste0(getwd(), "/test.mzQC")
 writeMZQC(mzqc_filename, mzQC_document)
 cat(mzqc_filename, "written to disk!")
+
+## read it again
+mq = readMZQC(mzqc_filename)
+
+## print some basic stats
+gettextf("This mzQC was created on %s and has %d quality metric(s) in total.", dQuote(mq$creationDate$datetime), length(mq$runQualities) + length(mq$setQualities))
+
 ```
 
 
