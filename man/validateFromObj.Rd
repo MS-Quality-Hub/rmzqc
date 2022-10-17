@@ -7,9 +7,9 @@
 validateFromObj(mzqc_root, verbose = TRUE)
 }
 \arguments{
-\item{verbose}{Show extra information if validation fails}
+\item{mzqc_root}{An mzQC root object}
 
-\item{JSON_obj}{An mzQC root object}
+\item{verbose}{Show extra information if validation fails}
 }
 \value{
 TRUE/FALSE if validation was successful/failed

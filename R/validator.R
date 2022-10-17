@@ -71,7 +71,7 @@ validateFromString = function(JSON_string, verbose = TRUE)
 #' The returned TRUE/FALSE has additional attributes in case of errors.
 #' Use attributes(result) to access them.
 #'
-#' @param JSON_obj An mzQC root object
+#' @param mzqc_root An mzQC root object
 #' @param verbose Show extra information if validation fails
 #' @return TRUE/FALSE if validation was successful/failed
 #'

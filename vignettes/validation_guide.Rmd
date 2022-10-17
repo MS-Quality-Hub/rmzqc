@@ -6,7 +6,7 @@ output:
   html_document: default
   pdf_document: null
 vignette: >
-  %\VignetteIndexEntry{Basic R-Usage Guide for rMZQC}
+  %\VignetteIndexEntry{Validation of mzQC documents}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
