@@ -24,7 +24,7 @@ writeMZQC = function(filepath, mzqc_obj)
 
   content = jsonlite::toJSON(mzqc_obj, pretty = TRUE, auto_unbox = TRUE)
 
-  cat(content, file = filepath)
+  cat(content, '\n', file = filepath) ## write a final linebreak to avoid a warning from readLines when reading the file back
 }
 
 #'

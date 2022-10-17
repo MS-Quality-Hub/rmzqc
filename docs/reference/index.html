@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rmzqc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -33,6 +33,9 @@
   </a>
   <ul class="dropdown-menu" role="menu"><li>
       <a href="../articles/basic_guide.html">Basic R-Usage Guide for rMZQC</a>
+    </li>
+    <li>
+      <a href="../articles/validation_guide.html">Validation of mzQC documents</a>
     </li>
   </ul></li>
 <li>
@@ -107,6 +110,10 @@ The value (if any) needs to be set afterwards.</p></td>
         </td>
         <td><p>Fills a MzQCqualityMetric object with id(accession) and name.
 The value (if any) and unit (if any) need to be set afterwards.</p></td>
+      </tr><tr><td>
+          <p><code><a href="getValidator.html">getValidator()</a></code> </p>
+        </td>
+        <td><p>Get a validator for mzQC</p></td>
       </tr><tr><td>
           <p><code><a href="hasFileSuffix.html">hasFileSuffix()</a></code> </p>
         </td>
@@ -199,6 +206,19 @@ create an 'analysisSoftware' node for mzQC</p></td>
           <p><code><a href="toQCMetric.html">toQCMetric()</a></code> </p>
         </td>
         <td><p>Create an 'MzQCqualityMetric' object from two inputs</p></td>
+      </tr><tr><td>
+          <p><code><a href="validateFromFile.html">validateFromFile()</a></code> </p>
+        </td>
+        <td><p>Validates an mzQC document which is present as a file.</p></td>
+      </tr><tr><td>
+          <p><code><a href="validateFromObj.html">validateFromObj()</a></code> </p>
+        </td>
+        <td><p>Validates an mzQC document which is already in memory as mzQC root object, as obtained by, e.g. readMZQC().</p></td>
+      </tr><tr><td>
+          <p><code><a href="validateFromString.html">validateFromString()</a></code> </p>
+        </td>
+        <td><p>Validates an mzQC document which is already in memory as JSON string.
+e.g. the string " mzQC : "</p></td>
       </tr><tr><td>
           <p><code><a href="writeMZQC.html">writeMZQC()</a></code> </p>
         </td>

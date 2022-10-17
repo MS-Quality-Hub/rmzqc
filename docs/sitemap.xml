@@ -10,6 +10,9 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
+    <loc>/articles/validation_guide.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -53,6 +56,9 @@
   </url>
   <url>
     <loc>/reference/getQualityMetricTemplate.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getValidator.html</loc>
   </url>
   <url>
     <loc>/reference/hasFileSuffix.html</loc>
@@ -122,6 +128,15 @@
   </url>
   <url>
     <loc>/reference/toQCMetric.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateFromFile.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateFromObj.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateFromString.html</loc>
   </url>
   <url>
     <loc>/reference/writeMZQC.html</loc>
