@@ -2,7 +2,7 @@
 % Please edit documentation in R/validator.R
 \name{validateFromFile}
 \alias{validateFromFile}
-\title{Validates an mzQC document which is present as a file.}
+\title{Syntactically validates an mzQC document which is present as a file.}
 \usage{
 validateFromFile(filepath, verbose = TRUE)
 }

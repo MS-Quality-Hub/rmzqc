@@ -6,11 +6,11 @@
 
 
 #'
-#' Get a validator for mzQC
+#' Get a syntax validator for mzQC
 #'
 #' @import jsonvalidate
 #'
-getValidator = function()
+getSyntaxValidator = function()
 {
   schema = system.file("schema/mzQC_schema.json", package = "rmzqc", mustWork = TRUE)
   v = jsonvalidate::json_validator(schema, engine = "ajv") ## we need schema draft-07
@@ -18,7 +18,7 @@ getValidator = function()
 }
 
 #'
-#' Validates an mzQC document which is present as a file.
+#' Syntactically validates an mzQC document which is present as a file.
 #'
 #' The returned TRUE/FALSE has additional attributes in case of errors.
 #' Use attributes(result) to access them.
@@ -31,13 +31,16 @@ getValidator = function()
 #'
 validateFromFile = function(filepath, verbose = TRUE)
 {
+  if (!file.exists(filepath)) {
+    stop("The file '", filepath, "' does not exist (or is not readable).")
+  }
   data = readLines(filepath)
   validateFromString(data, verbose)
 }
 
 
 #'
-#' Validates an mzQC document which is already in memory as JSON string.
+#' Syntactically validates an mzQC document which is already in memory as JSON string.
 #' e.g. the string "{ mzQC : {}}"
 #'
 #' If the string object passed into this function contains multiple elements (length > 1).
@@ -54,15 +57,21 @@ validateFromFile = function(filepath, verbose = TRUE)
 #'
 validateFromString = function(JSON_string, verbose = TRUE)
 {
-  v = getValidator()
+  v = getSyntaxValidator()
   if (length(JSON_string) > 1) JSON_string = paste0(JSON_string, collapse = "\n") ## we need a single line for the validator
+  valid_JSON = jsonlite::validate(JSON_string)
+  if (!valid_JSON)
+  {
+    warning(attributes(valid_JSON), immediate. = TRUE)
+    stop("The JSON string is not valid JSON.")
+  }
   res = v(JSON_string, verbose = verbose)
   return(res)
 }
 
 
 #'
-#' Validates an mzQC document which is already in memory as mzQC root object, as obtained by, e.g. readMZQC().
+#' Syntactically validates an mzQC document which is already in memory as mzQC root object, as obtained by, e.g. readMZQC().
 #'
 #' This method is less performant than validateFromString,
 #' because it needs to convert the R object to

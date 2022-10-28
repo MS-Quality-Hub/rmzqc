@@ -85,7 +85,7 @@
                         <h4 data-toc-skip class="author">Chris Bielow <a href="mailto:chris.bielow@fu-berlin.de" class="email">chris.bielow@fu-berlin.de</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2022-10-17</h4>
+            <h4 data-toc-skip class="date">2022-10-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MS-Quality-hub/rmzqc/blob/HEAD/vignettes/validation_guide.Rmd" class="external-link"><code>vignettes/validation_guide.Rmd</code></a></small>
       <div class="hidden name"><code>validation_guide.Rmd</code></div>
@@ -95,13 +95,13 @@
     
     
 <div class="section level2">
-<h2 id="how-to-validate-an-mzqc-file">How to validate an mzQC file<a class="anchor" aria-label="anchor" href="#how-to-validate-an-mzqc-file"></a>
+<h2 id="how-to-syntactically-validate-an-mzqc-file">How to syntactically validate an mzQC file<a class="anchor" aria-label="anchor" href="#how-to-syntactically-validate-an-mzqc-file"></a>
 </h2>
 <p>The mzQC file format is based upon JSON. When writing a JSON file,
 certain substructures are required by the mzQC specification document,
-other items are optional. The validator build into <code>rmzqc</code>
-allows you to check if all mandatory items are present, or if something
-was erroneously omitted in the mzQC file.</p>
+other items are optional. The syntax validator build into
+<code>rmzqc</code> allows you to check if all mandatory items are
+present, or if something was erroneously omitted in the mzQC file.</p>
 <p>There are three validation functions validateFromFile(),
 validateFromString() and validateFromObj(), depending on the data you
 have at hand. Their result is always a bool (TRUE/FALSE) which has some

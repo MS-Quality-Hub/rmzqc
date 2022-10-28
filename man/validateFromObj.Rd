@@ -2,7 +2,7 @@
 % Please edit documentation in R/validator.R
 \name{validateFromObj}
 \alias{validateFromObj}
-\title{Validates an mzQC document which is already in memory as mzQC root object, as obtained by, e.g. readMZQC().}
+\title{Syntactically validates an mzQC document which is already in memory as mzQC root object, as obtained by, e.g. readMZQC().}
 \usage{
 validateFromObj(mzqc_root, verbose = TRUE)
 }

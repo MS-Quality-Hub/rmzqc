@@ -11,11 +11,11 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-# How to validate an mzQC file
+# How to syntactically validate an mzQC file
 
 The mzQC file format is based upon JSON.
 When writing a JSON file, certain substructures are required by the mzQC specification document, other items are optional.
-The validator build into `rmzqc` allows you to check if all mandatory items are present, or if something was erroneously omitted in the mzQC file.
+The syntax validator build into `rmzqc` allows you to check if all mandatory items are present, or if something was erroneously omitted in the mzQC file.
 
 There are three validation functions validateFromFile(), validateFromString() and validateFromObj(), depending on the data you have at hand.
 Their result is always a bool (TRUE/FALSE) which has some attributes (usually 'errors') attached.

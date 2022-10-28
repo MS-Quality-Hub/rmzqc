@@ -2,7 +2,7 @@
 % Please edit documentation in R/validator.R
 \name{validateFromString}
 \alias{validateFromString}
-\title{Validates an mzQC document which is already in memory as JSON string.
+\title{Syntactically validates an mzQC document which is already in memory as JSON string.
 e.g. the string "{ mzQC : {}}"}
 \usage{
 validateFromString(JSON_string, verbose = TRUE)

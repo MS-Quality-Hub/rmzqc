@@ -12,6 +12,8 @@ test_that("validateFromString = function(JSON_string, verbose = TRUE)", {
   mzQC_strings = readLines(system.file("testdata/test.mzQC", package="rmzqc"))
   res = validateFromString(mzQC_strings)
   expect_true(res)
+  ## truncated content
+  expect_error(validateFromString(substr(mzQC_strings, 1, 100)))
 })
 
 test_that("validateFromObj = function(mzqc_root, verbose = TRUE)", {
