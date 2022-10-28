@@ -1,0 +1,52 @@
+---
+title: "Validation of mzQC documents"
+author: "Chris Bielow <chris.bielow@fu-berlin.de>"
+date: '`r Sys.Date()`'
+output:
+  html_document: default
+  pdf_document: null
+vignette: >
+  %\VignetteIndexEntry{Validation of mzQC documents}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+# How to syntactically validate an mzQC file
+
+The mzQC file format is based upon JSON.
+When writing a JSON file, certain substructures are required by the mzQC specification document, other items are optional.
+The syntax validator build into `rmzqc` allows you to check if all mandatory items are present, or if something was erroneously omitted in the mzQC file.
+
+There are three validation functions validateFromFile(), validateFromString() and validateFromObj(), depending on the data you have at hand.
+Their result is always a bool (TRUE/FALSE) which has some attributes (usually 'errors') attached.
+Simply print the bool or call 'attributes()' on the result (in case of failure) to inspect details.
+
+To validate a file simply:
+```{r, eval=FALSE}
+library(rmzqc)
+mzQC_filename = system.file("testdata/test.mzQC", package="rmzqc")
+#mzQC_filename = "C:\\dev\\rmzqc\\inst\\testdata\\test.mzQC"
+res = validateFromFile(mzQC_filename)
+res
+
+```
+
+If you have the file already as a JSON string in R (i.e. no need to load the data from a file), then simply use 'validateFromString()'
+
+```{r, eval=FALSE}
+library(rmzqc)
+mzQC_strings = readLines(system.file("testdata/test.mzQC", package="rmzqc"))
+res = validateFromString(mzQC_strings)
+res
+
+```
+
+Finally, if you have an mzQC root object in hand, then call 'validateFromObj()'
+
+```{r, eval=FALSE}
+library(rmzqc)
+mzQC_root = rmzqc::readMZQC(system.file("testdata/test.mzQC", package="rmzqc"))
+res = validateFromObj(mzQC_root)
+res
+
+```

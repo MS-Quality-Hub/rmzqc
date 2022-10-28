@@ -308,6 +308,11 @@ MzQCinputFile = setRefClass(
     {
       # force evaluation of all fields by '+'
       if (isUndefined(.self$name, .self$location) + !.self$fileFormat$isValid()) return(FALSE)
+      if (!grepl(":", .self$location, fixed = TRUE) || (grepl("\\", .self$location, fixed = TRUE))) {
+        # URI needs a ':' but must not contain a '\'
+        warning(paste0("Variable 'MzQCinputFile:location' (value: '", .self$location, "') is not a URI (e.g. 'file:///c:/tmp/test.raw' or 'http://...'). No '\\' are allowed"), immediate. = TRUE, call. = FALSE)
+        return(FALSE)
+      }
       return(isValidMzQC(.self$fileProperties)) ## TRUE for empty list, which is ok
     },
     toJSON = function(.self, ...)
