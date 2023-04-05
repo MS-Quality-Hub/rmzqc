@@ -12,7 +12,7 @@
 #'
 getSyntaxValidator = function()
 {
-  schema = system.file("schema/mzQC_schema.json", package = "rmzqc", mustWork = TRUE)
+  schema = system.file("schema/mzqc_schema.json", package = "rmzqc", mustWork = TRUE)
   v = jsonvalidate::json_validator(schema, engine = "ajv") ## we need schema draft-07
   return(v)
 }
