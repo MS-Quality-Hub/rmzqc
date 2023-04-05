@@ -1,6 +1,6 @@
 # `rmzqc`
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit/)
 [![CRAN/METACRAN](https://img.shields.io/cran/v/rmzqc)](https://cran.r-project.org/package=rmzqc)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MS-Quality-hub/rmzqc/blob/mwalzer-add-R-notebooks-and-containers/notebooks/babysteps_in_rmzqc.ipynb)
 
