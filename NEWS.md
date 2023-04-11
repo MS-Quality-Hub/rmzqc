@@ -3,7 +3,7 @@ i.e. a list of new features / bugfixes by version number.
 
 Versions uploaded to CRAN are marked with [CRAN].
 
-# version 0.4.0 (2022/10/17)
+# [CRAN] version 0.4.1 (2023/04/11)
 
 * Feature: support validation of mzQC files (via validateFrom...() functions, see Vignettes)
 
