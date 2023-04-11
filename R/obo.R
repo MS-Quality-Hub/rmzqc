@@ -114,6 +114,7 @@ CV_ <- R6::R6Class(classname = "CV_",
 #'
 getCVSingleton = function()
 {
-  cv_dict = CV_$new()
+  cv = rmzqc::CV_
+  cv_dict = cv$new()
   return(cv_dict)
 }
