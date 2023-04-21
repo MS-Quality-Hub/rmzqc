@@ -8,7 +8,7 @@
 #' You can in theory also provide any mzQC subelement,
 #' but the resulting mzQC file will not validate since its incomplete.
 #'
-#' The filename should have an '.mzQC' as suffix (warning otherwise).
+#' The filename should have '.mzQC' (case sensitive) as suffix. There will be a warning otherwise.
 #'
 #' @param filepath A filename (with optional path) to write to.
 #' @param mzqc_obj An MzQCmzQC root object, which is serialized to JSON and then written to disk
@@ -30,7 +30,7 @@ writeMZQC = function(filepath, mzqc_obj)
 #'
 #' Read a JSON file in mzQC format into an MzQCmzQC root object
 #'
-#' @param filepath A filename (with path) to write to.
+#' @param filepath A filename (with path) to read from.
 #' @returns An MzQCmzQC root object from which all the data can be extracted/manipulated
 #'
 #' @export
