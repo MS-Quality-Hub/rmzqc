@@ -7,7 +7,7 @@
 readMZQC(filepath)
 }
 \arguments{
-\item{filepath}{A filename (with path) to write to.}
+\item{filepath}{A filename (with path) to read from.}
 }
 \value{
 An MzQCmzQC root object from which all the data can be extracted/manipulated

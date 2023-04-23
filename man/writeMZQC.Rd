@@ -16,5 +16,5 @@ You can in theory also provide any mzQC subelement,
 but the resulting mzQC file will not validate since its incomplete.
 }
 \details{
-The filename should have an '.mzQC' as suffix (warning otherwise).
+The filename should have '.mzQC' (case sensitive) as suffix. There will be a warning otherwise.
 }
