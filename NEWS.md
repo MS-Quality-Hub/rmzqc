@@ -3,6 +3,10 @@ i.e. a list of new features / bugfixes by version number.
 
 Versions uploaded to CRAN are marked with [CRAN].
 
+# [CRAN] version 0.4.2 (2023/04/23)
+
+* bugfix release (CV_ member not found when rmzqc is not attached)
+
 # [CRAN] version 0.4.1 (2023/04/11)
 
 * Feature: support validation of mzQC files (via validateFrom...() functions, see Vignettes)
