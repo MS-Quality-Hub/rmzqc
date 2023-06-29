@@ -490,6 +490,7 @@ setMethod('asJSON', 'MzQCmetadata', function(x, ...) x$toJSON(...))
 #' @field description (optional) Definition of the controlled vocabulary term.
 #' @field value (optional) Value of the metric (single value, n-tuple, table, matrix).
 #'        The structure is not checked by our mzQC implementation and must be handled by the caller
+#'        See \code{\link{toQCMetric}} for details.
 #' @field unit (optional) Array of unit(s), stored as MzQcvParameter
 #'
 #' @exportClass MzQCqualityMetric
