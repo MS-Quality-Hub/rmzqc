@@ -48,22 +48,27 @@ toQCMetric = function(id, value, on_violation = c("error", "warn"))
       on_vio_func(paste0("Passed value of class '", paste0(class(value), collapse=","), "'. Expected any of: '", paste0(any_expected_class_types, collapse = ","),"' with expected length '", expected_length,  "' (given:", length(value), ") (due to metric with ID=", metric_id, ")"))
     }
   }
-
+  browser()
 
   CV = getCVSingleton()
-  entry = CV$byID(id)
-  is_a = CV$byID(entry$is_a)
-  if (is_a$id == "MS:4000006") {        # matrix
-    check_and_print(value, "matrix", id)
-  } else if (is_a$id == "MS:4000005") { # table
-    check_and_print(value, "data.frame", id)
-  } else if (is_a$id == "MS:4000004") { # n-tuple
-    check_and_print(value, c("integer", "numeric", "double", "character", "logical"), id)
-  } else if (is_a$id == "MS:4000003") { # single value
-    check_and_print(value, c("integer", "numeric", "double", "character", "logical"), id, 1)
-  } else
-  {
-    on_vio_func("value type ", is_a$id, "/", is_a$name, " not supported!")
+  entry = CV$byID(id)  ## could be NULL, if CV is too old
+  if (is.null(entry)) {
+    on_vio_func("The ID '", id, "' is unknown in the current CV. Either fix the ID or use a more recent CV (see \code{\link{getCVSingleton}}).")
+    ## we may still be alive here.
+  } else {
+    is_a = CV$byID(entry$is_a)
+    if (is_a$id == "MS:4000006") {        # matrix
+      check_and_print(value, "matrix", id)
+    } else if (is_a$id == "MS:4000005") { # table
+      check_and_print(value, "data.frame", id)
+    } else if (is_a$id == "MS:4000004") { # n-tuple
+      check_and_print(value, c("integer", "numeric", "double", "character", "logical"), id)
+    } else if (is_a$id == "MS:4000003") { # single value
+      check_and_print(value, c("integer", "numeric", "double", "character", "logical"), id, 1)
+    } else
+    {
+      on_vio_func("value type ", is_a$id, "/", is_a$name, " not supported by mzQC!")
+    }
   }
 
   MzQCqualityMetric(accession = entry$id, name = entry$name, description = entry$def, value = value)
