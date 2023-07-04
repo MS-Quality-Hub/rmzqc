@@ -174,8 +174,8 @@ setMethod('asJSON', 'MzQCDateTime', function(x, ...) x$toJSON(...))
 #' @examples
 #'   MzQCcontrolledVocabulary$new(
 #'     "Proteomics Standards Initiative Quality Control Ontology",
-#'     "https://github.com/HUPO-PSI/mzQC/blob/master/cv/qc-cv.obo",
-#'     "1.2.0")
+#'     "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.129/psi-ms.obo",
+#'     "4.1.129")
 #'
 #' @exportClass MzQCcontrolledVocabulary
 #' @export MzQCcontrolledVocabulary

@@ -2,7 +2,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit/)
 [![CRAN/METACRAN](https://img.shields.io/cran/v/rmzqc)](https://cran.r-project.org/package=rmzqc)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MS-Quality-hub/rmzqc/blob/mwalzer-add-R-notebooks-and-containers/notebooks/babysteps_in_rmzqc.ipynb)
 
 An R package for reading, validating, and writing `mzQC` files.
 
@@ -61,10 +60,6 @@ Please be as precise as possible when providing the bug report:
 just imagine what kind of information you would like to have in order
 to track down the issue.
 In certain situations, the input/output file you are trying to read/write is helpful.
-
-## Test the package
-
-The package can be tested on Google Colab. Just follow the link [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MS-Quality-hub/rmzqc/blob/mwalzer-add-R-notebooks-and-containers/notebooks/babysteps_in_rmzqc.ipynb)
 
 
 ## Contributing - Get Involved!
