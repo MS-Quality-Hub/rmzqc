@@ -7,7 +7,7 @@
 parseOBO(cv_obo_file)
 }
 \arguments{
-\item{cv_obo_file}{A path to an .obo file}
+\item{cv_obo_file}{A local path to an .obo file}
 }
 \value{
 A data.frame containing CV term information

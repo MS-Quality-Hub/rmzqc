@@ -1,14 +1,14 @@
 
 #'
-#' Get the information of each CV term from an obo file or URI.
+#' Get the information of each CV term from an obo file.
 #'
 #' @import ontologyIndex
 #'
-#' @param cv_obo_uri A path or URI (http, https, ftp) to an .obo file
+#' @param cv_obo_file A local path to an .obo file
 #' @return A data.frame containing CV term information
 #'
 #'
-parseOBO = function(cv_obo_uri){
+parseOBO = function(cv_obo_file){
 
   if (!file.exists(cv_obo_file))
   {
@@ -29,11 +29,14 @@ parseOBO = function(cv_obo_uri){
 #' See CV_ class to use this function efficiently.
 #'
 #' @param source Where to get the PSI-MS CV from:
-#'         - 'latest' will download from 'psi-ms.obo' from https://api.github.com/repos/HUPO-PSI/psi-ms-CV/releases/latest
+#'         - 'latest' will download 'psi-ms.obo' from https://api.github.com/repos/HUPO-PSI/psi-ms-CV/releases/latest
 #'         - 'local' will use rmzqc/cv/psi-ms.obo' (which might be outdated, if you need the latest terms)
 #'         - 'custom' uses a user-defined URI in 'custom_uri'
 #' @param custom_uri Used when 'source' is set to 'custom'. The URI can be local or remote, e.g. 'c:/obo/my.obo' or 'https://www.abc.com/my.obo'
-#' @return A list with 'data', 'URI' and 'version'.Where 'data' is a data.frame with columns 'id', 'name', 'def', 'parents', 'children' (and many more) which contains the CV entries
+#' @param use_local_fallback When downloading a file from a URI fails, should we fall back to the local psi-ms.obo shipped with rmzqc?
+#' @return A list with 'CV', 'URI' and 'version', where 'CV' is a data.frame with columns 'id', 'name', 'def', 'parents', 'children' (and many more) which contains the CV entries
+#'
+#' @importFrom utils download.file
 #'
 #' @export
 #'
@@ -45,14 +48,14 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
   if (source == "latest")
   {
     custom_uri = getLatest_PSICV_URL()
-    URI_out = custom_URI
+    URI_out = custom_uri
   } else if (source == "local")
   {
     custom_uri = system.file("./cv/psi-ms.obo", package="rmzqc")
     URI_out = paste0("https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v", getLocal_CV_Version(custom_uri), "/psi-ms.obo")
   } else if (source == "custom")
   {
-    URI_out = custom_URI
+    URI_out = custom_uri
   }
   else stop(paste0("Source ", source, " not supported!"))
 
@@ -62,7 +65,7 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
     message(paste0("Downloading obo from '", custom_uri, "' ..."))
     tmp_filename = tempfile()
     if (download.file(custom_uri, tmp_filename) != 0) stop("Could not download.")
-    on.exit(remove.file(tmp_filename)) ## clean up when function ends
+    on.exit(file.remove(tmp_filename)) ## clean up when function ends
     local_file = tmp_filename
   }
 
@@ -79,7 +82,7 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
 
   version = getLocal_CV_Version(local_file);
 
-  return(list(data = all, URI = URI_out, version = version))
+  return(list(CV = all, URI = URI_out, version = version))
 }
 
 
@@ -99,15 +102,15 @@ getLatest_PSICV_URL = function()
 #'
 getCVInfo = function()
 {
-  cvs = getCVSingleton()
+  cv = getCVSingleton()
   MzQCcontrolledVocabulary$new(
     "Proteomics Standards Initiative Mass Spectrometry Ontology",
-    csv$URI,
-    csv$version)
+    cv$URI,
+    cv$version)
 }
 
 #'
-#' Obtains the 'data-version' from a PSI-MS-CV
+#' Obtains the 'data-version' from a local (i.e. non-url) PSI-MS-CV
 #'
 #' @param local_PSIMS_obo_file A path to a local file, e.g. 'c:/temp/my.obo'
 #' @examples
@@ -119,7 +122,7 @@ getLocal_CV_Version = function(local_PSIMS_obo_file)
 {
   head = scan(file = local_PSIMS_obo_file, what = "character", nmax = 20, quiet = TRUE)
   idx_v = grep("data-version", head)
-  if (length(idx_v) == 0) stop("Parsing 'data-version' from the file '", ff, "' failed. Please report this as a bug.")
+  if (length(idx_v) == 0) stop("Parsing 'data-version' from the file '", local_PSIMS_obo_file, "' failed. Please report this as a bug.")
   return(head[idx_v + 1])
 }
 
@@ -155,10 +158,10 @@ CV_ <- R6::R6Class(classname = "CV_",
       warning("Could not find id '",id,"' in CV list (length: ", length(self$data$CV$id), ")")
       return(NULL)
     }
-    return(self$data[idx,])
-  }
+    return(self$data$CV[idx,])
+  },
   #' @description Set a user-defined CV, as obtained from \code{\link{getCVDictionary}}
-  #' @param The result of a call to \code{\link{getCVDictionary}}
+  #' @param cv_data The result of a call to \code{\link{getCVDictionary}}
   setData = function(cv_data)
   {
     self$data = cv_data

@@ -2,10 +2,10 @@
 % Please edit documentation in R/obo.R
 \name{getCVSingleton}
 \alias{getCVSingleton}
-\title{Returns the CV singleton. See CV_.}
+\title{Returns the CV singleton. See \code{\link{CV_}}.}
 \usage{
 getCVSingleton()
 }
 \description{
-Returns the CV singleton. See CV_.
+Returns the CV singleton. See \code{\link{CV_}}.
 }

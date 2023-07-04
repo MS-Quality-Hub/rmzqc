@@ -48,12 +48,11 @@ toQCMetric = function(id, value, on_violation = c("error", "warn"))
       on_vio_func(paste0("Passed value of class '", paste0(class(value), collapse=","), "'. Expected any of: '", paste0(any_expected_class_types, collapse = ","),"' with expected length '", expected_length,  "' (given:", length(value), ") (due to metric with ID=", metric_id, ")"))
     }
   }
-  browser()
 
   CV = getCVSingleton()
   entry = CV$byID(id)  ## could be NULL, if CV is too old
   if (is.null(entry)) {
-    on_vio_func("The ID '", id, "' is unknown in the current CV. Either fix the ID or use a more recent CV (see \code{\link{getCVSingleton}}).")
+    on_vio_func("The ID '", id, "' is unknown in the current CV. Either fix the ID or use a more recent CV (see getCVSingleton()).")
     ## we may still be alive here.
   } else {
     is_a = CV$byID(entry$is_a)

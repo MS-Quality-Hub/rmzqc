@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rmzqc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
       </span>
     </div>
 
@@ -87,24 +87,24 @@ any_expected_class_types.</p></td>
       </tr><tr><td>
           <p><code><a href="getCVDictionary.html">getCVDictionary()</a></code> </p>
         </td>
-        <td><p>Parse the content of 'psi-ms.obo', 'pato.obo', and 'uo.obo' from the 'rmzqc/cv/' folder as ontology and return their union</p></td>
+        <td><p>Fetch and parse the 'psi-ms.obo' and some metadata from the usual sources to use as ontology.</p></td>
+      </tr><tr><td>
+          <p><code><a href="getCVInfo.html">getCVInfo()</a></code> </p>
+        </td>
+        <td><p>Returns an MzQCcontrolledVocabulary for the currently used CV (see <code>getCVSingleton</code>)</p></td>
       </tr><tr><td>
           <p><code><a href="getCVSingleton.html">getCVSingleton()</a></code> </p>
         </td>
-        <td><p>Returns the CV singleton. See CV_.</p></td>
+        <td><p>Returns the CV singleton. See <code>CV_</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="getCVTemplate.html">getCVTemplate()</a></code> </p>
         </td>
         <td><p>Fills a MzQCcvParameter object with id(accession) and name.
 The value (if any) needs to be set afterwards.</p></td>
       </tr><tr><td>
-          <p><code><a href="getDefaultCV.html">getDefaultCV()</a></code> </p>
+          <p><code><a href="getLocal_CV_Version.html">getLocal_CV_Version()</a></code> </p>
         </td>
-        <td><p>Returns an MzQCcontrolledVocabulary which points to the PSI-MS CV which is currently shipped with this package</p></td>
-      </tr><tr><td>
-          <p><code><a href="getDefaultCVVersion.html">getDefaultCVVersion()</a></code> </p>
-        </td>
-        <td><p>Obtains the current 'data-version' from the MS-CV shipped with this package</p></td>
+        <td><p>Obtains the 'data-version' from a local (i.e. non-url) PSI-MS-CV</p></td>
       </tr><tr><td>
           <p><code><a href="getQualityMetricTemplate.html">getQualityMetricTemplate()</a></code> </p>
         </td>
@@ -236,7 +236,7 @@ e.g. the string " mzQC : "</p></td>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

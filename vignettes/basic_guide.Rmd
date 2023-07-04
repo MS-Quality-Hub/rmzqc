@@ -44,7 +44,7 @@ mzQC_document = MzQCmzQC$new(version = "1.0.0",
                              description = "A minimal mzQC test document with bogus data",
                              runQualities = list(run1_qc),
                              setQualities = list(), 
-                             controlledVocabularies = list(getDefaultCV()))
+                             controlledVocabularies = list(getCVInfo()))
 
 ## write it out
 mzqc_filename = paste0(getwd(), "/test.mzQC")
