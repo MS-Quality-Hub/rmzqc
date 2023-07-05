@@ -7,14 +7,15 @@
 #' The value (if any) and unit (if any) need to be set afterwards.
 #'
 #' @param accession The ID (=accession) of the term in the CV
-#' @param mzcv_dict A CV dictionary, as obtained by getCVDictionary(); defaults to a singleton, which needs to be filled manually beforehand
+#' @param CV A CV dictionary, as obtained by getCVDictionary(); defaults to the global singleton, which is populated automatically
 #'
 #' @return An instance of MzQCqualityMetric
 #'
 #' @export
 #'
-getQualityMetricTemplate = function(accession, mzcv_dict = getCVSingleton()$data)
+getQualityMetricTemplate = function(accession, CV = getCVSingleton())
 {
+  mzcv_dict = CV$getCV()
   idx = which(accession == mzcv_dict$id)
   if (length(idx) == 0) stop("Accession '", accession, "' is not a valid CV term in the current dictionary (", length(mzcv_dict$id), " entries].")
 
@@ -30,14 +31,15 @@ getQualityMetricTemplate = function(accession, mzcv_dict = getCVSingleton()$data
 #' The value (if any) needs to be set afterwards.
 #'
 #' @param accession The ID (=accession) of the term in the CV
-#' @param mzcv_dict A CV dictionary, as obtained by getCVDictionary(); defaults to a singleton, which needs to be filled manually beforehand
+#' @param CV A CV dictionary, as obtained by getCVDictionary(); defaults to the global singleton, which is populated automatically
 #'
 #' @return An instance of MzQCcvParameter
 #'
 #' @export
 #'
-getCVTemplate = function(accession, mzcv_dict = getCVSingleton()$data)
+getCVTemplate = function(accession, CV = getCVSingleton())
 {
+  mzcv_dict = CV$getCV()
   idx = which(accession == mzcv_dict$id)
   if (length(idx) == 0) stop("Accession '", accession, "' is not a valid CV term in the current dictionary.")
 

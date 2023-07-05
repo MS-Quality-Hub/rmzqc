@@ -2,13 +2,30 @@
 % Please edit documentation in R/obo.R
 \name{getCVDictionary}
 \alias{getCVDictionary}
-\title{Parse the content of 'psi-ms.obo', 'pato.obo', and 'uo.obo' from the 'rmzqc/cv/' folder as ontology and return their union}
+\title{Fetch and parse the 'psi-ms.obo' and some metadata from the usual sources to use as ontology.}
 \usage{
-getCVDictionary()
+getCVDictionary(
+  source = c("latest", "local", "custom"),
+  custom_uri = NULL,
+  use_local_fallback = TRUE
+)
+}
+\arguments{
+\item{source}{Where to get the PSI-MS CV from:
+- 'latest' will download 'psi-ms.obo' from https://api.github.com/repos/HUPO-PSI/psi-ms-CV/releases/latest
+- 'local' will use rmzqc/cv/psi-ms.obo' (which might be outdated, if you need the latest terms)
+- 'custom' uses a user-defined URI in 'custom_uri'}
+
+\item{custom_uri}{Used when 'source' is set to 'custom'. The URI can be local or remote, e.g. 'c:/obo/my.obo' or 'https://www.abc.com/my.obo'}
+
+\item{use_local_fallback}{When downloading a file from a URI fails, should we fall back to the local psi-ms.obo shipped with rmzqc?}
 }
 \value{
-a data.frame with columns 'id', 'name', 'def', 'parents', 'children' (and many more) which contains the CV entries
+A list with 'CV', 'URI' and 'version', where 'CV' is a data.frame with columns 'id', 'name', 'def', 'parents', 'children' (and many more) which contains the CV entries
 }
 \description{
+A 'pato.obo', and 'uo.obo' from the 'rmzqc/cv/' folder are automatically merged in as well.
+}
+\details{
 See CV_ class to use this function efficiently.
 }

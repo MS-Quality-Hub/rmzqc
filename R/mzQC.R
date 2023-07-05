@@ -174,8 +174,8 @@ setMethod('asJSON', 'MzQCDateTime', function(x, ...) x$toJSON(...))
 #' @examples
 #'   MzQCcontrolledVocabulary$new(
 #'     "Proteomics Standards Initiative Quality Control Ontology",
-#'     "https://github.com/HUPO-PSI/mzQC/blob/master/cv/qc-cv.obo",
-#'     "1.2.0")
+#'     "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.129/psi-ms.obo",
+#'     "4.1.129")
 #'
 #' @exportClass MzQCcontrolledVocabulary
 #' @export MzQCcontrolledVocabulary
@@ -489,8 +489,7 @@ setMethod('asJSON', 'MzQCmetadata', function(x, ...) x$toJSON(...))
 #' @field name Name of the controlled vocabulary element describing the metric.
 #' @field description (optional) Definition of the controlled vocabulary term.
 #' @field value (optional) Value of the metric (single value, n-tuple, table, matrix).
-#'        The structure is not checked by our mzQC implementation and must be handled by the caller
-#'        See \code{\link{toQCMetric}} for details.
+#'        The structure is not checked by our mzQC implementation and must be handled by the caller, see \code{\link{toQCMetric}}.
 #' @field unit (optional) Array of unit(s), stored as MzQcvParameter
 #'
 #' @exportClass MzQCqualityMetric

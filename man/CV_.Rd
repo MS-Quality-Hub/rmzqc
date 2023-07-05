@@ -9,11 +9,14 @@ Define a Singleton class which can hold a CV dictionary (so we do not have to lo
 Define a Singleton class which can hold a CV dictionary (so we do not have to load the .obo files over and over again)
 }
 \details{
+You can set your own custom CV by calling 'setData()'. By default, the latest release of the PSI-MS-CV (see \code{\link{getCVDictionary}}).
+
 Usage:
 cv_dict = CV_$new() ## uses 'getCVDictionary()' to populate the singleton
 cv_2 = CV_$new() ## uses the same data without parsing again
+cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo))
 
-Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton() from outside the package)
+Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton()$data from outside the package)
 }
 \section{Super class}{
 \code{\link[R6P:Singleton]{R6P::Singleton}} -> \code{CV_}
@@ -29,6 +32,8 @@ Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data'
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-CV_-byID}{\code{CV_$byID()}}
+\item \href{#method-CV_-setData}{\code{CV_$setData()}}
+\item \href{#method-CV_-getCV}{\code{CV_$getCV()}}
 \item \href{#method-CV_-clone}{\code{CV_$clone()}}
 }
 }
@@ -55,6 +60,33 @@ A function to retrieve a CV using its ID
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CV_-setData"></a>}}
+\if{latex}{\out{\hypertarget{method-CV_-setData}{}}}
+\subsection{Method \code{setData()}}{
+Set a user-defined object (consisting of 'CV', 'URI' and 'version'), as obtained from \code{\link{getCVDictionary}}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CV_$setData(cv_data)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{cv_data}}{The result of a call to \code{\link{getCVDictionary}}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CV_-getCV"></a>}}
+\if{latex}{\out{\hypertarget{method-CV_-getCV}{}}}
+\subsection{Method \code{getCV()}}{
+Gets the CV data, i.e. the 'CV' part of this class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CV_$getCV()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CV_-clone"></a>}}

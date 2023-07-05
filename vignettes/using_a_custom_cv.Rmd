@@ -1,0 +1,70 @@
+---
+title: "Using a custom controlled vocabulary for rMZQC"
+author: "Chris Bielow <chris.bielow@fu-berlin.de>"
+date: '`r Sys.Date()`'
+output:
+  html_document: default
+  pdf_document: null
+vignette: >
+  %\VignetteIndexEntry{Using a custom controlled vocabulary for rMZQC}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+# Using a custom controlled vocabulary for rMZQC
+
+This vignette serves as a guide for R users to use a custom CV before creating an mzQC document.
+
+Warning: you should settle on a CV before instantiating any mzQC objects, since this ensures that all
+CV terms are consistent (and checked for existance) and that the CV meta information within the mzQC document is accurate.
+
+**Target Audience:** R users
+
+
+## Create a minial mzQC document with a custom CV
+
+Let's first consider what happens by default:
+
+```{r, eval=TRUE}
+library(rmzqc)
+
+print(getCVInfo())
+## test if the default CV is usable
+toQCMetric(id = "MS:4000059", value = 13405) ## number of MS1 scans
+
+```
+
+However, if you happen to run this code without an internet connection, it will fall back to
+the PSI-MS CV which is shipped with the rmzqc package (which may not contain the latest CV terms)
+
+```{r, eval=TRUE}
+## With internet:
+CV = getCVSingleton()
+CV$setData(getCVDictionary("latest")) ## this is done internally by default when you load the package
+cat("Number of entries in latest CV: ", nrow(getCVSingleton()$getCV()), "\n")
+print(getCVInfo())
+
+## simulate missing internet connection by invoking the function manually
+CV$setData(getCVDictionary("local"))
+cat("Number of entries in local CV: ", nrow(getCVSingleton()$getCV()), "\n")
+print(getCVInfo())
+```
+
+Now, the package's PSI-MS CV might still not suit you, and you want to use the latest unpublished CV, which you downloaded somewhere, or which you handcrafted for testing. Then simply use a custom .obo file:
+
+```{r, eval=TRUE}
+myOBO = system.file("./cv/psi-ms.obo", package="rmzqc") ## we will use a local file, but you can point to anything you have (even URI's)
+CV$setData(getCVDictionary("custom", myOBO))
+cat("Number of entries in custom CV: ", nrow(getCVSingleton()$getCV()), "\n")
+print(getCVInfo())
+
+## you may want to change the URI (and version?) manually, before creating an mzQC file:
+CV$data$URI = "https://myURI.com"
+CV$data$version = "9.9.2"
+print(getCVInfo())
+
+
+
+```
+
+

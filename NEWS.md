@@ -3,6 +3,10 @@ i.e. a list of new features / bugfixes by version number.
 
 Versions uploaded to CRAN are marked with [CRAN].
 
+# [CRAN] version 0.5.0 (2023/07/04)
+
+* support the latest PSI-MS controlled vocabulary (via automatic download)
+
 # [CRAN] version 0.4.2 (2023/04/23)
 
 * bugfix release (CV_ member not found when rmzqc is not attached)

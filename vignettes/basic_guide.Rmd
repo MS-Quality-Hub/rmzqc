@@ -21,7 +21,7 @@ This vignette serves as a quickstart guide for R users to create and save an mzQ
 ## Create a minial mzQC document
 
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 library(rmzqc)
 raw_file = "file:///c:/data/special.raw"  ## we need a proper URI (i.e. no backslashes and a scheme, e.g. 'file:') 
                                           ## otherwise writing will fail
@@ -44,12 +44,12 @@ mzQC_document = MzQCmzQC$new(version = "1.0.0",
                              description = "A minimal mzQC test document with bogus data",
                              runQualities = list(run1_qc),
                              setQualities = list(), 
-                             controlledVocabularies = list(getDefaultCV()))
+                             controlledVocabularies = list(getCVInfo()))
 
 ## write it out
 mzqc_filename = paste0(getwd(), "/test.mzQC")
 writeMZQC(mzqc_filename, mzQC_document)
-cat(mzqc_filename, "written to disk!")
+cat(mzqc_filename, "written to disk!\n")
 
 ## read it again
 mq = readMZQC(mzqc_filename)

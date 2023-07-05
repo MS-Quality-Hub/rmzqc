@@ -10,6 +10,9 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
+    <loc>/articles/using_a_custom_cv.html</loc>
+  </url>
+  <url>
     <loc>/articles/validation_guide.html</loc>
   </url>
   <url>
@@ -43,6 +46,9 @@
     <loc>/reference/getCVDictionary.html</loc>
   </url>
   <url>
+    <loc>/reference/getCVInfo.html</loc>
+  </url>
+  <url>
     <loc>/reference/getCVSingleton.html</loc>
   </url>
   <url>
@@ -52,16 +58,13 @@
     <loc>/reference/getDefaultCV.html</loc>
   </url>
   <url>
-    <loc>/reference/getDefaultCVVersion.html</loc>
+    <loc>/reference/getLocal_CV_Version.html</loc>
   </url>
   <url>
     <loc>/reference/getQualityMetricTemplate.html</loc>
   </url>
   <url>
     <loc>/reference/getSyntaxValidator.html</loc>
-  </url>
-  <url>
-    <loc>/reference/getValidator.html</loc>
   </url>
   <url>
     <loc>/reference/hasFileSuffix.html</loc>

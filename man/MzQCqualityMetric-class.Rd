@@ -18,7 +18,7 @@ The central class to store QC information
 \item{\code{description}}{(optional) Definition of the controlled vocabulary term.}
 
 \item{\code{value}}{(optional) Value of the metric (single value, n-tuple, table, matrix).
-The structure is not checked by our mzQC implementation and must be handled by the caller}
+The structure is not checked by our mzQC implementation and must be handled by the caller, see \code{\link{toQCMetric}}.}
 
 \item{\code{unit}}{(optional) Array of unit(s), stored as MzQcvParameter}
 }}
