@@ -3,6 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   basic_guide: basic_guide.html
+  using_a_custom_cv: using_a_custom_cv.html
   validation_guide: validation_guide.html
-last_built: 2023-07-04T13:11Z
+last_built: 2023-07-05T10:31Z
 

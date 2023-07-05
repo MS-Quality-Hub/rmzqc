@@ -33,6 +33,7 @@ Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data'
 \itemize{
 \item \href{#method-CV_-byID}{\code{CV_$byID()}}
 \item \href{#method-CV_-setData}{\code{CV_$setData()}}
+\item \href{#method-CV_-getCV}{\code{CV_$getCV()}}
 \item \href{#method-CV_-clone}{\code{CV_$clone()}}
 }
 }
@@ -64,7 +65,7 @@ A function to retrieve a CV using its ID
 \if{html}{\out{<a id="method-CV_-setData"></a>}}
 \if{latex}{\out{\hypertarget{method-CV_-setData}{}}}
 \subsection{Method \code{setData()}}{
-Set a user-defined CV, as obtained from \code{\link{getCVDictionary}}
+Set a user-defined object (consisting of 'CV', 'URI' and 'version'), as obtained from \code{\link{getCVDictionary}}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CV_$setData(cv_data)}\if{html}{\out{</div>}}
 }
@@ -76,6 +77,16 @@ Set a user-defined CV, as obtained from \code{\link{getCVDictionary}}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CV_-getCV"></a>}}
+\if{latex}{\out{\hypertarget{method-CV_-getCV}{}}}
+\subsection{Method \code{getCV()}}{
+Gets the CV data, i.e. the 'CV' part of this class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CV_$getCV()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CV_-clone"></a>}}

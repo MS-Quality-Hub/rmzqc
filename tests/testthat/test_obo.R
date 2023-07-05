@@ -19,6 +19,10 @@ test_that("getLocal_CV_Version = function()", {
   expect_true(getLocal_CV_Version(system.file("./cv/psi-ms.obo", package="rmzqc")) == "4.1.95")
 })
 
+test_that("getCVInfo = function()", {
+  expect_true(startsWith(getCVInfo()$name, "Proteomics Standards Initi"))
+})
+
 test_that("getCVSingleton()", {
   d1 = getCVSingleton()
   d2 = getCVSingleton()

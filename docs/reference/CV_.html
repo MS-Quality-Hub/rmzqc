@@ -36,6 +36,9 @@ Define a Singleton class which can hold a CV dictionary (so we do not have to lo
       <a href="../articles/basic_guide.html">Basic R-Usage Guide for rMZQC</a>
     </li>
     <li>
+      <a href="../articles/using_a_custom_cv.html">Using a custom controlled vocabulary for rMZQC</a>
+    </li>
+    <li>
       <a href="../articles/validation_guide.html">Validation of mzQC documents</a>
     </li>
   </ul></li>
@@ -97,6 +100,7 @@ cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo))</p>
 
 <ul><li><p><a href="#method-CV_-byID"><code>CV_$byID()</code></a></p></li>
 <li><p><a href="#method-CV_-setData"><code>CV_$setData()</code></a></p></li>
+<li><p><a href="#method-CV_-getCV"><code>CV_$getCV()</code></a></p></li>
 <li><p><a href="#method-CV_-clone"><code>CV_$clone()</code></a></p></li>
 </ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="R6P" data-topic="Singleton" data-id="initialize"><a href="https://tidylab.github.io/R6P//reference/Singleton.html#method-initialize"><code>R6P::Singleton$initialize()</code></a></span></li>
 </ul></details></p><hr><a id="method-CV_-byID"></a><div class="section">
@@ -117,7 +121,7 @@ cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo))</p>
 
 </div><p></p><hr><a id="method-CV_-setData"></a><div class="section">
 <h3 id="method-setdata-">Method <code>setData()</code><a class="anchor" aria-label="anchor" href="#method-setdata-"></a></h3>
-<p>Set a user-defined CV, as obtained from <code><a href="getCVDictionary.html">getCVDictionary</a></code></p><div class="section">
+<p>Set a user-defined object (consisting of 'CV', 'URI' and 'version'), as obtained from <code><a href="getCVDictionary.html">getCVDictionary</a></code></p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CV_</span><span class="op">$</span><span class="fu">setData</span><span class="op">(</span><span class="va">cv_data</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -131,10 +135,18 @@ cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo))</p>
 </dl><p></p></div>
 </div>
 
+</div><p></p><hr><a id="method-CV_-getCV"></a><div class="section">
+<h3 id="method-getcv-">Method <code>getCV()</code><a class="anchor" aria-label="anchor" href="#method-getcv-"></a></h3>
+<p>Gets the CV data, i.e. the 'CV' part of this class</p><div class="section">
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CV_</span><span class="op">$</span><span class="fu">getCV</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
 </div><p></p><hr><a id="method-CV_-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CV_</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 

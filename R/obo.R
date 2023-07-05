@@ -44,7 +44,6 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
 {
   source = source[1] ## pick first entry if defaulted
   URI_out = "" ## the URI we report to the outside world
-  local_file = custom_uri  ## the file we use to determine the version (we must peek into it), could be a URL at the moment, but we will correct that below
   if (source == "latest")
   {
     custom_uri = getLatest_PSICV_URL()
@@ -67,7 +66,7 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
     if (download.file(custom_uri, tmp_filename) != 0) stop("Could not download.")
     on.exit(file.remove(tmp_filename)) ## clean up when function ends
     local_file = tmp_filename
-  }
+  } else local_file = custom_uri
 
   ms = try(parseOBO(local_file))
   if (use_local_fallback && inherits(ms, 'try-error') && source != "local") {
@@ -105,9 +104,23 @@ getCVInfo = function()
   cv = getCVSingleton()
   MzQCcontrolledVocabulary$new(
     "Proteomics Standards Initiative Mass Spectrometry Ontology",
-    cv$URI,
-    cv$version)
+    cv$data$URI,
+    cv$data$version)
 }
+
+#'
+#' Returns an MzQCcontrolledVocabulary for the currently used CV (see \code{\link{getCVSingleton}})
+#'
+#' @note This function will be deprecated soon. Use \code{\link{getCVInfo}} instead.
+#'
+#' @export
+#'
+getDefaultCV = function()
+{
+  warning("The function 'rmzqc::getDefaultCV()' is deprecated and will be removed soon. Use rmzqc::getCVInfo() instead.", immediate. = TRUE)
+  getCVInfo()
+}
+
 
 #'
 #' Obtains the 'data-version' from a local (i.e. non-url) PSI-MS-CV
@@ -160,11 +173,16 @@ CV_ <- R6::R6Class(classname = "CV_",
     }
     return(self$data$CV[idx,])
   },
-  #' @description Set a user-defined CV, as obtained from \code{\link{getCVDictionary}}
+  #' @description Set a user-defined object (consisting of 'CV', 'URI' and 'version'), as obtained from \code{\link{getCVDictionary}}
   #' @param cv_data The result of a call to \code{\link{getCVDictionary}}
   setData = function(cv_data)
   {
     self$data = cv_data
+  },
+  #' @description Gets the CV data, i.e. the 'CV' part of this class
+  getCV= function()
+  {
+    self$data$CV
   }
 ))
 

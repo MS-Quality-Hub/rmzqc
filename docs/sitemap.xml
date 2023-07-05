@@ -10,6 +10,9 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
+    <loc>/articles/using_a_custom_cv.html</loc>
+  </url>
+  <url>
     <loc>/articles/validation_guide.html</loc>
   </url>
   <url>
@@ -50,6 +53,9 @@
   </url>
   <url>
     <loc>/reference/getCVTemplate.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getDefaultCV.html</loc>
   </url>
   <url>
     <loc>/reference/getLocal_CV_Version.html</loc>

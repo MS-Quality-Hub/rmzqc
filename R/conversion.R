@@ -69,8 +69,10 @@ toQCMetric = function(id, value, on_violation = c("error", "warn"))
       on_vio_func("value type ", is_a$id, "/", is_a$name, " not supported by mzQC!")
     }
   }
-
-  MzQCqualityMetric(accession = entry$id, name = entry$name, description = entry$def, value = value)
+  tmp = getQualityMetricTemplate(entry$id, CV)
+  tmp$value =value
+  tmp
+  #MzQCqualityMetric(accession = entry$id, name = as.character(entry$name, description = entry$def, value = value)
 }
 
 #'
