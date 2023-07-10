@@ -174,7 +174,17 @@ check_type = function(value, any_expected_class_types, expected_length = 0)
   return (class_ok & length_ok)
 }
 
-
+#'
+#' remove a file, if it exists (useful for temporary files which may or may not have been created)
+#'
+#' @param tmp_filename A path to a local file
+#' @return NULL if file is missing, otherwise TRUE/FALSE depening on successful removal
+#'
+removeIfExists = function(tmp_filename)
+{
+  if (!file.exists(tmp_filename)) return(NULL)
+  file.remove(tmp_filename)
+}
 
 
 

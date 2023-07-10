@@ -47,6 +47,11 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
   if (source == "latest")
   {
     custom_uri = getLatest_PSICV_URL()
+    if (is.null(custom_uri)) {
+      ## no internet connection... fall back to local
+      warning("Falling back to local URL ...")
+      return(getCVDictionary("local"))
+    }
     URI_out = custom_uri
   } else if (source == "local")
   {
@@ -63,8 +68,10 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
   if (any(startsWith(custom_uri, c("http://", "https://", "ftp://", "file://")))){
     message(paste0("Downloading obo from '", custom_uri, "' ..."))
     tmp_filename = tempfile()
-    if (download.file(custom_uri, tmp_filename) != 0) stop("Could not download.")
-    on.exit(file.remove(tmp_filename)) ## clean up when function ends
+    on.exit(removeIfExists(tmp_filename)) ## clean up when function ends
+    if (download.file(custom_uri, tmp_filename) != 0) {
+      stop(paste0("Could not download '", custom_uri, "'."))
+    }
     local_file = tmp_filename
   } else local_file = custom_uri
 
@@ -84,12 +91,23 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
   return(list(CV = all, URI = URI_out, version = version))
 }
 
-
+#'
+#' Get the latest PSI-MS CV release URL
+#'
+#' This may fail (e.g. if no internet connection is available) will return NULL instead of an URL.
+#'
+#' @export
+#'
 getLatest_PSICV_URL = function()
 {
   temp_filename = tempfile()
-  on.exit(file.remove(temp_filename))
-  download.file("https://api.github.com/repos/HUPO-PSI/psi-ms-CV/releases/latest", temp_filename)
+  on.exit(removeIfExists(temp_filename))
+  ret = try(
+    download.file("https://api.github.com/repos/HUPO-PSI/psi-ms-CV/releases/latest", temp_filename)
+  )
+  if (inherits(ret, 'try-error') || ret != 0) {
+    return (NULL)
+  }
   cont = paste0(scan(temp_filename, what=character(), quiet = TRUE), collapse="")
   gsub('.*(https.*psi-ms\\.obo).*', '\\1', cont)
 }
