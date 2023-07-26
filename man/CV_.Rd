@@ -2,21 +2,21 @@
 % Please edit documentation in R/obo.R
 \name{CV_}
 \alias{CV_}
-\title{Define a Singleton class which can hold a CV dictionary (so we do not have to load the .obo files over and over again)}
+\title{CV_}
 \description{
-Define a Singleton class which can hold a CV dictionary (so we do not have to load the .obo files over and over again)
-
 Define a Singleton class which can hold a CV dictionary (so we do not have to load the .obo files over and over again)
 }
 \details{
 You can set your own custom CV by calling 'setData()'. By default, the latest release of the PSI-MS-CV (see \code{\link{getCVDictionary}}).
-
-Usage:
-cv_dict = CV_$new() ## uses 'getCVDictionary()' to populate the singleton
-cv_2 = CV_$new() ## uses the same data without parsing again
-cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo))
-
 Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton()$data from outside the package)
+}
+\examples{
+\donrun{
+  cv_dict = CV_$new() ## uses 'getCVDictionary()' to populate the singleton
+  cv_2 = CV_$new() ## uses the same data without parsing again
+  cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo"))
+}
+
 }
 \section{Super class}{
 \code{\link[R6P:Singleton]{R6P::Singleton}} -> \code{CV_}
@@ -31,19 +31,23 @@ Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data'
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-CV_-new}{\code{CV_$new()}}
 \item \href{#method-CV_-byID}{\code{CV_$byID()}}
 \item \href{#method-CV_-setData}{\code{CV_$setData()}}
 \item \href{#method-CV_-getCV}{\code{CV_$getCV()}}
 \item \href{#method-CV_-clone}{\code{CV_$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="R6P" data-topic="Singleton" data-id="initialize"><a href='../../R6P/html/Singleton.html#method-Singleton-initialize'><code>R6P::Singleton$initialize()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CV_-new"></a>}}
+\if{latex}{\out{\hypertarget{method-CV_-new}{}}}
+\subsection{Method \code{new()}}{
+Load the CV data from PSI (this is only done once, and then cached)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CV_$new()}\if{html}{\out{</div>}}
+}
+
+}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CV_-byID"></a>}}
 \if{latex}{\out{\hypertarget{method-CV_-byID}{}}}

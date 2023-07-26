@@ -159,16 +159,22 @@ getLocal_CV_Version = function(local_PSIMS_obo_file)
 
 
 #'
+#' @title CV_
+#'
+#' @description
 #' Define a Singleton class which can hold a CV dictionary (so we do not have to load the .obo files over and over again)
 #'
+#' @details
 #' You can set your own custom CV by calling 'setData()'. By default, the latest release of the PSI-MS-CV (see \code{\link{getCVDictionary}}).
+#' Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton()$data from outside the package)
 #'
-#' Usage:
+#'
+#' @examples
+#' \donrun{
 #'   cv_dict = CV_$new() ## uses 'getCVDictionary()' to populate the singleton
 #'   cv_2 = CV_$new() ## uses the same data without parsing again
-#'   cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo))
-#'
-#' Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton()$data from outside the package)
+#'   cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo"))
+#' }
 #'
 #' @import R6
 #' @import R6P
