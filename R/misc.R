@@ -180,6 +180,8 @@ check_type = function(value, any_expected_class_types, expected_length = 0)
 #' @param tmp_filename A path to a local file
 #' @return NULL if file is missing, otherwise TRUE/FALSE depening on successful removal
 #'
+#' @export
+#'
 removeIfExists = function(tmp_filename)
 {
   if (!file.exists(tmp_filename)) return(NULL)
