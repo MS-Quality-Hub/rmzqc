@@ -11,7 +11,7 @@ You can set your own custom CV by calling 'setData()'. By default, the latest re
 Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton()$data from outside the package)
 }
 \examples{
-\donrun{
+\dontrun{
   cv_dict = CV_$new() ## uses 'getCVDictionary()' to populate the singleton
   cv_2 = CV_$new() ## uses the same data without parsing again
   cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo"))
@@ -24,35 +24,31 @@ Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data'
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{data}}{Stores the data of the singleton.}
+\item{\code{data}}{Stores the data of the singleton: a list(CV = data.frame( ...), URI="someURI", version=\if{html}{\out{<PSI-MS-CV version>}})}
 }
 \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-CV_-new}{\code{CV_$new()}}
 \item \href{#method-CV_-byID}{\code{CV_$byID()}}
 \item \href{#method-CV_-setData}{\code{CV_$setData()}}
 \item \href{#method-CV_-getCV}{\code{CV_$getCV()}}
 \item \href{#method-CV_-clone}{\code{CV_$clone()}}
 }
 }
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CV_-new"></a>}}
-\if{latex}{\out{\hypertarget{method-CV_-new}{}}}
-\subsection{Method \code{new()}}{
-Load the CV data from PSI (this is only done once, and then cached)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CV_$new()}\if{html}{\out{</div>}}
-}
-
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="R6P" data-topic="Singleton" data-id="initialize"><a href='../../R6P/html/Singleton.html#method-Singleton-initialize'><code>R6P::Singleton$initialize()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CV_-byID"></a>}}
 \if{latex}{\out{\hypertarget{method-CV_-byID}{}}}
 \subsection{Method \code{byID()}}{
-A function to retrieve a CV using its ID
+A function to retrieve a CV entry using its ID
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CV_$byID(id)}\if{html}{\out{</div>}}
 }
@@ -69,7 +65,7 @@ A function to retrieve a CV using its ID
 \if{html}{\out{<a id="method-CV_-setData"></a>}}
 \if{latex}{\out{\hypertarget{method-CV_-setData}{}}}
 \subsection{Method \code{setData()}}{
-Set a user-defined object (consisting of 'CV', 'URI' and 'version'), as obtained from \code{\link{getCVDictionary}}
+Set a user-defined object (= a list of 'CV', 'URI' and 'version'), as obtained from \code{\link{getCVDictionary}}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CV_$setData(cv_data)}\if{html}{\out{</div>}}
 }
@@ -86,7 +82,7 @@ Set a user-defined object (consisting of 'CV', 'URI' and 'version'), as obtained
 \if{html}{\out{<a id="method-CV_-getCV"></a>}}
 \if{latex}{\out{\hypertarget{method-CV_-getCV}{}}}
 \subsection{Method \code{getCV()}}{
-Gets the CV data, i.e. the 'CV' part of this class
+Gets the CV data.frame, i.e. the 'CV' part of this class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CV_$getCV()}\if{html}{\out{</div>}}
 }

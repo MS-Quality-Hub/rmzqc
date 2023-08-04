@@ -157,7 +157,6 @@ getLocal_CV_Version = function(local_PSIMS_obo_file)
   return(head[idx_v + 1])
 }
 
-
 #'
 #' @title CV_
 #'
@@ -170,7 +169,7 @@ getLocal_CV_Version = function(local_PSIMS_obo_file)
 #'
 #'
 #' @examples
-#' \donrun{
+#' \dontrun{
 #'   cv_dict = CV_$new() ## uses 'getCVDictionary()' to populate the singleton
 #'   cv_2 = CV_$new() ## uses the same data without parsing again
 #'   cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo"))
@@ -184,26 +183,26 @@ getLocal_CV_Version = function(local_PSIMS_obo_file)
 CV_ <- R6::R6Class(classname = "CV_",
                    inherit = R6P::Singleton,
                    public = list(
-  #' @field data Stores the data of the singleton.
+  #' @field data Stores the data of the singleton: a list(CV = data.frame( ...), URI="someURI", version=<PSI-MS-CV version>)
   data = get0("self$data", ifnotfound = getCVDictionary()),
-  #' @description A function to retrieve a CV using its ID
+  #' @description A function to retrieve a CV entry using its ID
   #' @param id A CV accession, e.g. 'MS:1000560'
   byID = function(id) {
     idx = which(self$data$CV$id == id)
     if (length(idx)== 0)
     {
-      warning("Could not find id '",id,"' in CV list (length: ", length(self$data$CV$id), ")")
+      warning("Could not find id '", id, "' in CV list (length: ", length(self$data$CV$id), ")")
       return(NULL)
     }
     return(self$data$CV[idx,])
   },
-  #' @description Set a user-defined object (consisting of 'CV', 'URI' and 'version'), as obtained from \code{\link{getCVDictionary}}
+  #' @description Set a user-defined object (= a list of 'CV', 'URI' and 'version'), as obtained from \code{\link{getCVDictionary}}
   #' @param cv_data The result of a call to \code{\link{getCVDictionary}}
   setData = function(cv_data)
   {
     self$data = cv_data
   },
-  #' @description Gets the CV data, i.e. the 'CV' part of this class
+  #' @description Gets the CV data.frame, i.e. the 'CV' part of this class
   getCV= function()
   {
     self$data$CV

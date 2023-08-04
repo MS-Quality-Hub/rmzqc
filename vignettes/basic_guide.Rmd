@@ -17,6 +17,29 @@ This vignette serves as a quickstart guide for R users to create and save an mzQ
 
 **Target Audience:** R users
 
+## Read an mzQC file and extract some data
+
+
+```{r, eval=TRUE}
+library(rmzqc)
+data = readMZQC(system.file("./testdata/test.mzQC", package = "rmzqc", mustWork = TRUE))
+cat("This file has ", length(data$runQualities), " runqualities\n")
+cat("  - file: ", data$runQualities[[1]]$metadata$inputFiles[[1]]$name, "\n")
+cat("  - # of metrics: ", length(data$runQualities[[1]]$qualityMetrics), "\n")
+cat("    - metric #1 name: ", data$runQualities[[1]]$qualityMetrics[[1]]$name, "\n")
+cat("    - metric #1 value: ", data$runQualities[[1]]$qualityMetrics[[1]]$value, "\n")
+
+```
+
+Hint: if you receive an error such as 
+```
+Error in parse_con(txt, bigint_as_char) : 
+lexical error: invalid char in json text.
+cursor_int": [ NaN,NaN,NaN,NaN,825282.0,308263
+(right here) ------^
+```
+when calling`readMZQC` this indicates that the mzQC is not valid JSON, since `NaN` values should be quoted (`"NaN"`) or replaced by `null` (unquoted), depending on context. In short: `null` may become an `NA` in R if part of an array, see https://github.com/jeroen/jsonlite/issues/70#issuecomment-431433773.
+
 
 ## Create a minial mzQC document
 
