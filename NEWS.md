@@ -3,6 +3,16 @@ i.e. a list of new features / bugfixes by version number.
 
 Versions uploaded to CRAN are marked with [CRAN].
 
+
+# [CRAN] version 0.5.2 (2023/08/05)
+
+* Loads the PSI-MS CV only when required (not when the package is loaded, but only when running certain functions which depend on the CV).
+* Some documentation fixes (mostly CV related)
+
+# [CRAN] version 0.5.1 (2023/07/10)
+
+* fixes a bug in 0.5.0 when internet connection is missing
+
 # [CRAN] version 0.5.0 (2023/07/04)
 
 * support the latest PSI-MS controlled vocabulary (via automatic download)

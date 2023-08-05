@@ -47,6 +47,11 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
   if (source == "latest")
   {
     custom_uri = getLatest_PSICV_URL()
+    if (is.null(custom_uri)) {
+      ## no internet connection... fall back to local
+      warning("Falling back to local URL ...")
+      return(getCVDictionary("local"))
+    }
     URI_out = custom_uri
   } else if (source == "local")
   {
@@ -63,8 +68,10 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
   if (any(startsWith(custom_uri, c("http://", "https://", "ftp://", "file://")))){
     message(paste0("Downloading obo from '", custom_uri, "' ..."))
     tmp_filename = tempfile()
-    if (download.file(custom_uri, tmp_filename) != 0) stop("Could not download.")
-    on.exit(file.remove(tmp_filename)) ## clean up when function ends
+    on.exit(removeIfExists(tmp_filename)) ## clean up when function ends
+    if (download.file(custom_uri, tmp_filename) != 0) {
+      stop(paste0("Could not download '", custom_uri, "'."))
+    }
     local_file = tmp_filename
   } else local_file = custom_uri
 
@@ -84,12 +91,23 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
   return(list(CV = all, URI = URI_out, version = version))
 }
 
-
+#'
+#' Get the latest PSI-MS CV release URL
+#'
+#' This may fail (e.g. if no internet connection is available) will return NULL instead of an URL.
+#'
+#' @export
+#'
 getLatest_PSICV_URL = function()
 {
   temp_filename = tempfile()
-  on.exit(file.remove(temp_filename))
-  download.file("https://api.github.com/repos/HUPO-PSI/psi-ms-CV/releases/latest", temp_filename)
+  on.exit(removeIfExists(temp_filename))
+  ret = try(
+    download.file("https://api.github.com/repos/HUPO-PSI/psi-ms-CV/releases/latest", temp_filename)
+  )
+  if (inherits(ret, 'try-error') || ret != 0) {
+    return (NULL)
+  }
   cont = paste0(scan(temp_filename, what=character(), quiet = TRUE), collapse="")
   gsub('.*(https.*psi-ms\\.obo).*', '\\1', cont)
 }
@@ -104,8 +122,8 @@ getCVInfo = function()
   cv = getCVSingleton()
   MzQCcontrolledVocabulary$new(
     "Proteomics Standards Initiative Mass Spectrometry Ontology",
-    cv$data$URI,
-    cv$data$version)
+    cv$getData()$URI,
+    cv$getData()$version)
 }
 
 #'
@@ -139,52 +157,78 @@ getLocal_CV_Version = function(local_PSIMS_obo_file)
   return(head[idx_v + 1])
 }
 
-
 #'
+#' @title CV_
+#'
+#' @description
 #' Define a Singleton class which can hold a CV dictionary (so we do not have to load the .obo files over and over again)
 #'
+#' @details
+#' Get the full data by calling the 'getData()' function (which returns a list containing a 'CV', 'URI' and 'version'),
+#' or 'getCV()' which is a shorthand for 'getData()$CV'.
 #' You can set your own custom CV by calling 'setData()'. By default, the latest release of the PSI-MS-CV (see \code{\link{getCVDictionary}}).
+#' Wherever you need this data, simply re-grab the singleton using 'CV_$new()' (or use the convenience function getCVSingleton() from outside the package)
 #'
-#' Usage:
+#'
+#' @examples
+#' \dontrun{
 #'   cv_dict = CV_$new() ## uses 'getCVDictionary()' to populate the singleton
 #'   cv_2 = CV_$new() ## uses the same data without parsing again
-#'   cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo))
-#'
-#' Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton()$data from outside the package)
+#'   cv_2$setData(getCVDictionary("custom", "https://my.com/custom.obo"))
+#' }
 #'
 #' @import R6
 #' @import R6P
 #'
 #' @export
 #'
-CV_ <- R6::R6Class(classname = "CV_",
-                   inherit = R6P::Singleton,
-                   public = list(
-  #' @field data Stores the data of the singleton.
-  data = get0("self$data", ifnotfound = getCVDictionary()),
-  #' @description A function to retrieve a CV using its ID
-  #' @param id A CV accession, e.g. 'MS:1000560'
-  byID = function(id) {
-    idx = which(self$data$CV$id == id)
-    if (length(idx)== 0)
+CV_ <- R6::R6Class(
+  classname = "CV_",
+  inherit = R6P::Singleton,
+  lock_objects = FALSE, # we need to modify self$data
+  private = list(
+     # data Stores the data of the singleton: a list(CV = data.frame( ...), URI="someURI", version=<PSI-MS-CV version>)
+     data = NULL
+  ),
+  public = list(
+     #' @description Make sure that the CV data is loaded
+     ensureHasData = function() {
+       if (is.null(self$data)) {
+         self$data = getCVDictionary()
+       }
+     },
+    #' @description A function to retrieve a CV entry using its ID
+    #' @param id A CV accession, e.g. 'MS:1000560'
+    byID = function(id) {
+      self$ensureHasData()
+      idx = which(self$data$CV$id == id)
+      if (length(idx)== 0)
+      {
+        warning("Could not find id '", id, "' in CV list (length: ", length(self$data$CV$id), ")")
+        return(NULL)
+      }
+      return(self$data$CV[idx,])
+    },
+    #' @description Set a user-defined object (= a list of 'CV', 'URI' and 'version'), as obtained from \code{\link{getCVDictionary}}
+    #' @param cv_data The result of a call to \code{\link{getCVDictionary}}
+    setData = function(cv_data)
     {
-      warning("Could not find id '",id,"' in CV list (length: ", length(self$data$CV$id), ")")
-      return(NULL)
+      self$data = cv_data
+    },
+    #' @description Gets the underlying data (CV, URI and version)
+    getData = function()
+    {
+      self$ensureHasData()
+      self$data
+    },
+    #' @description A shorthand for 'getData()$CV', i.e. the CV data.frame.
+    getCV= function()
+    {
+      self$ensureHasData()
+      self$data$CV
     }
-    return(self$data$CV[idx,])
-  },
-  #' @description Set a user-defined object (consisting of 'CV', 'URI' and 'version'), as obtained from \code{\link{getCVDictionary}}
-  #' @param cv_data The result of a call to \code{\link{getCVDictionary}}
-  setData = function(cv_data)
-  {
-    self$data = cv_data
-  },
-  #' @description Gets the CV data, i.e. the 'CV' part of this class
-  getCV= function()
-  {
-    self$data$CV
-  }
-))
+  )
+)
 
 
 #'

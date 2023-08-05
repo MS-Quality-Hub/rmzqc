@@ -11,6 +11,9 @@ test_that("filenameToCV = function(filepath)", {
 
 
 test_that('toQCMetric = function(id, value, on_violation = c("error", "warn"))', {
+  ## load the CV first, since this will print some information (i.e. not silent)
+  myCV = CV_$new()
+  myCV$ensureHasData()
   expect_silent(toQCMetric(id = "MS:4000059", value = 13405))
   expect_silent(toQCMetric(id = "MS:4000059", value = "13405"))
   expect_error(toQCMetric(id = "MS:4000059", value = data.frame(n = 1), on_violation = "error"))

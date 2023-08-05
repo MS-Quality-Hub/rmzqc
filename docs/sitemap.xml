@@ -58,6 +58,9 @@
     <loc>/reference/getDefaultCV.html</loc>
   </url>
   <url>
+    <loc>/reference/getLatest_PSICV_URL.html</loc>
+  </url>
+  <url>
     <loc>/reference/getLocal_CV_Version.html</loc>
   </url>
   <url>
@@ -125,6 +128,12 @@
   </url>
   <url>
     <loc>/reference/removeFileSuffix.html</loc>
+  </url>
+  <url>
+    <loc>/reference/removeIfExists.html</loc>
+  </url>
+  <url>
+    <loc>/reference/rmzqc-package.html</loc>
   </url>
   <url>
     <loc>/reference/rmzqc.html</loc>

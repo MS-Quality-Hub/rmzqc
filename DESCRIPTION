@@ -1,7 +1,7 @@
 Package: rmzqc
 Title: Creation, Reading and Validation of 'mzqc' Files 
-Version: 0.5.0
-Date: 2023-07-04
+Version: 0.5.2
+Date: 2023-08-05
 Authors@R: 
     c(person("Chris", "Bielow", 
               email = "chris.bielow@bsc.fu-berlin.de", 

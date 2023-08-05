@@ -16,7 +16,7 @@ test_that("getLatest_PSICV_URL = function()", {
 })
 
 test_that("getLocal_CV_Version = function()", {
-  expect_true(getLocal_CV_Version(system.file("./cv/psi-ms.obo", package="rmzqc")) == "4.1.95")
+  expect_true(getLocal_CV_Version(system.file("./cv/psi-ms.obo", package="rmzqc")) == "4.1.129")
 })
 
 test_that("getCVInfo = function()", {
@@ -26,7 +26,7 @@ test_that("getCVInfo = function()", {
 test_that("getCVSingleton()", {
   d1 = getCVSingleton()
   d2 = getCVSingleton()
-  expect_true(identical(d1$data, d2$data))
+  expect_true(identical(d1$getData(), d2$getData()))
   entry = d1$byID("MS:1000563")
   expect_true(entry$parents == "MS:1000560")
   suppressWarnings(expect_null(d1$byID("does_not_exit")))
