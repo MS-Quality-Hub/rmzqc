@@ -7,8 +7,10 @@
 Define a Singleton class which can hold a CV dictionary (so we do not have to load the .obo files over and over again)
 }
 \details{
+Get the full data by calling the 'getData()' function (which returns a list containing a 'CV', 'URI' and 'version'),
+or 'getCV()' which is a shorthand for 'getData()$CV'.
 You can set your own custom CV by calling 'setData()'. By default, the latest release of the PSI-MS-CV (see \code{\link{getCVDictionary}}).
-Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data' (or use the convenience function getCVSingleton()$data from outside the package)
+Wherever you need this data, simply re-grab the singleton using 'CV_$new()' (or use the convenience function getCVSingleton() from outside the package)
 }
 \examples{
 \dontrun{
@@ -21,18 +23,13 @@ Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data'
 \section{Super class}{
 \code{\link[R6P:Singleton]{R6P::Singleton}} -> \code{CV_}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{data}}{Stores the data of the singleton: a list(CV = data.frame( ...), URI="someURI", version=\if{html}{\out{<PSI-MS-CV version>}})}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-CV_-ensureHasData}{\code{CV_$ensureHasData()}}
 \item \href{#method-CV_-byID}{\code{CV_$byID()}}
 \item \href{#method-CV_-setData}{\code{CV_$setData()}}
+\item \href{#method-CV_-getData}{\code{CV_$getData()}}
 \item \href{#method-CV_-getCV}{\code{CV_$getCV()}}
 \item \href{#method-CV_-clone}{\code{CV_$clone()}}
 }
@@ -44,6 +41,16 @@ Wherever you need this data, simply re-grab the singleton using 'CV_$new()$data'
 </ul>
 </details>
 }}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CV_-ensureHasData"></a>}}
+\if{latex}{\out{\hypertarget{method-CV_-ensureHasData}{}}}
+\subsection{Method \code{ensureHasData()}}{
+Make sure that the CV data is loaded
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CV_$ensureHasData()}\if{html}{\out{</div>}}
+}
+
+}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CV_-byID"></a>}}
 \if{latex}{\out{\hypertarget{method-CV_-byID}{}}}
@@ -79,10 +86,20 @@ Set a user-defined object (= a list of 'CV', 'URI' and 'version'), as obtained f
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CV_-getData"></a>}}
+\if{latex}{\out{\hypertarget{method-CV_-getData}{}}}
+\subsection{Method \code{getData()}}{
+Gets the underlying data (CV, URI and version)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CV_$getData()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CV_-getCV"></a>}}
 \if{latex}{\out{\hypertarget{method-CV_-getCV}{}}}
 \subsection{Method \code{getCV()}}{
-Gets the CV data.frame, i.e. the 'CV' part of this class
+A shorthand for 'getData()$CV', i.e. the CV data.frame.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CV_$getCV()}\if{html}{\out{</div>}}
 }
