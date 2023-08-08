@@ -12,7 +12,12 @@ test_that("getCVDictionary = function()", {
 })
 
 test_that("getLatest_PSICV_URL = function()", {
-  expect_true(endsWith(getLatest_PSICV_URL(), "psi-ms.obo"))
+  ## this test require internet connection, so run it only if available:
+  con = try(url("http://google.com", open="r"))
+  if (!inherits(con, "try-error")) {
+    close(con)
+    expect_true(endsWith(getLatest_PSICV_URL(), "psi-ms.obo"))
+  }
 })
 
 test_that("getLocal_CV_Version = function()", {
