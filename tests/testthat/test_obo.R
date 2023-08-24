@@ -12,7 +12,7 @@ test_that("getCVDictionary = function()", {
 })
 
 test_that("getLatest_PSICV_URL = function()", {
-  ## this test require internet connection, so run it only if available:
+  ## this test requires internet connection, so run it only if available:
   con = try(url("http://google.com", open="r"))
   if (!inherits(con, "try-error")) {
     close(con)
