@@ -202,6 +202,8 @@ removeIfExists = function(tmp_filename)
 #'
 localFileToURI = function(local_filename, must_exist = TRUE)
 {
+  ## first replace '\' by '/', since Linux will silently keep '\' which results in an invalid URI
+  local_filename = gsub('\\', '/', local_filename, fixed = TRUE)
   paste0("file:///", normalizePath(local_filename, winslash = '/', mustWork = must_exist))
 }
 
