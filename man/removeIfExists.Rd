@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{removeIfExists}
 \alias{removeIfExists}
-\title{remove a file, if it exists (useful for temporary files which may or may not have been created)}
+\title{Remove a file, if it exists (useful for temporary files which may or may not have been created)}
 \usage{
 removeIfExists(tmp_filename)
 }
@@ -13,5 +13,5 @@ removeIfExists(tmp_filename)
 NULL if file is missing, otherwise TRUE/FALSE depening on successful removal
 }
 \description{
-remove a file, if it exists (useful for temporary files which may or may not have been created)
+Remove a file, if it exists (useful for temporary files which may or may not have been created)
 }

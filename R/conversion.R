@@ -88,7 +88,8 @@ toQCMetric = function(id, value, on_violation = c("error", "warn"))
 #' @return An MzQCanalysisSoftware object
 #'
 #' @examples
-#'    toAnalysisSoftware(id = "MS:1003162", version = "1.0.13")
+#'  # use 'version = packageVersion("PTXQC")' if the package is installed
+#'  toAnalysisSoftware(id = "MS:1003162", version = "1.0.12")
 #'
 #' @export
 #'
@@ -99,9 +100,11 @@ toAnalysisSoftware = function(id, version = "unknown", uri = NULL, value = NA_ch
   if (is.null(uri))
   { # e.g.
     # def: "Proteomics (PTX) - QualityControl (QC) software for QC report generation and visualization." [DOI:10.1021/acs.jproteome.5b00780, PMID:26653327, https://github.com/cbielow/PTXQC/]
-    uri = sub(".*,[ ]*(http.*)[ ]*][ ]*", "\\1", entry$def)
+    uri = sub(".*,[ ]*(http.*)[ ]*].*", "\\1", entry$def)
+    ## not found?
+    if (uri == entry$def) uri = NA_character_;
   }
-  MzQCanalysisSoftware(accession = entry$id, name = entry$name, version = version, uri = uri, description = entry$def, value = value)
+  MzQCanalysisSoftware(accession = entry$id, name = entry$name, version = as.character(version), uri = uri, description = entry$def, value = value)
 }
 
 

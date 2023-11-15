@@ -3,6 +3,9 @@ i.e. a list of new features / bugfixes by version number.
 
 Versions uploaded to CRAN are marked with [CRAN].
 
+# [CRAN] version 0.5.3 (2023/08/24)
+
+* some convenience functions to create an mzQC document, e.g. 'localFileToURI()'
 
 # [CRAN] version 0.5.2 (2023/08/05)
 

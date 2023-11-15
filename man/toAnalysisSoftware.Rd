@@ -24,6 +24,7 @@ From an ID, e.g. "MS:1003162" (for PTX-QC), and some additional information,
 create an 'analysisSoftware' node for mzQC
 }
 \examples{
-   toAnalysisSoftware(id = "MS:1003162", version = "1.0.13")
+ # use 'version = packageVersion("PTXQC")' if the package is installed
+ toAnalysisSoftware(id = "MS:1003162", version = "1.0.12")
 
 }
