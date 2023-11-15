@@ -405,9 +405,9 @@ MzQCanalysisSoftware = setRefClass(
       r = list("accession" = .self$accession,
                "name" = .self$name,
                "version" = .self$version)
+      if (!isUndefined(.self$uri, verbose = FALSE)) r$uri = .self$uri
       if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
       if (!isUndefined(.self$value, verbose = FALSE)) r$value = .self$value
-      if (!isUndefined(.self$uri, verbose = FALSE)) r$uri = .self$uri
       return (jsonlite:::asJSON(r, ...))
     },
     fromData = function(.self, data)

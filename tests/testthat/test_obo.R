@@ -12,8 +12,8 @@ test_that("getCVDictionary = function()", {
 })
 
 test_that("getLatest_PSICV_URL = function()", {
-  ## this test requires internet connection, so run it only if available:
-  con = try(url("http://google.com", open="r"))
+  ## this test requires internet connection - in particular to Github (checking other sites may not help), so run it only if available:
+  con = try(url("https://api.github.com", open="r"))
   if (!inherits(con, "try-error")) {
     close(con)
     expect_true(endsWith(getLatest_PSICV_URL(), "psi-ms.obo"))
