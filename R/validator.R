@@ -41,7 +41,7 @@ validateFromFile = function(filepath, verbose = TRUE)
 
 #'
 #' Syntactically validates an mzQC document which is already in memory as JSON string.
-#' e.g. the string "{ mzQC : {}}"
+#' e.g. the string "\{ mzQC : \{\}\}"
 #'
 #' If the string object passed into this function contains multiple elements (length > 1).
 #' then they will be concatenated using '\\n' before validation.

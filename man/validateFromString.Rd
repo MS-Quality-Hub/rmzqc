@@ -3,7 +3,7 @@
 \name{validateFromString}
 \alias{validateFromString}
 \title{Syntactically validates an mzQC document which is already in memory as JSON string.
-e.g. the string "{ mzQC : {}}"}
+e.g. the string "\{ mzQC : \{\}\}"}
 \usage{
 validateFromString(JSON_string, verbose = TRUE)
 }
