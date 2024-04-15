@@ -3,12 +3,20 @@
 ##
 
 test_that("getCVDictionary = function()", {
-  cv = getCVDictionary()
+  ## this should never fail (even if internet is broken)
+  cv = getCVDictionary(use_local_fallback = TRUE)
   expect_true(all(c("CV", "URI", "version") %in% names(cv)))
   expect_true(all(c("id", "name", "def") %in% names(cv$CV)))
   expect_true("MS:1001000" %in% cv$CV$id)
   expect_true("gene name" %in% cv$CV$name)
 
+  ## this should never fail, due to local fallback (even if with wrong URL)
+  cv = getCVDictionary(source="custom", custom_uri = "https://github.com/HUPO-PSI/psi-ms-CV/rele_BROKEN_URL_ases/download/v4.1.147/psi-ms.obo", use_local_fallback = TRUE)
+  expect_true(all(c("CV", "URI", "version") %in% names(cv)))
+
+  ## this should always fail (due to wrong URL)
+  cv = try(getCVDictionary(source="custom", custom_uri = "https://github.com/HUPO-PSI/psi-ms-CV/rele_BROKEN_URL_ases/download/v4.1.147/psi-ms.obo", use_local_fallback = FALSE))
+  expect_true(inherits(cv, "try-error"))
 })
 
 test_that("getLatest_PSICV_URL = function()", {

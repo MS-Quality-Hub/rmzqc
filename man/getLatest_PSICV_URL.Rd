@@ -7,5 +7,6 @@
 getLatest_PSICV_URL()
 }
 \description{
-This may fail (e.g. if no internet connection is available) will return NULL instead of an URL.
+This may fail (e.g. if no internet connection is available, or URLs became invalid) then 'NULL' will be returned instead of an URL.
+A warning may be emitted, if the URL is out of date (i.e. the GitHub API changed).
 }
