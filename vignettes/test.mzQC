@@ -1,0 +1,50 @@
+{
+  "mzQC": {
+    "version": "1.0.0",
+    "creationDate": "2024-04-15T11:12:37",
+    "contactName": "bielow",
+    "contactAddress": "test@user.info",
+    "description": "A minimal mzQC test document with bogus data",
+    "runQualities": [
+      {
+        "metadata": {
+          "label": "file:///c:/data/special.raw",
+          "inputFiles": [
+            {
+              "name": "special.raw",
+              "location": "file:///c:/data/special.raw",
+              "fileFormat": {
+                "accession": "MS:1000563",
+                "name": "Thermo RAW format"
+              }
+            }
+          ],
+          "analysisSoftware": [
+            {
+              "accession": "MS:1003162",
+              "name": "PTX-QC",
+              "version": "1.0.13",
+              "uri": "https://github.com/cbielow/PTXQC/",
+              "description": "\"Proteomics (PTX) - QualityControl (QC) software for QC report generation and visualization.\" [DOI:10.1021/acs.jproteome.5b00780, PMID:26653327, https://github.com/cbielow/PTXQC/]"
+            }
+          ]
+        },
+        "qualityMetrics": [
+          {
+            "accession": "MS:4000059",
+            "name": "number of MS1 spectra",
+            "description": "\"The number of MS1 events in the run.\" [PSI:MS]",
+            "value": 13405
+          }
+        ]
+      }
+    ],
+    "controlledVocabularies": [
+      {
+        "name": "Proteomics Standards Initiative Mass Spectrometry Ontology",
+        "uri": "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.147/psi-ms.obo",
+        "version": "4.1.147"
+      }
+    ]
+  }
+} 
