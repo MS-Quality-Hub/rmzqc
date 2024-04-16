@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rmzqc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.4</span>
       </span>
     </div>
 
@@ -94,7 +94,8 @@ any_expected_class_types.</p></td>
       </tr><tr><td>
           <p><code><a href="getCVInfo.html">getCVInfo()</a></code> </p>
         </td>
-        <td><p>Returns an MzQCcontrolledVocabulary for the currently used CV (see <code>getCVSingleton</code>)</p></td>
+        <td><p>Returns an <code>MzQCcontrolledVocabulary</code> for the currently used CV (see <code>getCVSingleton</code>)
+using <code>getCVSingleton()$getData()$URI</code> and <code>$version</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="getCVSingleton.html">getCVSingleton()</a></code> </p>
         </td>
@@ -138,6 +139,10 @@ we can raise an error.</p></td>
           <p><code><a href="isValidMzQC.html">isValidMzQC()</a></code> </p>
         </td>
         <td><p>Checks validity (= completeness) of mzQC objects - or lists (JSON arrays) thereof</p></td>
+      </tr><tr><td>
+          <p><code><a href="localFileToURI.html">localFileToURI()</a></code> </p>
+        </td>
+        <td><p>Convert a local filename, e.g. "./myData/test.mzML" to a proper URI (e.g. "file:///user/bielow/myData/test.mzML")</p></td>
       </tr><tr><td>
           <p><code><a href="MzQCanalysisSoftware-class.html">MzQCanalysisSoftware-class</a></code> <code><a href="MzQCanalysisSoftware-class.html">MzQCanalysisSoftware</a></code> </p>
         </td>
@@ -207,7 +212,7 @@ If no dot exists, the full string is returned.</p></td>
       </tr><tr><td>
           <p><code><a href="removeIfExists.html">removeIfExists()</a></code> </p>
         </td>
-        <td><p>remove a file, if it exists (useful for temporary files which may or may not have been created)</p></td>
+        <td><p>Remove a file, if it exists (useful for temporary files which may or may not have been created)</p></td>
       </tr><tr><td>
           <p><code><a href="toAnalysisSoftware.html">toAnalysisSoftware()</a></code> </p>
         </td>
@@ -229,7 +234,7 @@ create an 'analysisSoftware' node for mzQC</p></td>
           <p><code><a href="validateFromString.html">validateFromString()</a></code> </p>
         </td>
         <td><p>Syntactically validates an mzQC document which is already in memory as JSON string.
-e.g. the string " mzQC : "</p></td>
+e.g. the string "{ mzQC : {}}"</p></td>
       </tr><tr><td>
           <p><code><a href="writeMZQC.html">writeMZQC()</a></code> </p>
         </td>

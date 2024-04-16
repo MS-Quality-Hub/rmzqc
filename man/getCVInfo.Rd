@@ -2,10 +2,12 @@
 % Please edit documentation in R/obo.R
 \name{getCVInfo}
 \alias{getCVInfo}
-\title{Returns an MzQCcontrolledVocabulary for the currently used CV (see \code{\link{getCVSingleton}})}
+\title{Returns an \code{\link{MzQCcontrolledVocabulary}} for the currently used CV (see \code{\link{getCVSingleton}})
+using \code{getCVSingleton()$getData()$URI} and \verb{$version}.}
 \usage{
 getCVInfo()
 }
 \description{
-Returns an MzQCcontrolledVocabulary for the currently used CV (see \code{\link{getCVSingleton}})
+Returns an \code{\link{MzQCcontrolledVocabulary}} for the currently used CV (see \code{\link{getCVSingleton}})
+using \code{getCVSingleton()$getData()$URI} and \verb{$version}.
 }

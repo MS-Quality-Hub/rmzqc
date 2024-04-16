@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rmzqc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.4</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
                         <h4 data-toc-skip class="author">Chris Bielow <a href="mailto:chris.bielow@fu-berlin.de" class="email">chris.bielow@fu-berlin.de</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2023-08-05</h4>
+            <h4 data-toc-skip class="date">2024-04-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MS-Quality-hub/rmzqc/blob/HEAD/vignettes/basic_guide.Rmd" class="external-link"><code>vignettes/basic_guide.Rmd</code></a></small>
       <div class="hidden name"><code>basic_guide.Rmd</code></div>
@@ -139,18 +139,19 @@ depending on context. In short: <code>null</code> may become an
 </h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MS-Quality-hub/rmzqc" class="external-link">rmzqc</a></span><span class="op">)</span></span>
-<span><span class="va">raw_file</span> <span class="op">=</span> <span class="st">"file:///c:/data/special.raw"</span>  <span class="co">## we need a proper URI (i.e. no backslashes and a scheme, e.g. 'file:') </span></span>
-<span>                                          <span class="co">## otherwise writing will fail</span></span>
+<span><span class="co">## we need a proper URI (i.e. no backslashes and a scheme, e.g. 'file:')</span></span>
+<span><span class="co">## otherwise writing will fail</span></span>
+<span><span class="va">raw_file</span> <span class="op">=</span> <span class="fu"><a href="../reference/localFileToURI.html">localFileToURI</a></span><span class="op">(</span><span class="st">"c:\\data\\special.raw"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">file_format</span> <span class="op">=</span> <span class="fu"><a href="../reference/getCVTemplate.html">getCVTemplate</a></span><span class="op">(</span>accession <span class="op">=</span> <span class="fu"><a href="../reference/filenameToCV.html">filenameToCV</a></span><span class="op">(</span><span class="va">raw_file</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.130/psi-ms.obo' ...</span></span></code></pre>
+<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.147/psi-ms.obo' ...</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ptxqc_software</span> <span class="op">=</span> <span class="fu"><a href="../reference/toAnalysisSoftware.html">toAnalysisSoftware</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:1003162"</span>, version <span class="op">=</span> <span class="st">"1.0.13"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ptxqc_software</span> <span class="op">=</span> <span class="fu"><a href="../reference/toAnalysisSoftware.html">toAnalysisSoftware</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:1003162"</span>, version <span class="op">=</span> <span class="st">"1.0.13"</span><span class="op">)</span> <span class="co">## you could use 'version = packageVersion("PTXQC")' to automate further</span></span>
 <span><span class="va">run1_qc</span> <span class="op">=</span> <span class="va"><a href="../reference/MzQCrunQuality-class.html">MzQCrunQuality</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>metadata <span class="op">=</span> <span class="va"><a href="../reference/MzQCmetadata-class.html">MzQCmetadata</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>label <span class="op">=</span> <span class="va">raw_file</span>,</span>
-<span>                                                        inputFiles <span class="op">=</span> </span>
-<span>                                                          <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va"><a href="../reference/MzQCinputFile-class.html">MzQCinputFile</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">raw_file</span><span class="op">)</span>,</span>
-<span>                                                                                 <span class="va">raw_file</span>,</span>
-<span>                                                                                 <span class="va">file_format</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                                                     analysisSoftware <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ptxqc_software</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                         inputFiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va"><a href="../reference/MzQCinputFile-class.html">MzQCinputFile</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">raw_file</span><span class="op">)</span>,</span>
+<span>                                                             <span class="va">raw_file</span>,</span>
+<span>                                                            <span class="va">file_format</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                         analysisSoftware <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ptxqc_software</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                         qualityMetrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/toQCMetric.html">toQCMetric</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:4000059"</span>, value <span class="op">=</span> <span class="fl">13405</span><span class="op">)</span> <span class="co">## number of MS1 scans</span></span>
 <span>                                               <span class="op">)</span></span>
 <span>                         <span class="op">)</span></span>
@@ -175,7 +176,7 @@ depending on context. In short: <code>null</code> may become an
 <span></span>
 <span><span class="co">## print some basic stats</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">gettextf</a></span><span class="op">(</span><span class="st">"This mzQC was created on %s and has %d quality metric(s) in total."</span>, <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html" class="external-link">dQuote</a></span><span class="op">(</span><span class="va">mq</span><span class="op">$</span><span class="va">creationDate</span><span class="op">$</span><span class="va">datetime</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mq</span><span class="op">$</span><span class="va">runQualities</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mq</span><span class="op">$</span><span class="va">setQualities</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "This mzQC was created on \"2023-08-05T00:00:00\" and has 1 quality metric(s) in total."</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "This mzQC was created on \"2024-04-15T00:00:00\" and has 1 quality metric(s) in total."</span></span></code></pre>
 </div>
 </div>
   </div>

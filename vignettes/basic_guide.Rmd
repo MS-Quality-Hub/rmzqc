@@ -46,16 +46,17 @@ when calling`readMZQC` this indicates that the mzQC is not valid JSON, since `Na
 
 ```{r, eval=TRUE}
 library(rmzqc)
-raw_file = "file:///c:/data/special.raw"  ## we need a proper URI (i.e. no backslashes and a scheme, e.g. 'file:') 
-                                          ## otherwise writing will fail
+## we need a proper URI (i.e. no backslashes and a scheme, e.g. 'file:')
+## otherwise writing will fail
+raw_file = localFileToURI("c:\\data\\special.raw", FALSE)
+
 file_format = getCVTemplate(accession = filenameToCV(raw_file))
-ptxqc_software = toAnalysisSoftware(id = "MS:1003162", version = "1.0.13")
+ptxqc_software = toAnalysisSoftware(id = "MS:1003162", version = "1.0.13") ## you could use 'version = packageVersion("PTXQC")' to automate further
 run1_qc = MzQCrunQuality$new(metadata = MzQCmetadata$new(label = raw_file,
-                                                        inputFiles = 
-                                                          list(MzQCinputFile$new(basename(raw_file),
-                                                                                 raw_file,
-                                                                                 file_format)),
-                                                     analysisSoftware = list(ptxqc_software)),
+                         inputFiles = list(MzQCinputFile$new(basename(raw_file),
+                                                             raw_file,
+                                                            file_format)),
+                         analysisSoftware = list(ptxqc_software)),
                          qualityMetrics = list(toQCMetric(id = "MS:4000059", value = 13405) ## number of MS1 scans
                                                )
                          )

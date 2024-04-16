@@ -1,6 +1,6 @@
 # `rmzqc`
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit)
 [![CRAN/METACRAN](https://img.shields.io/cran/v/rmzqc)](https://cran.r-project.org/package=rmzqc)
 
 An R package for reading, validating, and writing `mzQC` files.

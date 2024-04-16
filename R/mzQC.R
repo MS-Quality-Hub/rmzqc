@@ -372,7 +372,7 @@ MzQCanalysisSoftware = setRefClass(
   fields = list(accession = 'character',
                 name = 'character',
                 version = 'character',
-                uri = 'character',
+                uri = 'character',          # optional
                 description = 'character',  # optional
                 value = 'character'         # optional
   ),
@@ -381,7 +381,7 @@ MzQCanalysisSoftware = setRefClass(
     initialize = function(accession = NA_character_,
                           name = NA_character_,
                           version = NA_character_,
-                          uri = NA_character_,
+                          uri = NA_character_,         ## optional
                           description = NA_character_, ## optional
                           value = NA_character_        ## optional
     )
@@ -395,7 +395,7 @@ MzQCanalysisSoftware = setRefClass(
     },
     isValid = function(.self)
     {
-      if (isUndefined(.self$accession, .self$name, .self$version, .self$uri)) return(FALSE)
+      if (isUndefined(.self$accession, .self$name, .self$version)) return(FALSE)
       return(TRUE)
     },
     toJSON = function(.self, ...)
@@ -404,8 +404,8 @@ MzQCanalysisSoftware = setRefClass(
 
       r = list("accession" = .self$accession,
                "name" = .self$name,
-               "version" = .self$version,
-               "uri" = .self$uri)
+               "version" = .self$version)
+      if (!isUndefined(.self$uri, verbose = FALSE)) r$uri = .self$uri
       if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
       if (!isUndefined(.self$value, verbose = FALSE)) r$value = .self$value
       return (jsonlite:::asJSON(r, ...))
@@ -415,7 +415,7 @@ MzQCanalysisSoftware = setRefClass(
       .self$accession = data$accession
       .self$name = data$name
       .self$version = data$version
-      .self$uri = data$uri
+      .self$uri = NULL_to_charNA(data$uri)
       .self$description = NULL_to_charNA(data$description)
       .self$value = NULL_to_charNA(data$value)
       return(.self)

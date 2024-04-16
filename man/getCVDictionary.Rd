@@ -24,8 +24,11 @@ getCVDictionary(
 A list with 'CV', 'URI' and 'version', where 'CV' is a data.frame with columns 'id', 'name', 'def', 'parents', 'children' (and many more) which contains the CV entries
 }
 \description{
-A 'pato.obo', and 'uo.obo' from the 'rmzqc/cv/' folder are automatically merged in as well.
+If \code{use_local_fallback} is TRUE, this function will never fail. Otherwise, it may fail if the internet connection
+is flawed or internal URLs related to GitHubs API become stale.
 }
 \details{
+A 'pato.obo', and 'uo.obo' from the 'rmzqc/cv/' folder are automatically merged into the result.
+
 See CV_ class to use this function efficiently.
 }

@@ -175,7 +175,7 @@ check_type = function(value, any_expected_class_types, expected_length = 0)
 }
 
 #'
-#' remove a file, if it exists (useful for temporary files which may or may not have been created)
+#' Remove a file, if it exists (useful for temporary files which may or may not have been created)
 #'
 #' @param tmp_filename A path to a local file
 #' @return NULL if file is missing, otherwise TRUE/FALSE depening on successful removal
@@ -188,5 +188,23 @@ removeIfExists = function(tmp_filename)
   file.remove(tmp_filename)
 }
 
+#'
+#' Convert a local filename, e.g. "./myData/test.mzML" to a proper URI (e.g. "file:///user/bielow/myData/test.mzML")
+#'
+#' Relative filenames are made absolute.
+#' Backslashes as path separators are replaced by forward slashes (as commonly seen on Windows).
+#'
+#' @param local_filename Path to a file (can be relative to current getwd(); or absolute)
+#' @param must_exist Require the file to exist
+#' @return A URI starting with "file:///" followed by an absolute path
+#'
+#' @export
+#'
+localFileToURI = function(local_filename, must_exist = TRUE)
+{
+  ## first replace '\' by '/', since Linux will silently keep '\' which results in an invalid URI
+  local_filename = gsub('\\', '/', local_filename, fixed = TRUE)
+  paste0("file:///", normalizePath(local_filename, winslash = '/', mustWork = must_exist))
+}
 
 

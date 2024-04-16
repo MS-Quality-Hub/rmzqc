@@ -24,7 +24,10 @@ parseOBO = function(cv_obo_file){
 #'
 #' Fetch and parse the 'psi-ms.obo' and some metadata from the usual sources to use as ontology.
 #'
-#' A 'pato.obo', and 'uo.obo' from the 'rmzqc/cv/' folder are automatically merged in as well.
+#' If `use_local_fallback` is TRUE, this function will never fail. Otherwise, it may fail if the internet connection
+#' is flawed or internal URLs related to GitHubs API become stale.
+#'
+#' A 'pato.obo', and 'uo.obo' from the 'rmzqc/cv/' folder are automatically merged into the result.
 #'
 #' See CV_ class to use this function efficiently.
 #'
@@ -69,11 +72,22 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
     message(paste0("Downloading obo from '", custom_uri, "' ..."))
     tmp_filename = tempfile()
     on.exit(removeIfExists(tmp_filename)) ## clean up when function ends
-    if (download.file(custom_uri, tmp_filename) != 0) {
-      stop(paste0("Could not download '", custom_uri, "'."))
+    ret = try( ## download.file may throw itself or return != 0
+      {
+        if (download.file(custom_uri, tmp_filename) != 0) {
+          stop(paste0("Could not download '", custom_uri, "'."))
+        }
+        local_file = tmp_filename ## only on successful download
+      })
+    if (inherits(ret, 'try-error')) {
+      warning("Could not download from ", custom_uri, "!")
+      if (!use_local_fallback) stop("Download failed.")
+      ## fall back to local file
+      return (getCVDictionary("local"))
     }
-    local_file = tmp_filename
-  } else local_file = custom_uri
+  } else {
+    local_file = custom_uri
+  }
 
   ms = try(parseOBO(local_file))
   if (use_local_fallback && inherits(ms, 'try-error') && source != "local") {
@@ -94,7 +108,8 @@ getCVDictionary = function(source = c("latest", "local", "custom"), custom_uri =
 #'
 #' Get the latest PSI-MS CV release URL
 #'
-#' This may fail (e.g. if no internet connection is available) will return NULL instead of an URL.
+#' This may fail (e.g. if no internet connection is available, or URLs became invalid) then 'NULL' will be returned instead of an URL.
+#' A warning may be emitted, if the URL is out of date (i.e. the GitHub API changed).
 #'
 #' @export
 #'
@@ -103,17 +118,27 @@ getLatest_PSICV_URL = function()
   temp_filename = tempfile()
   on.exit(removeIfExists(temp_filename))
   ret = try(
-    download.file("https://api.github.com/repos/HUPO-PSI/psi-ms-CV/releases/latest", temp_filename)
+    {
+    df_ret = download.file("https://api.github.com/repos/HUPO-PSI/psi-ms-CV/releases/latest", temp_filename)
+    if (df_ret != 0) stop("Download failed")
+    df_ret # return success
+    }
   )
   if (inherits(ret, 'try-error') || ret != 0) {
     return (NULL)
   }
   cont = paste0(scan(temp_filename, what=character(), quiet = TRUE), collapse="")
-  gsub('.*(https.*psi-ms\\.obo).*', '\\1', cont)
+  obo_url = gsub('.*(https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v[0-9\\.]*/psi-ms.obo).*', '\\1', cont)
+  if (obo_url == cont) {
+    warning("Extracting psi-ms.obo URL failed. Please file a bug report.")
+    return (NULL)
+  }
+  return(obo_url)
 }
 
 #'
-#' Returns an MzQCcontrolledVocabulary for the currently used CV (see \code{\link{getCVSingleton}})
+#' Returns an \code{\link{MzQCcontrolledVocabulary}} for the currently used CV (see \code{\link{getCVSingleton}})
+#' using `getCVSingleton()$getData()$URI` and `$version`.
 #'
 #' @export
 #'
