@@ -38,9 +38,14 @@
 toQCMetric = function(id, value, on_violation = c("error", "warn"))
 {
   # set up reaction to violating CV restrictions
-  if (on_violation[1] == "warn") on_vio_func = function(message){ warning(message)} else
-  if (on_violation[1] == "error") on_vio_func = function(message){ stop(message)} else
+  if (on_violation[1] == "warn")  on_vio_func = function(...){ warning(paste0("... in toQCMetric: ", ...), call. = FALSE)}  else
+  if (on_violation[1] == "error") on_vio_func = function(...){ stop(paste0("... in toQCMetric: ", ...), call. = FALSE)} else
     stop("on_violation must be 'warn' or 'error'")
+
+  if (!is.character(id)) {
+    call = match.call()
+    stop("'id' is not a character: ", deparse(call)) ## prints something like  'id' is not a character: toQCMetric(id = 1, value = 2)
+  }
 
   check_and_print = function(value, any_expected_class_types, metric_id, expected_length = 0)
   {
@@ -54,6 +59,11 @@ toQCMetric = function(id, value, on_violation = c("error", "warn"))
   if (is.null(entry)) {
     on_vio_func("The ID '", id, "' is unknown in the current CV. Either fix the ID or use a more recent CV (see getCVSingleton()).")
     ## we may still be alive here.
+  } else if (!exists("entry$is_a")) {
+      on_vio_func("The ID '", id, "' does not have a 'is_a' entry and thus cannot be derived from a matrix, n-tuple, etc.\n",
+                  "Please use the correct CV term (possibly modifying the psi-ms cv file, see 'getCVSingleton()')\n",
+                  "or obtain a template using `getQualityMetricTemplate()` if your CV term is unknown.")
+      ## we may still be alive here.
   } else {
     is_a = CV$byID(entry$is_a)
     if (is_a$id == "MS:4000006") {        # matrix
