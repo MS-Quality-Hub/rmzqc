@@ -31,7 +31,6 @@ Wherever you need this data, simply re-grab the singleton using 'CV_$new()' (or 
 \item \href{#method-CV_-setData}{\code{CV_$setData()}}
 \item \href{#method-CV_-getData}{\code{CV_$getData()}}
 \item \href{#method-CV_-getCV}{\code{CV_$getCV()}}
-\item \href{#method-CV_-clone}{\code{CV_$clone()}}
 }
 }
 \if{html}{\out{
@@ -66,6 +65,9 @@ A function to retrieve a CV entry using its ID
 \item{\code{id}}{A CV accession, e.g. 'MS:1000560'}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A CV term, or NULL if the ID is unknown
 }
 }
 \if{html}{\out{<hr>}}
@@ -104,22 +106,5 @@ A shorthand for 'getData()$CV', i.e. the CV data.frame.
 \if{html}{\out{<div class="r">}}\preformatted{CV_$getCV()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CV_-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-CV_-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CV_$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
 }
 }

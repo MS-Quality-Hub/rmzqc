@@ -5,17 +5,22 @@
 \title{Fills a MzQCqualityMetric object with id(accession) and name.
 The value (if any) and unit (if any) need to be set afterwards.}
 \usage{
-getQualityMetricTemplate(accession, CV = getCVSingleton())
+getQualityMetricTemplate(
+  accession,
+  CV = getCVSingleton(),
+  allow_unknown_id = FALSE
+)
 }
 \arguments{
 \item{accession}{The ID (=accession) of the term in the CV}
 
 \item{CV}{A CV dictionary, as obtained by getCVDictionary(); defaults to the global singleton, which is populated automatically}
+
+\item{allow_unknown_id}{Allows invalid accession; if 'FALSE' this function errors if accession is unknown}
 }
 \value{
 An instance of MzQCqualityMetric
 }
 \description{
-Fills a MzQCqualityMetric object with id(accession) and name.
-The value (if any) and unit (if any) need to be set afterwards.
+The accession must be valid (or allow_unknown_id must be TRUE)
 }

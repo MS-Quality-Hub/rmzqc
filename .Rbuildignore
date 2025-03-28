@@ -4,3 +4,4 @@ notebooks
 ^docs$
 ^doc$
 ^Meta$
+_pkgdown.yml

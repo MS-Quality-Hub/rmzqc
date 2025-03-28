@@ -211,6 +211,7 @@ CV_ <- R6::R6Class(
   classname = "CV_",
   inherit = R6P::Singleton,
   lock_objects = FALSE, # we need to modify self$data
+  cloneable = FALSE,
   private = list(
      # data Stores the data of the singleton: a list(CV = data.frame( ...), URI="someURI", version=<PSI-MS-CV version>)
      data = NULL
@@ -224,10 +225,11 @@ CV_ <- R6::R6Class(
      },
     #' @description A function to retrieve a CV entry using its ID
     #' @param id A CV accession, e.g. 'MS:1000560'
+    #' @return A CV term, or NULL if the ID is unknown
     byID = function(id) {
       self$ensureHasData()
       idx = which(self$data$CV$id == id)
-      if (length(idx)== 0)
+      if (length(idx) == 0)
       {
         warning("Could not find id '", id, "' in CV list (length: ", length(self$data$CV$id), ")")
         return(NULL)

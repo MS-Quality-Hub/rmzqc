@@ -3,6 +3,12 @@ i.e. a list of new features / bugfixes by version number.
 
 Versions uploaded to CRAN are marked with [CRAN].
 
+
+# [CRAN] version 0.5.5 (2025/03/22)
+
+* improved api documentation
+* more robust handling of units
+
 # [CRAN] version 0.5.4 (2024/04/15)
 
 * more robust handling of faulty internet connection when retrieving the latest PSI-MS CV
