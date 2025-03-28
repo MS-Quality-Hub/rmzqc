@@ -534,8 +534,9 @@ MzQCqualityMetric = setRefClass(
       .self$accession = data$accession
       .self$name = data$name
       .self$description = NULL_to_charNA(data$description)
-      if (!is.na(data$value)) .self$value = data$value
-      .self$unit = fromDatatoMzQC(MzQCcvParameter, data$unit) ## if data$unit is empty, or NA, the empty list will be returned
+      if (length(data$value) > 1 ||  ## could be an n-tuple or a single value
+          !is.na(data$value)) .self$value = data$value
+      if (exists('data$unit')) .self$unit = fromDatatoMzQC(MzQCcvParameter, list(data$unit)) ## if data$unit is empty, or NA, the empty list will be returned
       return(.self)
     }
   )

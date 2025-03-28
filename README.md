@@ -73,6 +73,15 @@ There are many ways to get involved, _you do not need to be a developer_!
   - suggest improvements to our documentation
   - write code (in R) and submit a [Pull Request (PR)][PullRequest].
 
+## Building the package locally
+
+Use `roxygen2` to build the vignettes and documentation:
+
+    roxygen2::roxygenize('.', roclets = c('rd', 'collate', 'namespace'))
+
+Use `pkgdown` to build the html documentation in ./docs/:
+
+    pkgdown::buildsite()
 
 ## Links
 
