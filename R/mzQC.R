@@ -54,9 +54,17 @@ isValidMzQC = function(x, ...)
   if (inherits(x, "list")) {
     idx = sapply(x, isValidMzQC)
     if (any(idx == FALSE)) {
-      warning(paste0("In list of '", class(x[[1]]), "', the element(s) #[", paste(which(idx == FALSE), collapse = ","), "] is/are invalid."), immediate. = TRUE, call. = FALSE)
+      warning(paste0("In list of class '", class(x[[1]]), "', the element(s) #[", paste(which(idx == FALSE), collapse = ","), "] is/are invalid."), immediate. = TRUE, call. = FALSE)
     }
     return(all(idx) & isValidMzQC(...))
+  }
+  if (!inherits(x, "envRefClass")) {
+    output <- capture.output(str(x))
+    cat(paste0("Error: variable '", output, "' is not a RefClass, but should be!"))
+    return(FALSE)
+  }
+  if (!("isValid" %in% x$getRefClass()$methods())) {
+    stop("Invalid object: does not support 'isValid()'")
   }
   r = x$isValid()
   if (r == FALSE)
@@ -573,6 +581,30 @@ MzQCbaseQuality = setRefClass(
       if (!isValidMzQC(.self$metadata, .self$qualityMetrics)) return(FALSE)
       return(TRUE)
     },
+    getMetric = function(.self, accession = NULL, name = NULL) {
+      if (! (is.null(accession) ^ is.null(name)))
+      {
+        stop("Exactly one of 'accession' or 'name' are required.")
+      }
+
+      results = lapply(.self$qualityMetrics, function(qmetric) {
+        if (!is.null(accession) && qmetric$accession == accession)
+        {
+          return(qmetric)
+        }
+        if (!is.null(name) && qmetric$name == name)
+        {
+          return(qmetric)
+        }
+        else return(NULL) ## not the wanted metric
+      })
+      results_filtered <- Filter(Negate(is.null), results)
+      if (length(results_filtered) == 0)
+      {
+        stop(paste0("No metric with name='", name, "' / accession='", accession, "' found."))
+      }
+      results_filtered
+    },
     toJSON = function(.self, ...)
     {
       if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
@@ -591,6 +623,22 @@ MzQCbaseQuality = setRefClass(
 )
 setMethod('asJSON', 'MzQCbaseQuality', function(x, ...) x$toJSON(...))
 
+
+#' Extract a certain metric from a runQuality's list of MzQCqualityMetric
+#'
+#' You must provide either the accession or the name of the metric, but not both.
+#'
+#' Usually there should be only one MzQCqualityMetric which matches,
+#' however, this function will return all matches.
+#'
+#' Note: this function will stop() if not results are found
+#'
+#' @name MzQCbaseQuality_getMetric
+#'
+#' @param accession Accession of the MzQCqualityMetric
+#' @param name Name of the MzQCqualityMetric (less stable than accession)
+#' @return A list of MzQCqualityMetric's which match.
+NULL
 
 
 #'
@@ -670,8 +718,12 @@ MzQCmzQC = setRefClass(
     isValid = function(.self)
     {
       # force evaluation using '+'
-      if (isUndefined(.self$version) +
-          !isValidMzQC(.self$creationDate, .self$runQualities, .self$setQualities, .self$controlledVocabularies)) return(FALSE)
+      if (isUndefined(.self$version))
+      {
+        warning("MzQCmzQC::version is undefined")
+        return(FALSE)
+      }
+      if (!isValidMzQC(.self$creationDate, .self$runQualities, .self$setQualities, .self$controlledVocabularies)) return(FALSE)
       # at least one must be present
       if (length(.self$runQualities) + length(.self$setQualities) == 0)
       {

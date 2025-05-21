@@ -3,6 +3,10 @@ i.e. a list of new features / bugfixes by version number.
 
 Versions uploaded to CRAN are marked with [CRAN].
 
+# [CRAN] version 0.5.6 (2025/05/21)
+
+* improved error messages when attempting to write invalid mzQC files
+* runQuality/setQuality classes now have a getMetric() member function for easier extraction of metrics
 
 # [CRAN] version 0.5.5 (2025/03/22)
 

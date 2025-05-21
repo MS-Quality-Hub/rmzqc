@@ -1,8 +1,8 @@
-pandoc: '3.2'
-pkgdown: 2.1.1
+pandoc: 3.1.11
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   basic_guide: basic_guide.html
   using_a_custom_cv: using_a_custom_cv.html
   validation_guide: validation_guide.html
-last_built: 2025-03-22T20:49Z
+last_built: 2025-05-21T15:29Z
