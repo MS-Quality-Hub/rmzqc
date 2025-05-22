@@ -46,6 +46,8 @@ asJSON <- jsonlite:::asJSON
 #'
 #' @export
 #'
+#' @importFrom utils capture.output str
+#'
 isValidMzQC = function(x, ...)
 {
   # anchor
