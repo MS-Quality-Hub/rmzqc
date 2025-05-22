@@ -4,34 +4,26 @@
 \alias{isValidMzQC}
 \title{Checks validity (= completeness) of mzQC objects - or lists (JSON arrays) thereof}
 \usage{
-isValidMzQC(x, ...)
+isValidMzQC(x, parent_context = NULL)
 }
 \arguments{
-\item{x}{An mzQC refclass (or list of them), each will be subjected to \code{isValidMzQC()}}
+\item{x}{An mzQC refclass (or list of them), which will be subjected to validation}
 
-\item{...}{Ellipsis, for recursive argument splitting}
+\item{parent_context}{Internal parameter used to track the path in nested validations}
 }
 \description{
 Note: Returns TRUE for empty lists!
 }
 \details{
-You can pass multiple arguments, which are all checked individually.
-All of them need to be valid, for TRUE to be returned.
-The reason for combining both list support for arguments and ellipsis (...) into this function is that
-JSON arrays are represented as lists and you can simply pass them as a single argument
-(without the need for do.call()) and get the indices of invalid objects (if any).
-The ellipsis is useful to avoid clutter,
-i.e.
-if (!isValidMzQC(a) || !isValidMzQC(b)) doStuff()
-is harder to read than
-if (!isValidMzQC(a,b)) doStuff()
+This function checks if an mzQC object or a list of mzQC objects is valid.
+For lists, all elements need to be valid for the function to return TRUE.
+The function provides detailed error messages that include the path to the invalid field,
+making it easier to identify validation issues in complex nested structures.
 }
 \examples{
   isValidMzQC(MzQCcvParameter$new("MS:4000059"))       # FALSE
   isValidMzQC(MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra")) # TRUE
   isValidMzQC(list(MzQCcvParameter$new("MS:4000059"))) # FALSE
   isValidMzQC(list(MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra"))) # TRUE
-  isValidMzQC(list(MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra")),
-              MzQCcvParameter$new()) # FALSE
 
 }

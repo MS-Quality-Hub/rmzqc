@@ -47,15 +47,16 @@ NULL_to_NA = function(var_or_NULL) {
 
 
 #'
-#' Tell if a string is undefined (NA or NULL); If yes, and its required by the mzQC standard,
+#' Tell if a variable's value is undefined (NA or NULL); If yes, and it is required by the mzQC standard,
 #' we can raise an error.
 #'
-#' You can pass multiple strings, which are all checked.
+#' You can pass multiple variable, which are all checked.
 #' If **any** of them is undefined, the function returns TRUE
 #'
-#' @param s A string to be checked for NA/NULL
-#' @param ... More strings to be checked
+#' @param s A variable to be checked for NA/NULL
+#' @param ... More variable to be checked
 #' @param verbose If TRUE and 's' is NULL/NA, will print the name of the variable which was passed in
+#' @param context An optional string will be using within a warning message, to ease tracking of where in the mzQC structure the undefined value occurs
 #'
 #' @examples
 #' isUndefined(NA)       ## TRUE
@@ -70,14 +71,20 @@ NULL_to_NA = function(var_or_NULL) {
 #'
 #' @export
 #'
-isUndefined = function(s, ..., verbose = TRUE)
+isUndefined = function(s, ..., verbose = TRUE, context = NULL)
 {
   r = (is.na(s) || is.null(s))
   name_of_var = deparse(substitute(s))
   # omit the '.self' part of the variable's name
   name_of_var = gsub("^.self\\$", "", name_of_var)
+
+  # Build a more informative error message with context if provided
   if (verbose && r) {
-    warning(paste0("Variable '", name_of_var, "' is NA/NULL!"), immediate. = TRUE, call. = FALSE)
+    if (!is.null(context)) {
+      warning(paste0(context, "$", name_of_var, " is NA/NULL"), immediate. = TRUE, call. = FALSE)
+    } else {
+      warning(paste0("Variable '", name_of_var, "' is NA/NULL"), immediate. = TRUE, call. = FALSE)
+    }
   }
 
   # anchor
@@ -86,7 +93,7 @@ isUndefined = function(s, ..., verbose = TRUE)
   ## check remaining args from ... by using '+'
   ## This forces evaluation, since we want the error messages for all arguments
   ## , not just the first which failed
-  return(r + isUndefined(..., verbose = verbose) > 0)
+  return(r + isUndefined(..., verbose = verbose, context = context) > 0)
 }
 
 

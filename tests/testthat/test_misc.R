@@ -24,7 +24,7 @@ test_that("isUndefined = function(s, ..., verbose = TRUE)", {
   expect_true(isUndefined(NA, "", verbose = FALSE))
   expect_false(isUndefined(1, verbose = FALSE))
   myVar = NA
-  expect_warning(out <- isUndefined(myVar), "Variable 'myVar' is NA/NULL!")
+  expect_warning(out <- isUndefined(myVar), "Variable 'myVar' is NA/NULL")
   expect_true(out)
 })
 

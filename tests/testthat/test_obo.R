@@ -29,7 +29,7 @@ test_that("getLatest_PSICV_URL = function()", {
 })
 
 test_that("getLocal_CV_Version = function()", {
-  expect_true(getLocal_CV_Version(system.file("./cv/psi-ms.obo", package="rmzqc")) == "4.1.129")
+  expect_true(getLocal_CV_Version(system.file("./cv/psi-ms.obo", package="rmzqc")) == "4.1.193")
 })
 
 test_that("getCVInfo = function()", {

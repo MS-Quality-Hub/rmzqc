@@ -22,43 +22,44 @@ asJSON <- jsonlite:::asJSON
 #'
 #' Note: Returns TRUE for empty lists!
 #'
-#' You can pass multiple arguments, which are all checked individually.
-#' All of them need to be valid, for TRUE to be returned.
-#' The reason for combining both list support for arguments and ellipsis (...) into this function is that
-#' JSON arrays are represented as lists and you can simply pass them as a single argument
-#' (without the need for do.call()) and get the indices of invalid objects (if any).
-#' The ellipsis is useful to avoid clutter,
-#' i.e.
-#'      if (!isValidMzQC(a) || !isValidMzQC(b)) doStuff()
-#'      is harder to read than
-#'      if (!isValidMzQC(a,b)) doStuff()
+#' This function checks if an mzQC object or a list of mzQC objects is valid.
+#' For lists, all elements need to be valid for the function to return TRUE.
+#' The function provides detailed error messages that include the path to the invalid field,
+#' making it easier to identify validation issues in complex nested structures.
 #'
-#' @param x An mzQC refclass (or list of them), each will be subjected to `isValidMzQC()`
-#' @param ... Ellipsis, for recursive argument splitting
+#' @param x An mzQC refclass (or list of them), which will be subjected to validation
+#' @param parent_context Internal parameter used to track the path in nested validations
 #'
 #' @examples
 #'   isValidMzQC(MzQCcvParameter$new("MS:4000059"))       # FALSE
 #'   isValidMzQC(MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra")) # TRUE
 #'   isValidMzQC(list(MzQCcvParameter$new("MS:4000059"))) # FALSE
 #'   isValidMzQC(list(MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra"))) # TRUE
-#'   isValidMzQC(list(MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra")),
-#'               MzQCcvParameter$new()) # FALSE
 #'
 #' @export
 #'
 #' @importFrom utils capture.output str
 #'
-isValidMzQC = function(x, ...)
+isValidMzQC = function(x, parent_context = NULL)
 {
   # anchor
   if (missing(x)) return(TRUE)
 
+  # Build context string for better error reporting
+  current_context <- if (!is.null(parent_context)) parent_context else ""
+
   if (inherits(x, "list")) {
-    idx = sapply(x, isValidMzQC)
-    if (any(idx == FALSE)) {
-      warning(paste0("In list of class '", class(x[[1]]), "', the element(s) #[", paste(which(idx == FALSE), collapse = ","), "] is/are invalid."), immediate. = TRUE, call. = FALSE)
+    # Create a vector to store validation results
+    idx = logical(length(x))
+
+    # Process each item in the list with its index in the context
+    for (i in seq_along(x)) {
+      # Build context with index for this list item
+      item_context <- paste0(current_context, "[", i, "]")
+      # Validate the item with the indexed context
+      idx[i] <- isValidMzQC(x[[i]], parent_context = item_context)
     }
-    return(all(idx) & isValidMzQC(...))
+    return(all(idx))
   }
   if (!inherits(x, "envRefClass")) {
     output <- capture.output(str(x))
@@ -68,12 +69,13 @@ isValidMzQC = function(x, ...)
   if (!("isValid" %in% x$getRefClass()$methods())) {
     stop("Invalid object: does not support 'isValid()'")
   }
-  r = x$isValid()
-  if (r == FALSE)
-  {
-    warning(paste0("A field in object of type ", class(x), " is invalid."), immediate. = TRUE, call. = FALSE)
-  }
-  return(r & isValidMzQC(...))
+
+  # Pass the context to the isValid method
+  class_name <- class(x)[1]
+  context_with_class <- paste0(current_context, if(nchar(current_context) > 0) "$" else "", class_name)
+
+  # Call isValid with context information
+  return(x$isValid(context = context_with_class))
 }
 
 
@@ -131,7 +133,7 @@ fromDatatoMzQC = function(mzqc_class, data)
 #' @field datetime A correctly formatted date time (use as read-only)
 #'
 #' @examples
-#'    dt1 = MzQCDateTime$new("1900-01-01")  ## yields "1900-01-01T00:00:00"
+#'    dt1 = MzQCDateTime$new("1900-01-01")  ## yields "1900-01-01T00:00:00Z"
 #'    dt2 = MzQCDateTime$new(Sys.time())
 #'    ## test faulty input
 #'    ## errors with 'character string is not in a standard unambiguous format'
@@ -153,9 +155,9 @@ MzQCDateTime = setRefClass(
     },
     set = function(.self, date)
     {
-      .self$datetime = format(as.POSIXct(date), "%Y-%m-%dT%H:%M:%S")  # using ISO8601 format
+      .self$datetime = format(as.POSIXct(date, tz = "UTC"), "%Y-%m-%dT%H:%M:%SZ")  # using ISO8601 format with UTC time
     },
-    isValid = function(.self)
+    isValid = function(.self, context = "MzQCDateTime")
     {
       return(TRUE) ## always valid, because it's designed that way
     },
@@ -203,8 +205,13 @@ MzQCcontrolledVocabulary = setRefClass(
       .self$uri = uri
       .self$version = version
     },
-    isValid = function(.self) {
-      if (isUndefined(.self$name, .self$uri)) return(FALSE)
+    isValid = function(.self, context = "MzQCcontrolledVocabulary") {
+      if (isUndefined(.self$name, context = context)) {
+        return(FALSE)
+      }
+      if (isUndefined(.self$uri, context = context)) {
+        return(FALSE)
+      }
       return(TRUE)
     },
     toJSON = function(.self, ...)
@@ -260,8 +267,13 @@ MzQCcvParameter = setRefClass(
       .self$value = value
       .self$description = description
     },
-    isValid = function(.self) {
-      if (isUndefined(.self$accession, .self$name)) return(FALSE)
+    isValid = function(.self, context = "MzQCcvParameter") {
+      if (isUndefined(.self$accession, context = context)) {
+        return(FALSE)
+      }
+      if (isUndefined(.self$name, context = context)) {
+        return(FALSE)
+      }
       return(TRUE)
     },
     toJSON = function(.self, ...)
@@ -314,16 +326,29 @@ MzQCinputFile = setRefClass(
       .self$fileFormat = fileFormat
       .self$fileProperties = fileProperties
     },
-    isValid = function(.self)
+    isValid = function(.self, context = "MzQCinputFile")
     {
-      # force evaluation of all fields by '+'
-      if (isUndefined(.self$name, .self$location) + !.self$fileFormat$isValid()) return(FALSE)
-      if (!grepl(":", .self$location, fixed = TRUE) || (grepl("\\", .self$location, fixed = TRUE))) {
-        # URI needs a ':' but must not contain a '\'
-        warning(paste0("Variable 'MzQCinputFile:location' (value: '", .self$location, "') is not a URI (e.g. 'file:///c:/tmp/test.raw' or 'http://...'). No '\\' are allowed"), immediate. = TRUE, call. = FALSE)
+      if (isUndefined(.self$name, context = context)) {
         return(FALSE)
       }
-      return(isValidMzQC(.self$fileProperties)) ## TRUE for empty list, which is ok
+      if (isUndefined(.self$location, context = context)) {
+        return(FALSE)
+      }
+
+      # Check fileFormat validity with proper context
+      fileFormat_context <- paste0(context, "$fileFormat")
+      if (!.self$fileFormat$isValid(context = fileFormat_context)) {
+        return(FALSE)
+      }
+
+      if (!grepl(":", .self$location, fixed = TRUE) || (grepl("\\", .self$location, fixed = TRUE))) {
+        # URI needs a ':' but must not contain a '\'
+        warning(paste0(context, "$location (value: '", .self$location, "') is not a URI (e.g. 'file:///c:/tmp/test.raw' or 'http://...'). No '\\' are allowed"), immediate. = TRUE, call. = FALSE)
+        return(FALSE)
+      }
+
+      # Check fileProperties with proper context
+      return(isValidMzQC(.self$fileProperties, parent_context = paste0(context, "$fileProperties"))) ## TRUE for empty list, which is ok
     },
     toJSON = function(.self, ...)
     {
@@ -403,9 +428,17 @@ MzQCanalysisSoftware = setRefClass(
       .self$description = description
       .self$value = value
     },
-    isValid = function(.self)
+    isValid = function(.self, context = "MzQCanalysisSoftware")
     {
-      if (isUndefined(.self$accession, .self$name, .self$version)) return(FALSE)
+      if (isUndefined(.self$accession, context = context)) {
+        return(FALSE)
+      }
+      if (isUndefined(.self$name, context = context)) {
+        return(FALSE)
+      }
+      if (isUndefined(.self$version, context = context)) {
+        return(FALSE)
+      }
       return(TRUE)
     },
     toJSON = function(.self, ...)
@@ -462,10 +495,27 @@ MzQCmetadata = setRefClass(
       .self$analysisSoftware = analysisSoftware
       .self$cvParameters = cvParameters
     },
-    isValid = function(.self)
+    isValid = function(.self, context = "MzQCmetadata")
     {
-      # force evaluation of all fields by '+'
-      if (isUndefined(.self$label) + !isValidMzQC(.self$inputFiles, .self$analysisSoftware, .self$cvParameters)) return(FALSE)
+      if (isUndefined(.self$label, context = context)) {
+        return(FALSE)
+      }
+
+      # Check inputFiles with proper context
+      if (!isValidMzQC(.self$inputFiles, parent_context = paste0(context, "$inputFiles"))) {
+        return(FALSE)
+      }
+
+      # Check analysisSoftware with proper context
+      if (!isValidMzQC(.self$analysisSoftware, parent_context = paste0(context, "$analysisSoftware"))) {
+        return(FALSE)
+      }
+
+      # Check cvParameters with proper context
+      if (!isValidMzQC(.self$cvParameters, parent_context = paste0(context, "$cvParameters"))) {
+        return(FALSE)
+      }
+
       return(TRUE)
     },
     toJSON = function(.self, ...)
@@ -522,9 +572,22 @@ MzQCqualityMetric = setRefClass(
       if (!missing(value)) .self$value = value else .self$value = NA  ## need to set as NA explicitly, because the default value 'uninitialized class ANY' cannot be converted to JSON
       .self$unit = unit
     },
-    isValid = function(.self)
+    isValid = function(.self, context = "MzQCqualityMetric")
     {
-      if (isUndefined(.self$accession, .self$name)) return(FALSE)
+      if (isUndefined(.self$accession, context = context)) {
+        return(FALSE)
+      }
+      if (isUndefined(.self$name, context = context)) {
+        return(FALSE)
+      }
+
+      # Check unit with proper context if it exists
+      if (length(.self$unit) > 0) {
+        if (!isValidMzQC(.self$unit, parent_context = paste0(context, "$unit"))) {
+          return(FALSE)
+        }
+      }
+
       return(TRUE)
     },
     toJSON = function(.self, ...)
@@ -578,9 +641,19 @@ MzQCbaseQuality = setRefClass(
       .self$metadata = metadata
       .self$qualityMetrics = qualityMetrics
     },
-    isValid = function(.self)
+    isValid = function(.self, context = "MzQCbaseQuality")
     {
-      if (!isValidMzQC(.self$metadata, .self$qualityMetrics)) return(FALSE)
+      # Check metadata with proper context
+      metadata_context <- paste0(context, "$metadata")
+      if (!.self$metadata$isValid(context = metadata_context)) {
+        return(FALSE)
+      }
+
+      # Check qualityMetrics with proper context
+      if (!isValidMzQC(.self$qualityMetrics, parent_context = paste0(context, "$qualityMetrics"))) {
+        return(FALSE)
+      }
+
       return(TRUE)
     },
     getMetric = function(.self, accession = NULL, name = NULL) {
@@ -717,21 +790,41 @@ MzQCmzQC = setRefClass(
       .self$setQualities = setQualities
       .self$controlledVocabularies = controlledVocabularies
     },
-    isValid = function(.self)
+    isValid = function(.self, context = "MzQCmzQC")
     {
-      # force evaluation using '+'
-      if (isUndefined(.self$version))
+      if (isUndefined(.self$version, context = context))
       {
-        warning("MzQCmzQC::version is undefined")
         return(FALSE)
       }
-      if (!isValidMzQC(.self$creationDate, .self$runQualities, .self$setQualities, .self$controlledVocabularies)) return(FALSE)
+
+      # Check creationDate with proper context
+      creationDate_context <- paste0(context, "$creationDate")
+      if (!.self$creationDate$isValid(context = creationDate_context)) {
+        return(FALSE)
+      }
+
+      # Check runQualities with proper context
+      if (!isValidMzQC(.self$runQualities, parent_context = paste0(context, "$runQualities"))) {
+        return(FALSE)
+      }
+
+      # Check setQualities with proper context
+      if (!isValidMzQC(.self$setQualities, parent_context = paste0(context, "$setQualities"))) {
+        return(FALSE)
+      }
+
+      # Check controlledVocabularies with proper context
+      if (!isValidMzQC(.self$controlledVocabularies, parent_context = paste0(context, "$controlledVocabularies"))) {
+        return(FALSE)
+      }
+
       # at least one must be present
       if (length(.self$runQualities) + length(.self$setQualities) == 0)
       {
-        warning("At least one runQuality or setQuality must be present! (currently all empty)", immediate. = TRUE, call. = FALSE)
+        warning(paste0(context, " must have at least one runQuality or setQuality (currently all empty)"), immediate. = TRUE, call. = FALSE)
         return(FALSE)
       }
+
       return(TRUE)
     },
     toJSON = function(.self, ...)
