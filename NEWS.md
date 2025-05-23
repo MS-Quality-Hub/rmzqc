@@ -3,6 +3,12 @@ i.e. a list of new features / bugfixes by version number.
 
 Versions uploaded to CRAN are marked with [CRAN].
 
+# [CRAN] version 0.5.6 (2025/05/22)
+
+* improved error messages when attempting to write invalid mzQC files
+* runQuality/setQuality classes now have a getMetric() member function for easier extraction of metrics
+* fixed MzQCDateTime to contain a 'Z' at the end of the time to indicate UTC time for full ISO8601 compliance
+* update local psi-ms-cv to version 4.1.193
 
 # [CRAN] version 0.5.5 (2025/03/22)
 

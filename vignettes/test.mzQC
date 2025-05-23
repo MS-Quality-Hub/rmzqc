@@ -1,7 +1,7 @@
 {
   "mzQC": {
     "version": "1.0.0",
-    "creationDate": "2025-03-22T21:50:08",
+    "creationDate": "2025-05-22T14:06:18Z",
     "contactName": "bielow",
     "contactAddress": "test@user.info",
     "description": "A minimal mzQC test document with bogus data",
@@ -51,8 +51,8 @@
     "controlledVocabularies": [
       {
         "name": "Proteomics Standards Initiative Mass Spectrometry Ontology",
-        "uri": "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.192/psi-ms.obo",
-        "version": "4.1.192"
+        "uri": "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.193/psi-ms.obo",
+        "version": "4.1.193"
       }
     ]
   }

@@ -16,7 +16,7 @@ The format is "\%Y-\%m-\%dT\%H:\%M:\%S".
 
 
 \examples{
-   dt1 = MzQCDateTime$new("1900-01-01")  ## yields "1900-01-01T00:00:00"
+   dt1 = MzQCDateTime$new("1900-01-01")  ## yields "1900-01-01T00:00:00Z"
    dt2 = MzQCDateTime$new(Sys.time())
    ## test faulty input
    ## errors with 'character string is not in a standard unambiguous format'

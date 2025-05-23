@@ -2,20 +2,22 @@
 % Please edit documentation in R/misc.R
 \name{isUndefined}
 \alias{isUndefined}
-\title{Tell if a string is undefined (NA or NULL); If yes, and its required by the mzQC standard,
+\title{Tell if a variable's value is undefined (NA or NULL); If yes, and it is required by the mzQC standard,
 we can raise an error.}
 \usage{
-isUndefined(s, ..., verbose = TRUE)
+isUndefined(s, ..., verbose = TRUE, context = NULL)
 }
 \arguments{
-\item{s}{A string to be checked for NA/NULL}
+\item{s}{A variable to be checked for NA/NULL}
 
-\item{...}{More strings to be checked}
+\item{...}{More variable to be checked}
 
 \item{verbose}{If TRUE and 's' is NULL/NA, will print the name of the variable which was passed in}
+
+\item{context}{An optional string will be using within a warning message, to ease tracking of where in the mzQC structure the undefined value occurs}
 }
 \description{
-You can pass multiple strings, which are all checked.
+You can pass multiple variable, which are all checked.
 If \strong{any} of them is undefined, the function returns TRUE
 }
 \examples{

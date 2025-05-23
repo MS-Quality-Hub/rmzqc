@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rmzqc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
                         <h4 data-toc-skip class="author">Chris Bielow <a href="mailto:chris.bielow@fu-berlin.de" class="email">chris.bielow@fu-berlin.de</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2025-03-22</h4>
+            <h4 data-toc-skip class="date">2025-05-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MS-Quality-hub/rmzqc/blob/HEAD/vignettes/using_a_custom_cv.Rmd" class="external-link"><code>vignettes/using_a_custom_cv.Rmd</code></a></small>
       <div class="d-none name"><code>using_a_custom_cv.Rmd</code></div>
@@ -88,19 +88,17 @@ document is accurate.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MS-Quality-hub/rmzqc" class="external-link">rmzqc</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
-<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.192/psi-ms.obo' ...</span></span></code></pre>
+<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.193/psi-ms.obo' ...</span></span></code></pre>
 <pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
 <span><span class="co">## Field "name":</span></span>
 <span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
 <span><span class="co">## Field "uri":</span></span>
-<span><span class="co">## [1] "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.192/psi-ms.obo"</span></span>
+<span><span class="co">## [1] "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.193/psi-ms.obo"</span></span>
 <span><span class="co">## Field "version":</span></span>
-<span><span class="co">## [1] "4.1.192"</span></span></code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<span><span class="co">## [1] "4.1.193"</span></span></code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## test if the default CV is usable</span></span>
 <span><span class="fu"><a href="../reference/toQCMetric.html">toQCMetric</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:4000059"</span>, value <span class="op">=</span> <span class="fl">13405</span><span class="op">)</span> <span class="co">## number of MS1 scans</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
 <pre><code><span><span class="co">## Reference class object of class "MzQCqualityMetric"</span></span>
 <span><span class="co">## Field "accession":</span></span>
 <span><span class="co">## [1] "MS:4000059"</span></span>
@@ -115,71 +113,62 @@ document is accurate.</p>
 <p>However, if you happen to run this code without an internet
 connection, it will fall back to the PSI-MS CV which is shipped with the
 rmzqc package (which may not contain the latest CV terms)</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## With internet:</span></span>
-<span><span class="va">myCV</span> <span class="op">=</span> <span class="fu"><a href="../reference/getCVSingleton.html">getCVSingleton</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">myCV</span><span class="op">$</span><span class="fu">setData</span><span class="op">(</span><span class="fu"><a href="../reference/getCVDictionary.html">getCVDictionary</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">)</span> <span class="co">## this is done internally by default when you load the package</span></span></code></pre></div>
-<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.192/psi-ms.obo' ...</span></span></code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<span><span class="va">myCV</span> <span class="op">=</span> <span class="fu"><a href="../reference/getCVSingleton.html">getCVSingleton</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">myCV</span><span class="op">$</span><span class="fu">setData</span><span class="op">(</span><span class="fu"><a href="../reference/getCVDictionary.html">getCVDictionary</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">)</span> <span class="co">## this is done internally by default when you load the package</span></span></code></pre></div>
+<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.193/psi-ms.obo' ...</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Number of entries in latest CV: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVSingleton.html">getCVSingleton</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">getCV</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
 <pre><code><span><span class="co">## Number of entries in latest CV:  6806</span></span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
 <pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
 <span><span class="co">## Field "name":</span></span>
 <span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
 <span><span class="co">## Field "uri":</span></span>
-<span><span class="co">## [1] "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.192/psi-ms.obo"</span></span>
+<span><span class="co">## [1] "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.193/psi-ms.obo"</span></span>
 <span><span class="co">## Field "version":</span></span>
-<span><span class="co">## [1] "4.1.192"</span></span></code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<span><span class="co">## [1] "4.1.193"</span></span></code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## simulate missing internet connection by invoking the function manually</span></span>
 <span><span class="va">myCV</span><span class="op">$</span><span class="fu">setData</span><span class="op">(</span><span class="fu"><a href="../reference/getCVDictionary.html">getCVDictionary</a></span><span class="op">(</span><span class="st">"local"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Number of entries in local CV: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVSingleton.html">getCVSingleton</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">getCV</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
-<pre><code><span><span class="co">## Number of entries in local CV:  6700</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Number of entries in local CV:  6806</span></span></code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
 <pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
 <span><span class="co">## Field "name":</span></span>
 <span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
 <span><span class="co">## Field "uri":</span></span>
-<span><span class="co">## [1] "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.129/psi-ms.obo"</span></span>
+<span><span class="co">## [1] "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.193/psi-ms.obo"</span></span>
 <span><span class="co">## Field "version":</span></span>
-<span><span class="co">## [1] "4.1.129"</span></span></code></pre>
+<span><span class="co">## [1] "4.1.193"</span></span></code></pre>
 <p>Now, the package’s PSI-MS CV might still not suit you, and you want
 to use the latest unpublished CV, which you downloaded somewhere, or
 which you handcrafted for testing. Then simply use a custom .obo
 file:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myOBO</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"./cv/psi-ms.obo"</span>, package<span class="op">=</span><span class="st">"rmzqc"</span><span class="op">)</span> <span class="co">## we will use a local file, but you can point to anything you have (even URI's)</span></span>
 <span><span class="va">myCV</span><span class="op">$</span><span class="fu">setData</span><span class="op">(</span><span class="fu"><a href="../reference/getCVDictionary.html">getCVDictionary</a></span><span class="op">(</span><span class="st">"custom"</span>, <span class="va">myOBO</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Number of entries in custom CV: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVSingleton.html">getCVSingleton</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">getCV</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
-<pre><code><span><span class="co">## Number of entries in custom CV:  6700</span></span></code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Number of entries in custom CV:  6806</span></span></code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
 <pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
 <span><span class="co">## Field "name":</span></span>
 <span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
 <span><span class="co">## Field "uri":</span></span>
-<span><span class="co">## [1] "C:/Users/bielow/AppData/Local/Programs/R/R-4.4.3/library/rmzqc/./cv/psi-ms.obo"</span></span>
+<span><span class="co">## [1] "C:/Users/bielow/AppData/Local/Temp/RtmpYhnAaX/temp_libpath5c286a8e3a/rmzqc/./cv/psi-ms.obo"</span></span>
 <span><span class="co">## Field "version":</span></span>
-<span><span class="co">## [1] "4.1.129"</span></span></code></pre>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<span><span class="co">## [1] "4.1.193"</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## you may want to change the CV-entries, or URI or version manually, before creating an mzQC file:</span></span>
 <span><span class="va">newCV</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>CV <span class="op">=</span> <span class="va">myCV</span><span class="op">$</span><span class="fu">getData</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">CV</span>, </span>
 <span>             URI <span class="op">=</span> <span class="st">"https://myURI.com"</span>,</span>
 <span>             version <span class="op">=</span> <span class="st">"9.9.2"</span><span class="op">)</span></span>
 <span><span class="va">myCV</span><span class="op">$</span><span class="fu">setData</span><span class="op">(</span><span class="va">newCV</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span></span></code></pre>
 <pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
 <span><span class="co">## Field "name":</span></span>
 <span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
@@ -200,7 +189,7 @@ file:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>

@@ -48,14 +48,14 @@
 #'    toQCMetric(id = "MS:0000", value = "ID_is_not_valid", allow_unknown_id = TRUE)
 #'
 #'    \donttest{
-#'    ## matrix (there is no example in the CV yet, so this cannot be tested)
-#'    toQCMetric(id = "MS:400000?", value = matrix(1:12, nrow = 3, ncol = 4)) # ???
-
+#'    ## matrix (MS:4000006): there is no example in the CV yet, so this cannot be tested)
+#'    #toQCMetric(id = "MS:400000?", value = matrix(1:12, nrow = 3, ncol = 4)) # ???
+#'
 #'    # does not work since the 'id' is not derived from a valid value type
-#'    toQCMetric(id = "MS:0000000", value = "ID_is_not_valid")
+#'    #toQCMetric(id = "MS:0000000", value = "ID_is_not_valid")
 #'
 #'    # does not work, since the ID is unknown and 'allow_unknown_id' is FALSE by default
-#'    toQCMetric(id = "MS:0000", value = "ID_is_not_valid")
+#'    #toQCMetric(id = "MS:0000", value = "ID_is_not_valid")
 #'    }
 #'
 #' @export

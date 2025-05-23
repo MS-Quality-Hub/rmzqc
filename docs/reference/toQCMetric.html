@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rmzqc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,6 @@ The following requirements for values apply:</p><ul><li><p>single value: R singl
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>   <span class="co">## single value</span></span></span>
 <span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:4000059"</span>, value <span class="op">=</span> <span class="fl">13405</span><span class="op">)</span> <span class="co"># number of MS1 spectra</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reference class object of class "MzQCqualityMetric"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Field "accession":</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "MS:4000059"</span>
@@ -111,7 +110,6 @@ The following requirements for values apply:</p><ul><li><p>single value: R singl
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>   <span class="co">## n-tuple</span></span></span>
 <span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:4000051"</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">31.3</span>, <span class="fl">35.99</span>, <span class="fl">38.44</span><span class="op">)</span><span class="op">)</span> <span class="co"># XIC-FWHM quantiles</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reference class object of class "MzQCqualityMetric"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Field "accession":</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "MS:4000051"</span>
@@ -128,7 +126,6 @@ The following requirements for values apply:</p><ul><li><p>single value: R singl
 <span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:4000063"</span>,  <span class="co"># MS2 known precursor charges fractions</span></span></span>
 <span class="r-in"><span>              value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"MS:1000041"</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span></span>
 <span class="r-in"><span>                           <span class="st">"UO:0000191"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reference class object of class "MzQCqualityMetric"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Field "accession":</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "MS:4000063"</span>
@@ -148,7 +145,6 @@ The following requirements for values apply:</p><ul><li><p>single value: R singl
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>   <span class="co">## test an invalid CV accession/id</span></span></span>
 <span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:0000"</span>, value <span class="op">=</span> <span class="st">"ID_is_not_valid"</span>, allow_unknown_id <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Could not find id 'MS:0000' in CV list (length: 6806)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reference class object of class "MzQCqualityMetric"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Field "accession":</span>
@@ -163,23 +159,14 @@ The following requirements for values apply:</p><ul><li><p>single value: R singl
 <span class="r-out co"><span class="r-pr">#&gt;</span> list()</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>   <span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span>   <span class="co">## matrix (there is no example in the CV yet, so this cannot be tested)</span></span></span>
-<span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:400000?"</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="co"># ???</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Could not find id 'MS:400000?' in CV list (length: 6806)</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in toQCMetric(id = "MS:400000?", value = matrix(1:12, nrow = 3,     ncol = 4)):</span> The ID 'MS:400000?' is unknown in the current CV. Either fix the ID or use a more recent CV (see getCVSingleton()).</span>
+<span class="r-in"><span>   <span class="co">## matrix (MS:4000006): there is no example in the CV yet, so this cannot be tested)</span></span></span>
+<span class="r-in"><span>   <span class="co">#toQCMetric(id = "MS:400000?", value = matrix(1:12, nrow = 3, ncol = 4)) # ???</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>   <span class="co"># does not work since the 'id' is not derived from a valid value type</span></span></span>
-<span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:0000000"</span>, value <span class="op">=</span> <span class="st">"ID_is_not_valid"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> ... in toQCMetric: The ID 'MS:0000000' does not have a 'is_a' entry and thus cannot be derived from a matrix, n-tuple, etc.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Please use the correct CV term (possibly modifying the psi-ms cv file, see 'getCVSingleton()')</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> or obtain a template using `getQualityMetricTemplate()` if your CV term is unknown.</span>
+<span class="r-in"><span>   <span class="co">#toQCMetric(id = "MS:0000000", value = "ID_is_not_valid")</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>   <span class="co"># does not work, since the ID is unknown and 'allow_unknown_id' is FALSE by default</span></span></span>
-<span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:0000"</span>, value <span class="op">=</span> <span class="st">"ID_is_not_valid"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Superclass Singleton has cloneable=FALSE, but subclass CV_ has cloneable=TRUE. A subclass cannot be cloneable when its superclass is not cloneable, so cloning will be disabled for CV_.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Could not find id 'MS:0000' in CV list (length: 6806)</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in toQCMetric(id = "MS:0000", value = "ID_is_not_valid"):</span> The ID 'MS:0000' is unknown in the current CV. Either fix the ID or use a more recent CV (see getCVSingleton()).</span>
+<span class="r-in"><span>   <span class="co">#toQCMetric(id = "MS:0000", value = "ID_is_not_valid")</span></span></span>
 <span class="r-in"><span>   <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -193,7 +180,7 @@ The following requirements for values apply:</p><ul><li><p>single value: R singl
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer></div>

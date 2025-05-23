@@ -1,5 +1,5 @@
 
-test_that("isValidMzQC = function(x, ...)", {
+test_that("isValidMzQC = function(x, parent_context = NULL)", {
   suppressWarnings(## the expression below yields more than one warning, but expect_warning only catches a single one
    expect_warning(out <- isValidMzQC(MzQCcvParameter$new("MS:4000059")))
   )
@@ -14,9 +14,14 @@ test_that("isValidMzQC = function(x, ...)", {
 
   expect_true(isValidMzQC(list(MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra"))))
 
-  suppressWarnings(## the expression below yields more than one warning, but expect_warning only catches a single one
-    expect_warning(out <- isValidMzQC(list(MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra")),
-                                   MzQCcvParameter$new()))
+  # Test with multiple objects (now needs to be done separately)
+  valid_param <- MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra")
+  invalid_param <- MzQCcvParameter$new()
+  
+  # Check each object individually
+  expect_true(isValidMzQC(valid_param))
+  suppressWarnings(
+    expect_warning(out <- isValidMzQC(invalid_param))
   )
   expect_false(out)
 })
