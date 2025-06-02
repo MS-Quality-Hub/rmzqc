@@ -246,14 +246,14 @@ MzQCcontrolledVocabulary = setRefClass(
     {
       # Define expected fields
       expected_fields <- c("name", "uri", "version")
-      
+
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCcontrolledVocabulary", context)
-      
+
       # Required fields
       .self$name = check_field_exists(data, "name", "MzQCcontrolledVocabulary", paste0(context, "$name"), NA_character_)
       .self$uri = check_field_exists(data, "uri", "MzQCcontrolledVocabulary", paste0(context, "$uri"), NA_character_)
-      
+
       # Optional fields
       .self$version = getOptionalValue(data, "version", NA_character_)
       return(.self)
@@ -318,14 +318,14 @@ MzQCcvParameter = setRefClass(
     {
       # Define expected fields
       expected_fields <- c("accession", "name", "description", "value")
-      
+
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCcvParameter", context)
-      
+
       # Required fields
       .self$accession = check_field_exists(data, "accession", "MzQCcvParameter", paste0(context, "$accession"), NA_character_)
       .self$name = check_field_exists(data, "name", "MzQCcvParameter", paste0(context, "$name"), NA_character_)
-      
+
       # Optional fields
       .self$value = getOptionalValue(data, "value", NA)
       .self$description = getOptionalValue(data, "description", NA_character_)
@@ -398,10 +398,10 @@ MzQCinputFile = setRefClass(
     {
       # Define expected fields
       expected_fields <- c("name", "location", "fileFormat", "fileProperties")
-      
+
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCinputFile", context)
-      
+
       # Required fields
       .self$name = check_field_exists(data, "name", "MzQCinputFile", paste0(context, "$name"), NA_character_)
       .self$location = check_field_exists(data, "location", "MzQCinputFile", paste0(context, "$location"), NA_character_)
@@ -513,15 +513,15 @@ MzQCanalysisSoftware = setRefClass(
     {
       # Define expected fields
       expected_fields <- c("accession", "name", "version", "uri", "description", "value")
-      
+
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCanalysisSoftware", context)
-      
+
       # Required fields
       .self$accession = check_field_exists(data, "accession", "MzQCanalysisSoftware", paste0(context, "$accession"), NA_character_)
       .self$name = check_field_exists(data, "name", "MzQCanalysisSoftware", paste0(context, "$name"), NA_character_)
       .self$version = check_field_exists(data, "version", "MzQCanalysisSoftware", paste0(context, "$version"), NA_character_)
-      
+
       # Optional fields
       .self$uri = getOptionalValue(data, "uri", NA_character_)
       .self$description = getOptionalValue(data, "description", NA_character_)
@@ -598,10 +598,10 @@ MzQCmetadata = setRefClass(
     {
       # Define expected fields
       expected_fields <- c("label", "inputFiles", "analysisSoftware", "cvParameters")
-      
+
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCmetadata", context)
-      
+
       # Required fields
       .self$label = check_field_exists(data, "label", "MzQCmetadata", paste0(context, "$label"), NA_character_)
 
@@ -690,10 +690,10 @@ MzQCqualityMetric = setRefClass(
     {
       # Define expected fields
       expected_fields <- c("accession", "name", "description", "value", "unit")
-      
+
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCqualityMetric", context)
-      
+
       # Required fields
       .self$accession = check_field_exists(data, "accession", "MzQCqualityMetric", paste0(context, "$accession"), NA_character_)
       .self$name = check_field_exists(data, "name", "MzQCqualityMetric", paste0(context, "$name"), NA_character_)
@@ -757,7 +757,7 @@ MzQCbaseQuality = setRefClass(
       return(TRUE)
     },
     getMetric = function(.self, accession = NULL, name = NULL) {
-      if (! (is.null(accession) ^ is.null(name)))
+      if (! xor(is.null(accession), is.null(name)))
       {
         stop("Exactly one of 'accession' or 'name' are required.")
       }
@@ -965,11 +965,11 @@ MzQCmzQC = setRefClass(
         stop(gettextf("No valid mzQC root %s found. Cannot read data.", sQuote("mzQC")))
       }
       root = data$mzQC
-      
+
       # Define expected fields
       expected_fields <- c("version", "creationDate", "contactName", "contactAddress",
                           "description", "runQualities", "setQualities", "controlledVocabularies")
-      
+
       # Check for unexpected fields
       checkUnexpectedFields(root, expected_fields, "MzQCmzQC", context)
 
