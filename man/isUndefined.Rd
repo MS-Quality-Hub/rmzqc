@@ -25,6 +25,7 @@ isUndefined(NA)       ## TRUE
 isUndefined(NULL)     ## TRUE
 isUndefined(NA, NULL) ## TRUE
 isUndefined("")       ## FALSE
+isUndefined(list(1,2,3)) ## FALSE
 isUndefined("", NA)   ## TRUE
 isUndefined(NA, "")   ## TRUE
 isUndefined(1)        ## FALSE
