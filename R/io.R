@@ -37,8 +37,24 @@ writeMZQC = function(filepath, mzqc_obj)
 #'
 readMZQC = function(filepath)
 {
+  js = jsonlite::read_json(filepath)
+  return(readMZQCFromJSON(js))
+}
+
+
+#'
+#' Read a JSON object in mzQC format into an MzQCmzQC root object
+#'
+#' @param json_obj A generic R object (list of lists...)
+#' @returns An MzQCmzQC root object from which all the data can be extracted/manipulated
+#'
+#' @export
+#'
+readMZQCFromJSON = function(json_obj)
+{
   res = MzQCmzQC$new(version = "1.0.0",
                      creationDate = MzQCDateTime$new())
-  js = jsonlite::read_json(filepath)
-  return(res$fromData(js))
+  return(res$fromData(json_obj))
 }
+
+
