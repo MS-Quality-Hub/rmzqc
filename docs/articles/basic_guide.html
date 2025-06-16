@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rmzqc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
                         <h4 data-toc-skip class="author">Chris Bielow <a href="mailto:chris.bielow@fu-berlin.de" class="email">chris.bielow@fu-berlin.de</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2025-06-03</h4>
+            <h4 data-toc-skip class="date">2025-06-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MS-Quality-hub/rmzqc/blob/HEAD/vignettes/basic_guide.Rmd" class="external-link"><code>vignettes/basic_guide.Rmd</code></a></small>
       <div class="d-none name"><code>basic_guide.Rmd</code></div>
@@ -150,7 +150,7 @@ depending on context. In short: <code>null</code> may become an
 <span></span>
 <span><span class="co">## print some basic stats</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">gettextf</a></span><span class="op">(</span><span class="st">"This mzQC was created on %s and has %d quality metric(s) in total."</span>, <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html" class="external-link">dQuote</a></span><span class="op">(</span><span class="va">mq</span><span class="op">$</span><span class="va">creationDate</span><span class="op">$</span><span class="va">datetime</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mq</span><span class="op">$</span><span class="va">runQualities</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mq</span><span class="op">$</span><span class="va">setQualities</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "This mzQC was created on \"2025-06-03T00:00:00Z\" and has 1 quality metric(s) in total."</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "This mzQC was created on \"2025-06-16T00:00:00Z\" and has 1 quality metric(s) in total."</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="different-value-types-single-value-n-tuple-table-matrix-for-qualitymetrics">Different Value Types (single value, n-tuple, table, matrix) for
