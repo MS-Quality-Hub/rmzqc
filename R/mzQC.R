@@ -86,6 +86,7 @@ isValidMzQC = function(x, parent_context = NULL)
 #'
 #' @param mzqc_class Prototype of the class to convert 'data' into
 #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+#' @param context A trace through the mzQC object tree to aid users in case of errors
 #'
 #' @examples
 #'  data = MzQCcvParameter$new("acc", "myName", "value")
@@ -94,12 +95,12 @@ isValidMzQC = function(x, parent_context = NULL)
 #'
 #' @export
 #'
-fromDatatoMzQCobj = function(mzqc_class, data)
+fromDatatoMzQCobj = function(mzqc_class, data, context = NULL)
 {
   ## if not a list or vector and NA/NULL --> return a list
   if ((length(data) == 1) && (is.na(data) || is.null(data))) return(list())
   obj = mzqc_class$new()
-  obj$fromData(data)
+  obj$fromData(data, context = context)
   return(obj)
 }
 
@@ -109,6 +110,7 @@ fromDatatoMzQCobj = function(mzqc_class, data)
 #'
 #' @param mzqc_class Prototype of the class to convert 'data' into
 #' @param data A list of: A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+#' @param context A trace through the mzQC object tree to aid users in case of errors
 #'
 #' @examples
 #'     data = rmzqc::MzQCcvParameter$new("acc", "myName", "value")
@@ -117,11 +119,28 @@ fromDatatoMzQCobj = function(mzqc_class, data)
 #'
 #' @export
 #'
-fromDatatoMzQC = function(mzqc_class, data)
+fromDatatoMzQC = function(mzqc_class, data, context = NULL)
 {
-  return(sapply(data, function(x) {
-      fromDatatoMzQCobj(mzqc_class, x)
-    }))
+  # Handle NULL or NA data
+  if (is.null(data) || (length(data) == 1 && is.na(data))) {
+    return(list())
+  }
+
+  # Process each item with its index in the context
+  result <- list()
+  for (i in seq_along(data)) {
+    # Build context with index for this item
+    item_context <- if (!is.null(context)) {
+      paste0(context, "[", i, "]")
+    } else {
+      paste0("[", i, "]")
+    }
+
+    # Process the item with the indexed context
+    result[[i]] <- fromDatatoMzQCobj(mzqc_class, data[[i]], context = item_context)
+  }
+
+  return(result)
 }
 
 
@@ -166,7 +185,7 @@ MzQCDateTime = setRefClass(
       if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
       return(jsonlite:::asJSON(.self$datetime, ...))
     },
-    fromData = function(.self, data)
+    fromData = function(.self, data, context = "MzQCDateTime")
     {
       .self$set(data)
       return(.self)
@@ -223,11 +242,20 @@ MzQCcontrolledVocabulary = setRefClass(
                "version" = .self$version)
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data)
+    fromData = function(.self, data, context = "MzQCcontrolledVocabulary")
     {
-      .self$name = data$name
-      .self$uri = data$uri
-      .self$version = NULL_to_charNA(data$version)
+      # Define expected fields
+      expected_fields <- c("name", "uri", "version")
+
+      # Check for unexpected fields
+      checkUnexpectedFields(data, expected_fields, "MzQCcontrolledVocabulary", context)
+
+      # Required fields
+      .self$name = check_field_exists(data, "name", "MzQCcontrolledVocabulary", paste0(context, "$name"), NA_character_)
+      .self$uri = check_field_exists(data, "uri", "MzQCcontrolledVocabulary", paste0(context, "$uri"), NA_character_)
+
+      # Optional fields
+      .self$version = getOptionalValue(data, "version", NA_character_)
       return(.self)
     }
   )
@@ -282,16 +310,25 @@ MzQCcvParameter = setRefClass(
 
       r = list("accession" = .self$accession,
                "name" = .self$name)
-      if (!is.na(.self$description)) r["description"] = .self$description
-      if (!is.na(.self$value)) r["value"] = .self$value
+      if (!isUndefined(.self$value, verbose = FALSE)) r["value"] = .self$value
+      if (!isUndefined(.self$description, verbose = FALSE)) r["description"] = .self$description
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data)
+    fromData = function(.self, data, context = "MzQCcvParameter")
     {
-      .self$accession = data$accession
-      .self$name = data$name
-      .self$description = NULL_to_charNA(data$description)
-      .self$value = NULL_to_NA(data$value)
+      # Define expected fields
+      expected_fields <- c("accession", "name", "description", "value")
+
+      # Check for unexpected fields
+      checkUnexpectedFields(data, expected_fields, "MzQCcvParameter", context)
+
+      # Required fields
+      .self$accession = check_field_exists(data, "accession", "MzQCcvParameter", paste0(context, "$accession"), NA_character_)
+      .self$name = check_field_exists(data, "name", "MzQCcvParameter", paste0(context, "$name"), NA_character_)
+
+      # Optional fields
+      .self$value = getOptionalValue(data, "value", NA)
+      .self$description = getOptionalValue(data, "description", NA_character_)
       return(.self)
     }
   )
@@ -357,12 +394,31 @@ MzQCinputFile = setRefClass(
       if (length(.self$fileProperties) > 0) r$fileProperties = .self$fileProperties
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data)
+    fromData = function(.self, data, context = "MzQCinputFile")
     {
-      .self$name = data$name
-      .self$location = data$location
-      .self$fileFormat$fromData(data$fileFormat)
-      .self$fileProperties = fromDatatoMzQC(MzQCcvParameter, data$fileProperties) ## for lists, call the free function
+      # Define expected fields
+      expected_fields <- c("name", "location", "fileFormat", "fileProperties")
+
+      # Check for unexpected fields
+      checkUnexpectedFields(data, expected_fields, "MzQCinputFile", context)
+
+      # Required fields
+      .self$name = check_field_exists(data, "name", "MzQCinputFile", paste0(context, "$name"), NA_character_)
+      .self$location = check_field_exists(data, "location", "MzQCinputFile", paste0(context, "$location"), NA_character_)
+
+      # Check fileFormat exists and pass context to nested fromData call
+      fileFormat_data = check_field_exists(data, "fileFormat", "MzQCinputFile", paste0(context, "$fileFormat"), NULL)
+
+      if (!is.null(fileFormat_data) && !any(is.na(fileFormat_data))) {
+        .self$fileFormat$fromData(fileFormat_data, context = paste0(context, "$fileFormat"))
+      } else {
+        .self$fileFormat <- MzQCcvParameter$new()  # Use default
+      }
+
+      # Handle optional fileProperties with default empty list
+      fileProperties_data = getOptionalValue(data, "fileProperties", list())
+      .self$fileProperties = fromDatatoMzQC(MzQCcvParameter, fileProperties_data, context = paste0(context, "$fileProperties"))
+
       return(.self)
     }
   )
@@ -453,14 +509,23 @@ MzQCanalysisSoftware = setRefClass(
       if (!isUndefined(.self$value, verbose = FALSE)) r$value = .self$value
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data)
+    fromData = function(.self, data, context = "MzQCanalysisSoftware")
     {
-      .self$accession = data$accession
-      .self$name = data$name
-      .self$version = data$version
-      .self$uri = NULL_to_charNA(data$uri)
-      .self$description = NULL_to_charNA(data$description)
-      .self$value = NULL_to_charNA(data$value)
+      # Define expected fields
+      expected_fields <- c("accession", "name", "version", "uri", "description", "value")
+
+      # Check for unexpected fields
+      checkUnexpectedFields(data, expected_fields, "MzQCanalysisSoftware", context)
+
+      # Required fields
+      .self$accession = check_field_exists(data, "accession", "MzQCanalysisSoftware", paste0(context, "$accession"), NA_character_)
+      .self$name = check_field_exists(data, "name", "MzQCanalysisSoftware", paste0(context, "$name"), NA_character_)
+      .self$version = check_field_exists(data, "version", "MzQCanalysisSoftware", paste0(context, "$version"), NA_character_)
+
+      # Optional fields
+      .self$uri = getOptionalValue(data, "uri", NA_character_)
+      .self$description = getOptionalValue(data, "description", NA_character_)
+      .self$value = getOptionalValue(data, "value", NA_character_)
       return(.self)
     }
   )
@@ -529,12 +594,31 @@ MzQCmetadata = setRefClass(
       if (length(.self$cvParameters) > 0 ) r$cvParameters = list(.self$cvParameters) ## extra list for the enclosing '[ ... ]'
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data)
+    fromData = function(.self, data, context = "MzQCmetadata")
     {
-      .self$label = data$label
-      .self$inputFiles = fromDatatoMzQC(MzQCinputFile, data$inputFiles)
-      .self$analysisSoftware = fromDatatoMzQC(MzQCanalysisSoftware, data$analysisSoftware)
-      .self$cvParameters = fromDatatoMzQC(MzQCcvParameter, data$cvParameters)
+      # Define expected fields
+      expected_fields <- c("label", "inputFiles", "analysisSoftware", "cvParameters")
+
+      # Check for unexpected fields
+      checkUnexpectedFields(data, expected_fields, "MzQCmetadata", context)
+
+      # Required fields
+      .self$label = check_field_exists(data, "label", "MzQCmetadata", paste0(context, "$label"), NA_character_)
+
+      inputFiles_data = check_field_exists(data, "inputFiles", "MzQCmetadata", paste0(context, "$inputFiles"), list())
+      .self$inputFiles = fromDatatoMzQC(MzQCinputFile, inputFiles_data, context = paste0(context, "$inputFiles"))
+
+      analysisSoftware_data = check_field_exists(data, "analysisSoftware", "MzQCmetadata", paste0(context, "$analysisSoftware"), list())
+      .self$analysisSoftware = fromDatatoMzQC(MzQCanalysisSoftware, analysisSoftware_data, context = paste0(context, "$analysisSoftware"))
+
+      # Optional cvParameters
+      cvParameters_data = getOptionalValue(data, "cvParameters", list())
+      if (length(cvParameters_data) > 0) {
+        .self$cvParameters = fromDatatoMzQC(MzQCcvParameter, cvParameters_data, context = paste0(context, "$cvParameters"))
+      } else {
+        .self$cvParameters = list()
+      }
+
       return(.self)
     }
   )
@@ -595,21 +679,37 @@ MzQCqualityMetric = setRefClass(
       if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
 
       r = list("accession" = .self$accession,
-               "name" = .self$name,
-               "description" = .self$description,
-               "value" = .self$value   ## NA is written as "value": [null] and read back as NA
-      )
+               "name" = .self$name)
+      if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
+      if (!isUndefined(.self$value, verbose = FALSE)) r$value = .self$value
+
       if (length(.self$unit) > 0) r$unit = .self$unit  ## optional
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data)
+    fromData = function(.self, data, context = "MzQCqualityMetric")
     {
-      .self$accession = data$accession
-      .self$name = data$name
-      .self$description = NULL_to_charNA(data$description)
-      if (length(data$value) > 1 ||  ## could be an n-tuple or a single value
-          !is.na(data$value)) .self$value = data$value
-      if (exists('data$unit')) .self$unit = fromDatatoMzQC(MzQCcvParameter, list(data$unit)) ## if data$unit is empty, or NA, the empty list will be returned
+      # Define expected fields
+      expected_fields <- c("accession", "name", "description", "value", "unit")
+
+      # Check for unexpected fields
+      checkUnexpectedFields(data, expected_fields, "MzQCqualityMetric", context)
+
+      # Required fields
+      .self$accession = check_field_exists(data, "accession", "MzQCqualityMetric", paste0(context, "$accession"), NA_character_)
+      .self$name = check_field_exists(data, "name", "MzQCqualityMetric", paste0(context, "$name"), NA_character_)
+
+      # Optional fields
+      .self$description = getOptionalValue(data, "description", NA_character_)
+      .self$value = getOptionalValue(data, "value", NA) ## could be an n-tuple or a single value
+
+      # Optional unit
+      unit_data = getOptionalValue(data, "unit", list())
+      if (!is.null(unit_data) && length(unit_data) > 0) {
+        .self$unit = fromDatatoMzQC(MzQCcvParameter, list(unit_data), context = paste0(context, "$unit"))
+      } else {
+        .self$unit = list()
+      }
+
       return(.self)
     }
   )
@@ -650,14 +750,14 @@ MzQCbaseQuality = setRefClass(
       }
 
       # Check qualityMetrics with proper context
-      if (!isValidMzQC(.self$qualityMetrics, parent_context = paste0(context, "$qualityMetrics"))) {
+      if (length(.self$qualityMetrics) == 0 || !isValidMzQC(.self$qualityMetrics, parent_context = paste0(context, "$qualityMetrics"))) {
         return(FALSE)
       }
 
       return(TRUE)
     },
     getMetric = function(.self, accession = NULL, name = NULL) {
-      if (! (is.null(accession) ^ is.null(name)))
+      if (! xor(is.null(accession), is.null(name)))
       {
         stop("Exactly one of 'accession' or 'name' are required.")
       }
@@ -688,10 +788,23 @@ MzQCbaseQuality = setRefClass(
                "qualityMetrics" = .self$qualityMetrics)
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, mdata)
+    fromData = function(.self, mdata, context = "MzQCbaseQuality")
     {
-      .self$metadata = fromDatatoMzQCobj(MzQCmetadata, mdata$metadata) ## metadata is a single element
+
+      .self$metadata = fromDatatoMzQCobj(MzQCmetadata, mdata$metadata)
       .self$qualityMetrics = fromDatatoMzQC(MzQCqualityMetric, mdata$qualityMetrics) ## if mdata$qualityMetrics is empty, or NA, the empty list will be returned
+
+      # Required fields
+      #  - metadata is a single element
+      metadata_data = check_field_exists(mdata, "metadata", "MzQCbaseQuality", paste0(context, "$metadata"), NULL)
+      .self$metadata = fromDatatoMzQCobj(MzQCmetadata, metadata_data, context = paste0(context, "$metadata"))
+
+      qualityMetrics_data = check_field_exists(mdata, "qualityMetrics", "MzQCbaseQuality", paste0(context, "$qualityMetrics"), list())
+      if (!("list" %in% class(qualityMetrics_data)) || length(qualityMetrics_data) == 0)
+      {
+        warning("A list of QualityMetrics must contain at least one element. The given list is empty!")
+      }
+      .self$qualityMetrics = fromDatatoMzQC(MzQCqualityMetric, qualityMetrics_data, context = paste0(context, "$qualityMetrics"))
       return(.self)
     }
   )
@@ -842,18 +955,54 @@ MzQCmzQC = setRefClass(
       r$controlledVocabularies = .self$controlledVocabularies
       return (jsonlite:::asJSON(list("mzQC" = r), ...))
     },
-    fromData = function(.self, data)
+    fromData = function(.self, data, context = "MzQCmzQC")
     {
+      # Check if mzQC root exists
+      if (is.null(data$mzQC)) {
+        warning(paste0("No valid mzQC root found in data for class 'MzQCmzQC'",
+                      if (!is.null(context)) paste0(" in ", context) else ""),
+                immediate. = TRUE, call. = FALSE)
+        stop(gettextf("No valid mzQC root %s found. Cannot read data.", sQuote("mzQC")))
+      }
       root = data$mzQC
-      if (is.null(root)) stop(gettextf("No valid mzQC root %s found. Cannot read data.", sQuote("mzQC")))
-      .self$version = root$version
-      .self$creationDate = fromDatatoMzQCobj(MzQCDateTime, root$creationDate)
-      .self$contactName = NULL_to_charNA(root$contactName)
-      .self$contactAddress = NULL_to_charNA(root$contactAddress)
-      .self$description = NULL_to_charNA(root$description)
-      .self$runQualities = fromDatatoMzQC(MzQCrunQuality, root$runQualities) ## if root$runQualities is empty, or NA, the empty list will be returned
-      .self$setQualities = fromDatatoMzQC(MzQCsetQuality, root$setQualities) ## if root$setQualities is empty, or NA, the empty list will be returned
-      .self$controlledVocabularies = fromDatatoMzQC(MzQCcontrolledVocabulary, root$controlledVocabularies)
+
+      # Define expected fields
+      expected_fields <- c("version", "creationDate", "contactName", "contactAddress",
+                          "description", "runQualities", "setQualities", "controlledVocabularies")
+
+      # Check for unexpected fields
+      checkUnexpectedFields(root, expected_fields, "MzQCmzQC", context)
+
+      # Required fields
+      .self$version = check_field_exists(root, "version", "MzQCmzQC", paste0(context, "$version"), NA_character_)
+
+      # Required fields with default constructor
+      creationDate_data = check_field_exists(root, "creationDate", "MzQCmzQC", paste0(context, "$creationDate"), NULL)
+      if (!is.null(creationDate_data)) {
+        .self$creationDate = fromDatatoMzQCobj(MzQCDateTime, creationDate_data, context = paste0(context, "$creationDate"))
+      } else {
+        .self$creationDate = MzQCDateTime$new() # Use default
+      }
+
+      # Optional fields
+      .self$contactName = getOptionalValue(root, "contactName", NA_character_)
+      .self$contactAddress = getOptionalValue(root, "contactAddress", NA_character_)
+      .self$description = getOptionalValue(root, "description", NA_character_)
+
+      # At least one of runQualities or setQualities must be present, but both are technically optional
+      runQualities_data = getOptionalValue(root, "runQualities", list())
+      .self$runQualities = fromDatatoMzQC(MzQCrunQuality, runQualities_data,
+                                         context = paste0(context, "$runQualities"))
+
+      setQualities_data = getOptionalValue(root, "setQualities", list())
+      .self$setQualities = fromDatatoMzQC(MzQCsetQuality, setQualities_data,
+                                         context = paste0(context, "$setQualities"))
+
+      # Required list
+      controlledVocabularies_data = check_field_exists(root, "controlledVocabularies", "MzQCmzQC",
+                                                      paste0(context, "$controlledVocabularies"), list())
+      .self$controlledVocabularies = fromDatatoMzQC(MzQCcontrolledVocabulary, controlledVocabularies_data,
+                                                   context = paste0(context, "$controlledVocabularies"))
       return(.self)
     }
   )

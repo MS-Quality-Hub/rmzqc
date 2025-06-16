@@ -4,12 +4,14 @@
 \alias{fromDatatoMzQCobj}
 \title{Allow conversion of a plain R object (obtained from jSON) to an mzQC object}
 \usage{
-fromDatatoMzQCobj(mzqc_class, data)
+fromDatatoMzQCobj(mzqc_class, data, context = NULL)
 }
 \arguments{
 \item{mzqc_class}{Prototype of the class to convert 'data' into}
 
 \item{data}{A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'}
+
+\item{context}{A trace through the mzQC object tree to aid users in case of errors}
 }
 \description{
 If you have a list of elements, call fromDatatoMzQC.

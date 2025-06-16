@@ -1,7 +1,7 @@
 {
   "mzQC": {
     "version": "1.0.0",
-    "creationDate": "2025-05-22T14:06:18Z",
+    "creationDate": "2025-06-03T11:16:22Z",
     "contactName": "bielow",
     "contactAddress": "test@user.info",
     "description": "A minimal mzQC test document with bogus data",
@@ -42,7 +42,7 @@
             "description": "\"The fraction of MS/MS precursors of the corresponding charge. The fractions [0,1] are given in the 'Fraction' column, corresponding charges in the 'Charge state' column. The highest charge state is to be interpreted as that charge state or higher.\" [PSI:MS]",
             "value": {
               "MS:1000041": [1, 2, 3],
-              "UO:0000191": [0.7, 0.6, 0.8]
+              "UO:0000191": [0.1, 0.8, 0.1]
             }
           }
         ]
@@ -51,8 +51,8 @@
     "controlledVocabularies": [
       {
         "name": "Proteomics Standards Initiative Mass Spectrometry Ontology",
-        "uri": "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.193/psi-ms.obo",
-        "version": "4.1.193"
+        "uri": "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.194/psi-ms.obo",
+        "version": "4.1.194"
       }
     ]
   }

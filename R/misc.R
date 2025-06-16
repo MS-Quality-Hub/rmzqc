@@ -63,6 +63,7 @@ NULL_to_NA = function(var_or_NULL) {
 #' isUndefined(NULL)     ## TRUE
 #' isUndefined(NA, NULL) ## TRUE
 #' isUndefined("")       ## FALSE
+#' isUndefined(list(1,2,3)) ## FALSE
 #' isUndefined("", NA)   ## TRUE
 #' isUndefined(NA, "")   ## TRUE
 #' isUndefined(1)        ## FALSE
@@ -73,13 +74,14 @@ NULL_to_NA = function(var_or_NULL) {
 #'
 isUndefined = function(s, ..., verbose = TRUE, context = NULL)
 {
-  r = (is.na(s) || is.null(s))
-  name_of_var = deparse(substitute(s))
-  # omit the '.self' part of the variable's name
-  name_of_var = gsub("^.self\\$", "", name_of_var)
+  r = (is.null(s) || all(is.na(s)))
 
   # Build a more informative error message with context if provided
   if (verbose && r) {
+    name_of_var = deparse(substitute(s))
+    # omit the '.self' part of the variable's name
+    name_of_var = gsub("^.self\\$", "", name_of_var)
+
     if (!is.null(context)) {
       warning(paste0(context, "$", name_of_var, " is NA/NULL"), immediate. = TRUE, call. = FALSE)
     } else {
@@ -214,4 +216,76 @@ localFileToURI = function(local_filename, must_exist = TRUE)
   paste0("file:///", normalizePath(local_filename, winslash = '/', mustWork = must_exist))
 }
 
+#'
+#' Check if a field exists in data and warn if it doesn't, then return the field value
+#'
+#' @param data The data structure to check
+#' @param field_name The name of the field to check for
+#' @param class_name The name of the class being populated
+#' @param context Optional context information for the warning message
+#' @param default_value Value to return if the field doesn't exist (default: NA)
+#' @return The field value if it exists, otherwise the default_value
+#'
+#' @keywords internal
+#'
+check_field_exists = function(data, field_name, class_name, context = NULL, default_value = NA) {
+  if (is.null(data[[field_name]])) {
+    context_str <- if (!is.null(context)) paste0(" in ", context) else ""
+    warning(paste0("Required field '", field_name, "' missing in data for class '", class_name, "'", context_str),
+            immediate. = TRUE, call. = FALSE)
+    return(default_value)
+  }
+  return(data[[field_name]])
+}
+
+#'
+#' Check for unexpected fields in data and warn if any are found
+#'
+#' This function compares the fields in the data with a list of expected fields
+#' and warns if there are any unexpected fields.
+#'
+#' @param data The data structure to check
+#' @param expected_fields A character vector of expected field names
+#' @param class_name The name of the class being populated
+#' @param context Optional context information for the warning message
+#' @return Invisibly returns a character vector of unexpected field names
+#'
+#' @keywords internal
+#'
+checkUnexpectedFields = function(data, expected_fields, class_name, context = NULL) {
+  if (!is.list(data) || is.null(data)) {
+    return(invisible(character(0)))
+  }
+
+  data_fields <- names(data)
+  unexpected_fields <- setdiff(data_fields, expected_fields)
+
+  if (length(unexpected_fields) > 0) {
+    context_str <- if (!is.null(context)) paste0(" in ", context) else ""
+    warning(paste0("Unexpected field(s) found in data for class '", class_name, "'", context_str, ": ",
+                  paste(unexpected_fields, collapse = ", ")),
+            immediate. = TRUE, call. = FALSE)
+  }
+
+  invisible(unexpected_fields)
+}
+
+#'
+#' Get an optional value from data, using a default if not present
+#'
+#' Use this function for optional fields where no warning should be generated if missing.
+#'
+#' @param data The data structure to extract from
+#' @param field_name The name of the field to extract
+#' @param default_value Value to return if the field doesn't exist
+#' @return The field value if it exists, otherwise the default_value
+#'
+#' @keywords internal
+#'
+getOptionalValue = function(data, field_name, default_value = NA) {
+  if (is.null(data[[field_name]])) {
+    return(default_value)
+  }
+  return(data[[field_name]])
+}
 

@@ -17,7 +17,7 @@ test_that("isValidMzQC = function(x, parent_context = NULL)", {
   # Test with multiple objects (now needs to be done separately)
   valid_param <- MzQCcvParameter$new("MS:4000059", "Number of MS1 spectra")
   invalid_param <- MzQCcvParameter$new()
-  
+
   # Check each object individually
   expect_true(isValidMzQC(valid_param))
   suppressWarnings(
@@ -42,4 +42,19 @@ test_that("fromDatatoMzQCobj = function(mzqc_class, data)", {
   expect_equal(data_recovered$accession, data$accession)
   expect_equal(data_recovered$value, data$value)
   expect_equal(data_recovered$description, data$description)
+})
+
+
+test_that("MzQCbaseQuality::getMetric = function(.self, accession = NULL, name = NULL)", {
+  data = readMZQC(system.file("./testdata/test.mzQC", package = "rmzqc", mustWork = TRUE))
+
+  extracted_metrics = data$runQualities[[1]]$getMetric(accession = "MS:4000059")
+  expect_equal(length(extracted_metrics), 1)
+  expect_equal(extracted_metrics[[1]]$accession, "MS:4000059")
+  expect_equal(extracted_metrics[[1]]$name, "number of MS1 spectra")
+
+  extracted_metrics = data$runQualities[[1]]$getMetric(name = "number of MS1 spectra")
+  expect_equal(length(extracted_metrics), 1)
+  expect_equal(extracted_metrics[[1]]$accession, "MS:4000059")
+  expect_equal(extracted_metrics[[1]]$name, "number of MS1 spectra")
 })

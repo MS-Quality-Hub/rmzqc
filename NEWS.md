@@ -1,7 +1,17 @@
 This NEWS file mainly serves as a changelog file,
 i.e. a list of new features / bugfixes by version number.
 
+References to pull requests (or issues) created on https://github.com/MS-Quality-Hub/rmzqc
+are marked with '#<number>', e.g. '(#25)' refers to https://github.com/MS-Quality-Hub/rmzqc/pull/25
+
 Versions uploaded to CRAN are marked with [CRAN].
+
+
+# [CRAN] version 0.6.0 (2025/06/02)
+
+* fix `MzQCbaseQuality$getMetric()` function (#25)
+* extend `basic guide` vignette to showcase different value types for a QualityMetric (single value, n-tuple, table, matrix)
+* check and warn for extraneous data in mzQC files which are not part of the specification
 
 # [CRAN] version 0.5.6 (2025/05/22)
 
