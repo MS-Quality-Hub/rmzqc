@@ -7,7 +7,7 @@
 ## We provide initialize() functions for all RefClasses to enable unnamed construction (shorter syntax)
 ##
 
-
+library('R6')
 
 ##
 # Defining this function to enable overload
@@ -44,14 +44,14 @@ isValidMzQC = function(x, parent_context = NULL)
 {
   # anchor
   if (missing(x)) return(TRUE)
-
+  
   # Build context string for better error reporting
   current_context <- if (!is.null(parent_context)) parent_context else ""
-
+  
   if (inherits(x, "list")) {
     # Create a vector to store validation results
     idx = logical(length(x))
-
+    
     # Process each item in the list with its index in the context
     for (i in seq_along(x)) {
       # Build context with index for this list item
@@ -69,11 +69,11 @@ isValidMzQC = function(x, parent_context = NULL)
   if (!("isValid" %in% x$getRefClass()$methods())) {
     stop("Invalid object: does not support 'isValid()'")
   }
-
+  
   # Pass the context to the isValid method
   class_name <- class(x)[1]
   context_with_class <- paste0(current_context, if(nchar(current_context) > 0) "$" else "", class_name)
-
+  
   # Call isValid with context information
   return(x$isValid(context = context_with_class))
 }
@@ -125,7 +125,7 @@ fromDatatoMzQC = function(mzqc_class, data, context = NULL)
   if (is.null(data) || (length(data) == 1 && is.na(data))) {
     return(list())
   }
-
+  
   # Process each item with its index in the context
   result <- list()
   for (i in seq_along(data)) {
@@ -135,11 +135,11 @@ fromDatatoMzQC = function(mzqc_class, data, context = NULL)
     } else {
       paste0("[", i, "]")
     }
-
+    
     # Process the item with the indexed context
     result[[i]] <- fromDatatoMzQCobj(mzqc_class, data[[i]], context = item_context)
   }
-
+  
   return(result)
 }
 
@@ -164,35 +164,38 @@ fromDatatoMzQC = function(mzqc_class, data, context = NULL)
 #' @exportClass MzQCDateTime
 #' @export MzQCDateTime
 #'
-MzQCDateTime = setRefClass(
+MzQCDateTime = R6Class(
   'MzQCDateTime',
-  fields = list(datetime = 'character'),
-  methods = list(
+  public = list(
+    # Fields
+    datetime = 'character',
+    
+    # Methods
     initialize = function(date = as.character(Sys.time()))
     {
-      set(date)
+      self$set(date)
     },
-    set = function(.self, date)
+    set = function(date)
     {
-      .self$datetime = format(as.POSIXct(date, tz = "UTC"), "%Y-%m-%dT%H:%M:%SZ")  # using ISO8601 format with UTC time
+      self$datetime = format(as.POSIXct(date, tz = "UTC"), "%Y-%m-%dT%H:%M:%SZ")  # using ISO8601 format with UTC time
     },
-    isValid = function(.self, context = "MzQCDateTime")
+    isValid = function( context = "MzQCDateTime")
     {
       return(TRUE) ## always valid, because it's designed that way
     },
-    toJSON = function(.self, ...)
+    toJSON = function( ...)
     {
-      if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
-      return(jsonlite:::asJSON(.self$datetime, ...))
+      if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
+      return(jsonlite:::asJSON(self$datetime, ...))
     },
-    fromData = function(.self, data, context = "MzQCDateTime")
+    fromData = function( data, context = "MzQCDateTime")
     {
-      .self$set(data)
-      return(.self)
+      self$set(data)
+      return(self)
     }
   )
 )
-setMethod('asJSON', 'MzQCDateTime', function(x, ...) x$toJSON(...))
+MzQCDateTime$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #'
@@ -211,56 +214,58 @@ setMethod('asJSON', 'MzQCDateTime', function(x, ...) x$toJSON(...))
 #' @exportClass MzQCcontrolledVocabulary
 #' @export MzQCcontrolledVocabulary
 #'
-MzQCcontrolledVocabulary = setRefClass(
+MzQCcontrolledVocabulary = R6Class(
   'MzQCcontrolledVocabulary',
-  fields = list(name = 'character',
-                uri = 'character',
-                version = 'character'    # optional
-  ),
-  methods = list(
+  public = list(
+    # Fields
+    name = 'character',
+    uri = 'character',
+    version = 'character',    # optional
+    
+    # Methods
     initialize = function(name = NA_character_, uri = NA_character_, version = NA_character_)
     {
-      .self$name = name
-      .self$uri = uri
-      .self$version = version
+      self$name = name
+      self$uri = uri
+      self$version = version
     },
-    isValid = function(.self, context = "MzQCcontrolledVocabulary") {
-      if (isUndefined(.self$name, context = context)) {
+    isValid = function( context = "MzQCcontrolledVocabulary") {
+      if (isUndefined(self$name, context = context)) {
         return(FALSE)
       }
-      if (isUndefined(.self$uri, context = context)) {
+      if (isUndefined(self$uri, context = context)) {
         return(FALSE)
       }
       return(TRUE)
     },
-    toJSON = function(.self, ...)
+    toJSON = function( ...)
     {
-      if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
-
-      r = list("name" = .self$name,
-               "uri" = .self$uri,
-               "version" = .self$version)
+      if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
+      
+      r = list("name" = self$name,
+               "uri" = self$uri,
+               "version" = self$version)
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data, context = "MzQCcontrolledVocabulary")
+    fromData = function( data, context = "MzQCcontrolledVocabulary")
     {
       # Define expected fields
       expected_fields <- c("name", "uri", "version")
-
+      
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCcontrolledVocabulary", context)
-
+      
       # Required fields
-      .self$name = check_field_exists(data, "name", "MzQCcontrolledVocabulary", paste0(context, "$name"), NA_character_)
-      .self$uri = check_field_exists(data, "uri", "MzQCcontrolledVocabulary", paste0(context, "$uri"), NA_character_)
-
+      self$name = check_field_exists(data, "name", "MzQCcontrolledVocabulary", paste0(context, "$name"), NA_character_)
+      self$uri = check_field_exists(data, "uri", "MzQCcontrolledVocabulary", paste0(context, "$uri"), NA_character_)
+      
       # Optional fields
-      .self$version = getOptionalValue(data, "version", NA_character_)
-      return(.self)
+      self$version = getOptionalValue(data, "version", NA_character_)
+      return(self)
     }
   )
 )
-setMethod('asJSON', 'MzQCcontrolledVocabulary', function(x, ...) x$toJSON(...))
+MzQCcontrolledVocabulary$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #'
@@ -280,60 +285,64 @@ setMethod('asJSON', 'MzQCcontrolledVocabulary', function(x, ...) x$toJSON(...))
 #' @exportClass MzQCcvParameter
 #' @export MzQCcvParameter
 #'
-MzQCcvParameter = setRefClass(
+MzQCcvParameter = R6Class(
   'MzQCcvParameter',
-  fields = list(accession = 'character',
-                name = 'character',
-                value = 'ANY',              # optional
-                description = 'character'   # optional
-  ),
-  methods = list(
+  public = list(
+
+    # Fields
+    accession = 'character',
+    name = 'character',
+    value = 'ANY',              # optional
+    description = 'character',   # optional
+    
+    # Methods
     initialize = function(accession = NA_character_, name = NA_character_, value = NA, description = NA_character_)
     {
-      .self$accession = accession
-      .self$name = name
-      .self$value = value
-      .self$description = description
+      self$accession = accession
+      self$name = name
+      self$value = value
+      self$description = description
     },
-    isValid = function(.self, context = "MzQCcvParameter") {
-      if (isUndefined(.self$accession, context = context)) {
+    isValid = function( context = "MzQCcvParameter") {
+      if (isUndefined(self$accession, context = context)) {
         return(FALSE)
       }
-      if (isUndefined(.self$name, context = context)) {
+      if (isUndefined(self$name, context = context)) {
         return(FALSE)
       }
       return(TRUE)
     },
-    toJSON = function(.self, ...)
+    toJSON = function( ...)
     {
-      if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
-
-      r = list("accession" = .self$accession,
-               "name" = .self$name)
-      if (!isUndefined(.self$value, verbose = FALSE)) r["value"] = .self$value
-      if (!isUndefined(.self$description, verbose = FALSE)) r["description"] = .self$description
+      if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
+      
+      r = list("accession" = self$accession,
+               "name" = self$name)
+      if (!isUndefined(self$value, verbose = FALSE)) r["value"] = self$value
+      if (!isUndefined(self$description, verbose = FALSE)) r["description"] = self$description
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data, context = "MzQCcvParameter")
+    fromData = function( data, context = "MzQCcvParameter")
     {
       # Define expected fields
       expected_fields <- c("accession", "name", "description", "value")
-
+      
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCcvParameter", context)
-
+      
       # Required fields
-      .self$accession = check_field_exists(data, "accession", "MzQCcvParameter", paste0(context, "$accession"), NA_character_)
-      .self$name = check_field_exists(data, "name", "MzQCcvParameter", paste0(context, "$name"), NA_character_)
-
+      self$accession = check_field_exists(data, "accession", "MzQCcvParameter", paste0(context, "$accession"), NA_character_)
+      self$name = check_field_exists(data, "name", "MzQCcvParameter", paste0(context, "$name"), NA_character_)
+      
       # Optional fields
-      .self$value = getOptionalValue(data, "value", NA)
-      .self$description = getOptionalValue(data, "description", NA_character_)
-      return(.self)
+      self$value = getOptionalValue(data, "value", NA)
+      self$description = getOptionalValue(data, "description", NA_character_)
+      return(self)
     }
   )
 )
-setMethod('asJSON', 'MzQCcvParameter', function(x, ...) x$toJSON(...))
+MzQCcvParameter$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+
 
 #'
 #' An inputfile within metadata for a run/setQuality
@@ -347,83 +356,86 @@ setMethod('asJSON', 'MzQCcvParameter', function(x, ...) x$toJSON(...))
 #' @exportClass MzQCinputFile
 #' @export MzQCinputFile
 #'
-MzQCinputFile = setRefClass(
+MzQCinputFile = R6Class(
   'MzQCinputFile',
-  fields = list(name = 'character',
-                location = 'character',
-                fileFormat = 'MzQCcvParameter',
-                fileProperties = 'list'         # array of MzQCcvParameter, optional
-  ),
-  methods = list(
+  public = list(
+    
+    # Fields
+    name = 'character',
+    location = 'character',
+    fileFormat = 'MzQCcvParameter',
+    fileProperties = 'list',         # array of MzQCcvParameter, optional
+
+    # Methods
     # defaults are required, otherwise refClasses do not work.
     initialize = function(name = NA_character_, location = NA_character_, fileFormat = MzQCcvParameter$new(), fileProperties = list())
     {
-      .self$name = name
-      .self$location = location
-      .self$fileFormat = fileFormat
-      .self$fileProperties = fileProperties
+      self$name = name
+      self$location = location
+      self$fileFormat = fileFormat
+      self$fileProperties = fileProperties
     },
-    isValid = function(.self, context = "MzQCinputFile")
+    isValid = function( context = "MzQCinputFile")
     {
-      if (isUndefined(.self$name, context = context)) {
+      if (isUndefined(self$name, context = context)) {
         return(FALSE)
       }
-      if (isUndefined(.self$location, context = context)) {
+      if (isUndefined(self$location, context = context)) {
         return(FALSE)
       }
-
+      
       # Check fileFormat validity with proper context
       fileFormat_context <- paste0(context, "$fileFormat")
-      if (!.self$fileFormat$isValid(context = fileFormat_context)) {
+      if (!self$fileFormat$isValid(context = fileFormat_context)) {
         return(FALSE)
       }
-
-      if (!grepl(":", .self$location, fixed = TRUE) || (grepl("\\", .self$location, fixed = TRUE))) {
+      
+      if (!grepl(":", self$location, fixed = TRUE) || (grepl("\\", self$location, fixed = TRUE))) {
         # URI needs a ':' but must not contain a '\'
-        warning(paste0(context, "$location (value: '", .self$location, "') is not a URI (e.g. 'file:///c:/tmp/test.raw' or 'http://...'). No '\\' are allowed"), immediate. = TRUE, call. = FALSE)
+        warning(paste0(context, "$location (value: '", self$location, "') is not a URI (e.g. 'file:///c:/tmp/test.raw' or 'http://...'). No '\\' are allowed"), immediate. = TRUE, call. = FALSE)
         return(FALSE)
       }
-
+      
       # Check fileProperties with proper context
-      return(isValidMzQC(.self$fileProperties, parent_context = paste0(context, "$fileProperties"))) ## TRUE for empty list, which is ok
+      return(isValidMzQC(self$fileProperties, parent_context = paste0(context, "$fileProperties"))) ## TRUE for empty list, which is ok
     },
-    toJSON = function(.self, ...)
+    toJSON = function( ...)
     {
-      if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
-      r = list(name = .self$name, location = .self$location, fileFormat = .self$fileFormat)
-      if (length(.self$fileProperties) > 0) r$fileProperties = .self$fileProperties
+      if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
+      r = list(name = self$name, location = self$location, fileFormat = self$fileFormat)
+      if (length(self$fileProperties) > 0) r$fileProperties = self$fileProperties
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data, context = "MzQCinputFile")
+    fromData = function( data, context = "MzQCinputFile")
     {
       # Define expected fields
       expected_fields <- c("name", "location", "fileFormat", "fileProperties")
-
+      
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCinputFile", context)
-
+      
       # Required fields
-      .self$name = check_field_exists(data, "name", "MzQCinputFile", paste0(context, "$name"), NA_character_)
-      .self$location = check_field_exists(data, "location", "MzQCinputFile", paste0(context, "$location"), NA_character_)
-
+      self$name = check_field_exists(data, "name", "MzQCinputFile", paste0(context, "$name"), NA_character_)
+      self$location = check_field_exists(data, "location", "MzQCinputFile", paste0(context, "$location"), NA_character_)
+      
       # Check fileFormat exists and pass context to nested fromData call
       fileFormat_data = check_field_exists(data, "fileFormat", "MzQCinputFile", paste0(context, "$fileFormat"), NULL)
-
+      
       if (!is.null(fileFormat_data) && !any(is.na(fileFormat_data))) {
-        .self$fileFormat$fromData(fileFormat_data, context = paste0(context, "$fileFormat"))
+        self$fileFormat$fromData(fileFormat_data, context = paste0(context, "$fileFormat"))
       } else {
-        .self$fileFormat <- MzQCcvParameter$new()  # Use default
+        self$fileFormat <- MzQCcvParameter$new()  # Use default
       }
-
+      
       # Handle optional fileProperties with default empty list
       fileProperties_data = getOptionalValue(data, "fileProperties", list())
-      .self$fileProperties = fromDatatoMzQC(MzQCcvParameter, fileProperties_data, context = paste0(context, "$fileProperties"))
-
-      return(.self)
+      self$fileProperties = fromDatatoMzQC(MzQCcvParameter, fileProperties_data, context = paste0(context, "$fileProperties"))
+      
+      return(self)
     }
   )
 )
-setMethod('asJSON', 'MzQCinputFile', function(x, ...) x$toJSON(...))
+MzQCinputFile$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 #
 # file_format = MzQCcvParameter$new("MS:1000584", "mzML format")
@@ -458,16 +470,19 @@ setMethod('asJSON', 'MzQCinputFile', function(x, ...) x$toJSON(...))
 #' @exportClass MzQCanalysisSoftware
 #' @export MzQCanalysisSoftware
 #'
-MzQCanalysisSoftware = setRefClass(
+MzQCanalysisSoftware = R6Class(
   'MzQCanalysisSoftware',
-  fields = list(accession = 'character',
-                name = 'character',
-                version = 'character',
-                uri = 'character',          # optional
-                description = 'character',  # optional
-                value = 'character'         # optional
-  ),
-  methods = list(
+  public = list(
+    
+    # Fields
+    accession = 'character',
+    name = 'character',
+    version = 'character',
+    uri = 'character',          # optional
+    description = 'character',  # optional
+    value = 'character',        # optional
+    
+    # Methods
     # defaults are required, otherwise refClasses do not work.
     initialize = function(accession = NA_character_,
                           name = NA_character_,
@@ -477,61 +492,60 @@ MzQCanalysisSoftware = setRefClass(
                           value = NA_character_        ## optional
     )
     {
-      .self$accession = accession
-      .self$name = name
-      .self$version = version
-      .self$uri = uri
-      .self$description = description
-      .self$value = value
+      self$accession = accession
+      self$name = name
+      self$version = version
+      self$uri = uri
+      self$description = description
+      self$value = value
     },
-    isValid = function(.self, context = "MzQCanalysisSoftware")
+    isValid = function( context = "MzQCanalysisSoftware")
     {
-      if (isUndefined(.self$accession, context = context)) {
+      if (isUndefined(self$accession, context = context)) {
         return(FALSE)
       }
-      if (isUndefined(.self$name, context = context)) {
+      if (isUndefined(self$name, context = context)) {
         return(FALSE)
       }
-      if (isUndefined(.self$version, context = context)) {
+      if (isUndefined(self$version, context = context)) {
         return(FALSE)
       }
       return(TRUE)
     },
-    toJSON = function(.self, ...)
+    toJSON = function( ...)
     {
-      if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
-
-      r = list("accession" = .self$accession,
-               "name" = .self$name,
-               "version" = .self$version)
-      if (!isUndefined(.self$uri, verbose = FALSE)) r$uri = .self$uri
-      if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
-      if (!isUndefined(.self$value, verbose = FALSE)) r$value = .self$value
+      if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
+      
+      r = list("accession" = self$accession,
+               "name" = self$name,
+               "version" = self$version)
+      if (!isUndefined(self$uri, verbose = FALSE)) r$uri = self$uri
+      if (!isUndefined(self$description, verbose = FALSE)) r$description = self$description
+      if (!isUndefined(self$value, verbose = FALSE)) r$value = self$value
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data, context = "MzQCanalysisSoftware")
+    fromData = function( data, context = "MzQCanalysisSoftware")
     {
       # Define expected fields
       expected_fields <- c("accession", "name", "version", "uri", "description", "value")
-
+      
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCanalysisSoftware", context)
-
+      
       # Required fields
-      .self$accession = check_field_exists(data, "accession", "MzQCanalysisSoftware", paste0(context, "$accession"), NA_character_)
-      .self$name = check_field_exists(data, "name", "MzQCanalysisSoftware", paste0(context, "$name"), NA_character_)
-      .self$version = check_field_exists(data, "version", "MzQCanalysisSoftware", paste0(context, "$version"), NA_character_)
-
+      self$accession = check_field_exists(data, "accession", "MzQCanalysisSoftware", paste0(context, "$accession"), NA_character_)
+      self$name = check_field_exists(data, "name", "MzQCanalysisSoftware", paste0(context, "$name"), NA_character_)
+      self$version = check_field_exists(data, "version", "MzQCanalysisSoftware", paste0(context, "$version"), NA_character_)
+      
       # Optional fields
-      .self$uri = getOptionalValue(data, "uri", NA_character_)
-      .self$description = getOptionalValue(data, "description", NA_character_)
-      .self$value = getOptionalValue(data, "value", NA_character_)
-      return(.self)
+      self$uri = getOptionalValue(data, "uri", NA_character_)
+      self$description = getOptionalValue(data, "description", NA_character_)
+      self$value = getOptionalValue(data, "value", NA_character_)
+      return(self)
     }
   )
 )
-setMethod('asJSON', 'MzQCanalysisSoftware', function(x, ...) x$toJSON(...))
-
+MzQCanalysisSoftware$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #'
@@ -545,85 +559,88 @@ setMethod('asJSON', 'MzQCanalysisSoftware', function(x, ...) x$toJSON(...))
 #' @exportClass MzQCmetadata
 #' @export MzQCmetadata
 #'
-MzQCmetadata = setRefClass(
+MzQCmetadata = R6Class(
   'MzQCmetadata',
-  fields = list(label = 'character',
-                inputFiles = 'list',       # array of MzQCinputFile
-                analysisSoftware = 'list', # array of MzQCanalysisSoftware
-                cvParameters = 'list'      # optional array of MzQCcvParameter
-  ),
-  methods = list(
+  public = list(
+    
+    # Fields
+    label = 'character',
+    inputFiles = 'list',       # array of MzQCinputFile
+    analysisSoftware = 'list', # array of MzQCanalysisSoftware
+    cvParameters = 'list',     # optional array of MzQCcvParameter
+
+    # Methods
     initialize = function(label = NA_character_, inputFiles = list(), analysisSoftware = list(), cvParameters = list())
     {
-      .self$label = label
-      .self$inputFiles = inputFiles
-      .self$analysisSoftware = analysisSoftware
-      .self$cvParameters = cvParameters
+      self$label = label
+      self$inputFiles = inputFiles
+      self$analysisSoftware = analysisSoftware
+      self$cvParameters = cvParameters
     },
-    isValid = function(.self, context = "MzQCmetadata")
+    isValid = function( context = "MzQCmetadata")
     {
-      if (isUndefined(.self$label, context = context)) {
+      if (isUndefined(self$label, context = context)) {
         return(FALSE)
       }
-
+      
       # Check inputFiles with proper context
-      if (!isValidMzQC(.self$inputFiles, parent_context = paste0(context, "$inputFiles"))) {
+      if (!isValidMzQC(self$inputFiles, parent_context = paste0(context, "$inputFiles"))) {
         return(FALSE)
       }
-
+      
       # Check analysisSoftware with proper context
-      if (!isValidMzQC(.self$analysisSoftware, parent_context = paste0(context, "$analysisSoftware"))) {
+      if (!isValidMzQC(self$analysisSoftware, parent_context = paste0(context, "$analysisSoftware"))) {
         return(FALSE)
       }
-
+      
       # Check cvParameters with proper context
-      if (!isValidMzQC(.self$cvParameters, parent_context = paste0(context, "$cvParameters"))) {
+      if (!isValidMzQC(self$cvParameters, parent_context = paste0(context, "$cvParameters"))) {
         return(FALSE)
       }
-
+      
       return(TRUE)
     },
-    toJSON = function(.self, ...)
+    toJSON = function( ...)
     {
-      if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
-
-      r = list("label" = .self$label,
-               "inputFiles" = .self$inputFiles,
-               "analysisSoftware" = .self$analysisSoftware)
+      if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
+      
+      r = list("label" = self$label,
+               "inputFiles" = self$inputFiles,
+               "analysisSoftware" = self$analysisSoftware)
       ## only add if present (otherwise leads to 'cvParameters = []')
-      if (length(.self$cvParameters) > 0 ) r$cvParameters = list(.self$cvParameters) ## extra list for the enclosing '[ ... ]'
+      if (length(self$cvParameters) > 0 ) r$cvParameters = list(self$cvParameters) ## extra list for the enclosing '[ ... ]'
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data, context = "MzQCmetadata")
+    fromData = function( data, context = "MzQCmetadata")
     {
       # Define expected fields
       expected_fields <- c("label", "inputFiles", "analysisSoftware", "cvParameters")
-
+      
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCmetadata", context)
-
+      
       # Required fields
-      .self$label = check_field_exists(data, "label", "MzQCmetadata", paste0(context, "$label"), NA_character_)
-
+      self$label = check_field_exists(data, "label", "MzQCmetadata", paste0(context, "$label"), NA_character_)
+      
       inputFiles_data = check_field_exists(data, "inputFiles", "MzQCmetadata", paste0(context, "$inputFiles"), list())
-      .self$inputFiles = fromDatatoMzQC(MzQCinputFile, inputFiles_data, context = paste0(context, "$inputFiles"))
-
+      self$inputFiles = fromDatatoMzQC(MzQCinputFile, inputFiles_data, context = paste0(context, "$inputFiles"))
+      
       analysisSoftware_data = check_field_exists(data, "analysisSoftware", "MzQCmetadata", paste0(context, "$analysisSoftware"), list())
-      .self$analysisSoftware = fromDatatoMzQC(MzQCanalysisSoftware, analysisSoftware_data, context = paste0(context, "$analysisSoftware"))
-
+      self$analysisSoftware = fromDatatoMzQC(MzQCanalysisSoftware, analysisSoftware_data, context = paste0(context, "$analysisSoftware"))
+      
       # Optional cvParameters
       cvParameters_data = getOptionalValue(data, "cvParameters", list())
       if (length(cvParameters_data) > 0) {
-        .self$cvParameters = fromDatatoMzQC(MzQCcvParameter, cvParameters_data, context = paste0(context, "$cvParameters"))
+        self$cvParameters = fromDatatoMzQC(MzQCcvParameter, cvParameters_data, context = paste0(context, "$cvParameters"))
       } else {
-        .self$cvParameters = list()
+        self$cvParameters = list()
       }
-
-      return(.self)
+      
+      return(self)
     }
   )
 )
-setMethod('asJSON', 'MzQCmetadata', function(x, ...) x$toJSON(...))
+MzQCmetadata$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 ################################################################################################################################
 #################################################################################################################################'
@@ -639,82 +656,85 @@ setMethod('asJSON', 'MzQCmetadata', function(x, ...) x$toJSON(...))
 #' @exportClass MzQCqualityMetric
 #' @export MzQCqualityMetric
 #'
-MzQCqualityMetric = setRefClass(
+MzQCqualityMetric = R6Class(
   'MzQCqualityMetric',
-  fields = list(accession = 'character',
-                name = 'character',
-                description = 'character', # optional
-                value = 'ANY',             # optional value of unspecified type
-                unit = 'list'              # optional array of MzQCcvParameter
-  ),
-  methods = list(
+  public = list(
+    
+    # Fields
+    accession = 'character',
+    name = 'character',
+    description = 'character', # optional
+    value = 'ANY',             # optional value of unspecified type
+    unit = 'list',              # optional array of MzQCcvParameter
+
+    # Methods
     initialize = function(accession = NA_character_, name = NA_character_, description = NA_character_, value = NA, unit = list())
     {
-      .self$accession = accession
-      .self$name = name
-      .self$description = description
-      if (!missing(value)) .self$value = value else .self$value = NA  ## need to set as NA explicitly, because the default value 'uninitialized class ANY' cannot be converted to JSON
-      .self$unit = unit
+      self$accession = accession
+      self$name = name
+      self$description = description
+      if (!missing(value)) self$value = value else self$value = NA  ## need to set as NA explicitly, because the default value 'uninitialized class ANY' cannot be converted to JSON
+      self$unit = unit
     },
-    isValid = function(.self, context = "MzQCqualityMetric")
+    isValid = function( context = "MzQCqualityMetric")
     {
-      if (isUndefined(.self$accession, context = context)) {
+      if (isUndefined(self$accession, context = context)) {
         return(FALSE)
       }
-      if (isUndefined(.self$name, context = context)) {
+      if (isUndefined(self$name, context = context)) {
         return(FALSE)
       }
-
+      
       # Check unit with proper context if it exists
-      if (length(.self$unit) > 0) {
-        if (!isValidMzQC(.self$unit, parent_context = paste0(context, "$unit"))) {
+      if (length(self$unit) > 0) {
+        if (!isValidMzQC(self$unit, parent_context = paste0(context, "$unit"))) {
           return(FALSE)
         }
       }
-
+      
       return(TRUE)
     },
-    toJSON = function(.self, ...)
+    toJSON = function( ...)
     {
-      if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
-
-      r = list("accession" = .self$accession,
-               "name" = .self$name)
-      if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
-      if (!isUndefined(.self$value, verbose = FALSE)) r$value = .self$value
-
-      if (length(.self$unit) > 0) r$unit = .self$unit  ## optional
+      if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
+      
+      r = list("accession" = self$accession,
+               "name" = self$name)
+      if (!isUndefined(self$description, verbose = FALSE)) r$description = self$description
+      if (!isUndefined(self$value, verbose = FALSE)) r$value = self$value
+      
+      if (length(self$unit) > 0) r$unit = self$unit  ## optional
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, data, context = "MzQCqualityMetric")
+    fromData = function( data, context = "MzQCqualityMetric")
     {
       # Define expected fields
       expected_fields <- c("accession", "name", "description", "value", "unit")
-
+      
       # Check for unexpected fields
       checkUnexpectedFields(data, expected_fields, "MzQCqualityMetric", context)
-
+      
       # Required fields
-      .self$accession = check_field_exists(data, "accession", "MzQCqualityMetric", paste0(context, "$accession"), NA_character_)
-      .self$name = check_field_exists(data, "name", "MzQCqualityMetric", paste0(context, "$name"), NA_character_)
-
+      self$accession = check_field_exists(data, "accession", "MzQCqualityMetric", paste0(context, "$accession"), NA_character_)
+      self$name = check_field_exists(data, "name", "MzQCqualityMetric", paste0(context, "$name"), NA_character_)
+      
       # Optional fields
-      .self$description = getOptionalValue(data, "description", NA_character_)
-      .self$value = getOptionalValue(data, "value", NA) ## could be an n-tuple or a single value
-
+      self$description = getOptionalValue(data, "description", NA_character_)
+      self$value = getOptionalValue(data, "value", NA) ## could be an n-tuple or a single value
+      
       # Optional unit
       unit_data = getOptionalValue(data, "unit", list())
       if (!is.null(unit_data) && length(unit_data) > 0) {
-        .self$unit = fromDatatoMzQC(MzQCcvParameter, list(unit_data), context = paste0(context, "$unit"))
+        self$unit = fromDatatoMzQC(MzQCcvParameter, list(unit_data), context = paste0(context, "$unit"))
       } else {
-        .self$unit = list()
+        self$unit = list()
       }
-
-      return(.self)
+      
+      return(self)
     }
   )
 )
-setMethod('asJSON', 'MzQCqualityMetric', function(x, ...) x$toJSON(...))
+MzQCqualityMetric$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #a_qc_metric = MzQCqualityMetric$new("acc", "nnam")
@@ -731,38 +751,42 @@ setMethod('asJSON', 'MzQCqualityMetric', function(x, ...) x$toJSON(...))
 #' @exportClass MzQCbaseQuality
 #' @export MzQCbaseQuality
 #'
-MzQCbaseQuality = setRefClass(
+MzQCbaseQuality = R6Class(
   'MzQCbaseQuality',
-  fields = list(metadata = 'MzQCmetadata',
-                qualityMetrics = 'list'), # array of MzQCqualityMetric
-  methods = list(
+  public = list(
+    
+    # Fields
+    metadata = 'MzQCmetadata',
+    qualityMetrics = 'list', # array of MzQCqualityMetric
+
+    # Methods
     initialize = function(metadata = MzQCmetadata$new(), qualityMetrics = list())
     {
-      .self$metadata = metadata
-      .self$qualityMetrics = qualityMetrics
+      self$metadata = metadata
+      self$qualityMetrics = qualityMetrics
     },
-    isValid = function(.self, context = "MzQCbaseQuality")
+    isValid = function( context = "MzQCbaseQuality")
     {
       # Check metadata with proper context
       metadata_context <- paste0(context, "$metadata")
-      if (!.self$metadata$isValid(context = metadata_context)) {
+      if (!self$metadata$isValid(context = metadata_context)) {
         return(FALSE)
       }
-
+      
       # Check qualityMetrics with proper context
-      if (length(.self$qualityMetrics) == 0 || !isValidMzQC(.self$qualityMetrics, parent_context = paste0(context, "$qualityMetrics"))) {
+      if (length(self$qualityMetrics) == 0 || !isValidMzQC(self$qualityMetrics, parent_context = paste0(context, "$qualityMetrics"))) {
         return(FALSE)
       }
-
+      
       return(TRUE)
     },
-    getMetric = function(.self, accession = NULL, name = NULL) {
+    getMetric = function( accession = NULL, name = NULL) {
       if (! xor(is.null(accession), is.null(name)))
       {
         stop("Exactly one of 'accession' or 'name' are required.")
       }
-
-      results = lapply(.self$qualityMetrics, function(qmetric) {
+      
+      results = lapply(self$qualityMetrics, function(qmetric) {
         if (!is.null(accession) && qmetric$accession == accession)
         {
           return(qmetric)
@@ -780,36 +804,36 @@ MzQCbaseQuality = setRefClass(
       }
       results_filtered
     },
-    toJSON = function(.self, ...)
+    toJSON = function( ...)
     {
-      if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
-
-      r = list("metadata" = .self$metadata,
-               "qualityMetrics" = .self$qualityMetrics)
+      if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
+      
+      r = list("metadata" = self$metadata,
+               "qualityMetrics" = self$qualityMetrics)
       return (jsonlite:::asJSON(r, ...))
     },
-    fromData = function(.self, mdata, context = "MzQCbaseQuality")
+    fromData = function( mdata, context = "MzQCbaseQuality")
     {
-
-      .self$metadata = fromDatatoMzQCobj(MzQCmetadata, mdata$metadata)
-      .self$qualityMetrics = fromDatatoMzQC(MzQCqualityMetric, mdata$qualityMetrics) ## if mdata$qualityMetrics is empty, or NA, the empty list will be returned
-
+      
+      self$metadata = fromDatatoMzQCobj(MzQCmetadata, mdata$metadata)
+      self$qualityMetrics = fromDatatoMzQC(MzQCqualityMetric, mdata$qualityMetrics) ## if mdata$qualityMetrics is empty, or NA, the empty list will be returned
+      
       # Required fields
       #  - metadata is a single element
       metadata_data = check_field_exists(mdata, "metadata", "MzQCbaseQuality", paste0(context, "$metadata"), NULL)
-      .self$metadata = fromDatatoMzQCobj(MzQCmetadata, metadata_data, context = paste0(context, "$metadata"))
-
+      self$metadata = fromDatatoMzQCobj(MzQCmetadata, metadata_data, context = paste0(context, "$metadata"))
+      
       qualityMetrics_data = check_field_exists(mdata, "qualityMetrics", "MzQCbaseQuality", paste0(context, "$qualityMetrics"), list())
       if (!("list" %in% class(qualityMetrics_data)) || length(qualityMetrics_data) == 0)
       {
         warning("A list of QualityMetrics must contain at least one element. The given list is empty!")
       }
-      .self$qualityMetrics = fromDatatoMzQC(MzQCqualityMetric, qualityMetrics_data, context = paste0(context, "$qualityMetrics"))
-      return(.self)
+      self$qualityMetrics = fromDatatoMzQC(MzQCqualityMetric, qualityMetrics_data, context = paste0(context, "$qualityMetrics"))
+      return(self)
     }
   )
 )
-setMethod('asJSON', 'MzQCbaseQuality', function(x, ...) x$toJSON(...))
+MzQCbaseQuality$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #' Extract a certain metric from a runQuality's list of MzQCqualityMetric
@@ -837,9 +861,9 @@ NULL
 #' @exportClass MzQCrunQuality
 #' @export MzQCrunQuality
 #'
-MzQCrunQuality =  setRefClass(
+MzQCrunQuality =  R6Class(
   "MzQCrunQuality",
-  contains = "MzQCbaseQuality"
+  inherit = MzQCbaseQuality
 )
 
 #'
@@ -851,9 +875,9 @@ MzQCrunQuality =  setRefClass(
 #' @exportClass MzQCsetQuality
 #' @export MzQCsetQuality
 #'
-MzQCsetQuality =  setRefClass(
+MzQCsetQuality =  R6Class(
   "MzQCsetQuality",
-  contains = "MzQCbaseQuality"
+  inherit = MzQCbaseQuality
 )
 
 ###########################################################################
@@ -874,17 +898,20 @@ MzQCsetQuality =  setRefClass(
 #' @exportClass MzQCmzQC
 #' @export MzQCmzQC
 #'
-MzQCmzQC = setRefClass(
+MzQCmzQC = R6Class(
   'MzQCmzQC',
-  fields = list(version = 'character',
-                creationDate = 'MzQCDateTime',
-                contactName = 'character',            # optional
-                contactAddress = 'character',         # optional
-                description = 'character',            # optional
-                runQualities = 'list',                # array of MzQCrunQuality         # hint: at least runQuality or a setQuality must be present
-                setQualities = 'list',                # array of MzQCsetQuality
-                controlledVocabularies = 'list'),     # array of MzQCcontrolledVocabulary
-  methods = list(
+  public = list(
+    # Fields
+    version = 'character',
+    creationDate = 'MzQCDateTime',
+    contactName = 'character',            # optional
+    contactAddress = 'character',         # optional
+    description = 'character',            # optional
+    runQualities = 'list',                # array of MzQCrunQuality         # hint: at least runQuality or a setQuality must be present
+    setQualities = 'list',                # array of MzQCsetQuality
+    controlledVocabularies = 'list',     # array of MzQCcontrolledVocabulary
+    
+    # Methods
     initialize = function(version = NA_character_,
                           creationDate = MzQCDateTime$new(),
                           contactName = NA_character_,
@@ -894,117 +921,117 @@ MzQCmzQC = setRefClass(
                           setQualities = list(),
                           controlledVocabularies = list())
     {
-      .self$version = version
-      .self$creationDate = creationDate
-      .self$contactName = contactName
-      .self$contactAddress = contactAddress
-      .self$description = description
-      .self$runQualities = runQualities
-      .self$setQualities = setQualities
-      .self$controlledVocabularies = controlledVocabularies
+      self$version = version
+      self$creationDate = creationDate
+      self$contactName = contactName
+      self$contactAddress = contactAddress
+      self$description = description
+      self$runQualities = runQualities
+      self$setQualities = setQualities
+      self$controlledVocabularies = controlledVocabularies
     },
-    isValid = function(.self, context = "MzQCmzQC")
+    isValid = function( context = "MzQCmzQC")
     {
-      if (isUndefined(.self$version, context = context))
+      if (isUndefined(self$version, context = context))
       {
         return(FALSE)
       }
-
+  
       # Check creationDate with proper context
       creationDate_context <- paste0(context, "$creationDate")
-      if (!.self$creationDate$isValid(context = creationDate_context)) {
+      if (!self$creationDate$isValid(context = creationDate_context)) {
         return(FALSE)
       }
-
+  
       # Check runQualities with proper context
-      if (!isValidMzQC(.self$runQualities, parent_context = paste0(context, "$runQualities"))) {
+      if (!isValidMzQC(self$runQualities, parent_context = paste0(context, "$runQualities"))) {
         return(FALSE)
       }
-
+  
       # Check setQualities with proper context
-      if (!isValidMzQC(.self$setQualities, parent_context = paste0(context, "$setQualities"))) {
+      if (!isValidMzQC(self$setQualities, parent_context = paste0(context, "$setQualities"))) {
         return(FALSE)
       }
-
+  
       # Check controlledVocabularies with proper context
-      if (!isValidMzQC(.self$controlledVocabularies, parent_context = paste0(context, "$controlledVocabularies"))) {
+      if (!isValidMzQC(self$controlledVocabularies, parent_context = paste0(context, "$controlledVocabularies"))) {
         return(FALSE)
       }
-
+  
       # at least one must be present
-      if (length(.self$runQualities) + length(.self$setQualities) == 0)
+      if (length(self$runQualities) + length(self$setQualities) == 0)
       {
         warning(paste0(context, " must have at least one runQuality or setQuality (currently all empty)"), immediate. = TRUE, call. = FALSE)
         return(FALSE)
       }
-
+  
       return(TRUE)
     },
-    toJSON = function(.self, ...)
+    toJSON = function( ...)
     {
-      if (!isValidMzQC(.self)) stop(paste0("Object of class '", class(.self), "' is not in a valid state for writing to JSON"))
-
-      r = list("version" = .self$version,
-               "creationDate" = .self$creationDate)
-      if (!isUndefined(.self$contactName, verbose = FALSE)) r$contactName = .self$contactName
-      if (!isUndefined(.self$contactAddress, verbose = FALSE)) r$contactAddress = .self$contactAddress
-      if (!isUndefined(.self$description, verbose = FALSE)) r$description = .self$description
+      if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
+  
+      r = list("version" = self$version,
+               "creationDate" = self$creationDate)
+      if (!isUndefined(self$contactName, verbose = FALSE)) r$contactName = self$contactName
+      if (!isUndefined(self$contactAddress, verbose = FALSE)) r$contactAddress = self$contactAddress
+      if (!isUndefined(self$description, verbose = FALSE)) r$description = self$description
       ## do not write them out if they are empty (leads to 'runQuality: []', which is invalid)
-      if (length(.self$runQualities) > 0) r$runQualities = (.self$runQualities)
-      if (length(.self$setQualities) > 0) r$setQualities = (.self$setQualities)
-      r$controlledVocabularies = .self$controlledVocabularies
+      if (length(self$runQualities) > 0) r$runQualities = (self$runQualities)
+      if (length(self$setQualities) > 0) r$setQualities = (self$setQualities)
+      r$controlledVocabularies = self$controlledVocabularies
       return (jsonlite:::asJSON(list("mzQC" = r), ...))
     },
-    fromData = function(.self, data, context = "MzQCmzQC")
+    fromData = function( data, context = "MzQCmzQC")
     {
       # Check if mzQC root exists
       if (is.null(data$mzQC)) {
         warning(paste0("No valid mzQC root found in data for class 'MzQCmzQC'",
-                      if (!is.null(context)) paste0(" in ", context) else ""),
+                       if (!is.null(context)) paste0(" in ", context) else ""),
                 immediate. = TRUE, call. = FALSE)
         stop(gettextf("No valid mzQC root %s found. Cannot read data.", sQuote("mzQC")))
       }
       root = data$mzQC
-
+  
       # Define expected fields
       expected_fields <- c("version", "creationDate", "contactName", "contactAddress",
-                          "description", "runQualities", "setQualities", "controlledVocabularies")
-
+                           "description", "runQualities", "setQualities", "controlledVocabularies")
+  
       # Check for unexpected fields
       checkUnexpectedFields(root, expected_fields, "MzQCmzQC", context)
-
+  
       # Required fields
-      .self$version = check_field_exists(root, "version", "MzQCmzQC", paste0(context, "$version"), NA_character_)
-
+      self$version = check_field_exists(root, "version", "MzQCmzQC", paste0(context, "$version"), NA_character_)
+  
       # Required fields with default constructor
       creationDate_data = check_field_exists(root, "creationDate", "MzQCmzQC", paste0(context, "$creationDate"), NULL)
       if (!is.null(creationDate_data)) {
-        .self$creationDate = fromDatatoMzQCobj(MzQCDateTime, creationDate_data, context = paste0(context, "$creationDate"))
+        self$creationDate = fromDatatoMzQCobj(MzQCDateTime, creationDate_data, context = paste0(context, "$creationDate"))
       } else {
-        .self$creationDate = MzQCDateTime$new() # Use default
+        self$creationDate = MzQCDateTime$new() # Use default
       }
-
+  
       # Optional fields
-      .self$contactName = getOptionalValue(root, "contactName", NA_character_)
-      .self$contactAddress = getOptionalValue(root, "contactAddress", NA_character_)
-      .self$description = getOptionalValue(root, "description", NA_character_)
-
+      self$contactName = getOptionalValue(root, "contactName", NA_character_)
+      self$contactAddress = getOptionalValue(root, "contactAddress", NA_character_)
+      self$description = getOptionalValue(root, "description", NA_character_)
+  
       # At least one of runQualities or setQualities must be present, but both are technically optional
       runQualities_data = getOptionalValue(root, "runQualities", list())
-      .self$runQualities = fromDatatoMzQC(MzQCrunQuality, runQualities_data,
-                                         context = paste0(context, "$runQualities"))
-
+      self$runQualities = fromDatatoMzQC(MzQCrunQuality, runQualities_data,
+                                          context = paste0(context, "$runQualities"))
+  
       setQualities_data = getOptionalValue(root, "setQualities", list())
-      .self$setQualities = fromDatatoMzQC(MzQCsetQuality, setQualities_data,
-                                         context = paste0(context, "$setQualities"))
-
+      self$setQualities = fromDatatoMzQC(MzQCsetQuality, setQualities_data,
+                                          context = paste0(context, "$setQualities"))
+  
       # Required list
       controlledVocabularies_data = check_field_exists(root, "controlledVocabularies", "MzQCmzQC",
-                                                      paste0(context, "$controlledVocabularies"), list())
-      .self$controlledVocabularies = fromDatatoMzQC(MzQCcontrolledVocabulary, controlledVocabularies_data,
-                                                   context = paste0(context, "$controlledVocabularies"))
-      return(.self)
+                                                       paste0(context, "$controlledVocabularies"), list())
+      self$controlledVocabularies = fromDatatoMzQC(MzQCcontrolledVocabulary, controlledVocabularies_data,
+                                                    context = paste0(context, "$controlledVocabularies"))
+      return(self)
     }
   )
 )
-setMethod('asJSON', 'MzQCmzQC', function(x, ...) x$toJSON(...))
+MzQCmzQC$set('public', 'asJSON', function(x, ...) x$toJSON(...))
