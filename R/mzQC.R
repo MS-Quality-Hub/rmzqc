@@ -209,8 +209,8 @@ MzQCDateTime = R6Class(
     }
   )
 )
-setMethod(asJSON, 'MzQCDateTime', function(x, ...) x$toJSON(...))
-#MzQCDateTime$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+#setMethod(asJSON, 'MzQCDateTime', function(x, ...) x$toJSON(...))
+asJSON.MzQCDateTime = function(x, ...) x$toJSON(...)
 
 
 #'
@@ -285,8 +285,8 @@ MzQCcontrolledVocabulary = R6Class(
     }
   )
 )
-setMethod(asJSON, 'MzQCcontrolledVocabulary', function(x, ...) x$toJSON(...))
-#MzQCcontrolledVocabulary$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+#setMethod(asJSON, 'MzQCcontrolledVocabulary', function(x, ...) x$toJSON(...))
+asJSON.MzQCcontrolledVocabulary = function(x, ...) x$toJSON(...)
 
 
 #'
@@ -367,8 +367,8 @@ MzQCcvParameter = R6Class(
     }
   )
 )
-setMethod(asJSON, 'MzQCcvParameter', function(x, ...) x$toJSON(...))
-#MzQCcvParameter$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+#setMethod(asJSON, 'MzQCcvParameter', function(x, ...) x$toJSON(...))
+asJSON.MzQCcvParameter = function(x, ...) x$toJSON(...)
 
 
 #'
@@ -399,7 +399,7 @@ MzQCinputFile = R6Class(
     fileProperties = 'list',         # array of MzQCcvParameter, optional
 
     # Methods
-    # defaults are required, otherwise refClasses do not work.
+    # defaults are required.
     initialize = function(name = NA_character_, location = NA_character_, fileFormat = MzQCcvParameter$new(), fileProperties = list())
     {
       self$name = name
@@ -467,8 +467,9 @@ MzQCinputFile = R6Class(
     }
   )
 )
-setMethod(asJSON, 'MzQCinputFile', function(x, ...) x$toJSON(...))
-#MzQCinputFile$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+#setMethod(asJSON, 'MzQCinputFile', function(x, ...) x$toJSON(...))
+asJSON.MzQCinputFile = function(x, ...) x$toJSON(...)
+
 
 #
 # file_format = MzQCcvParameter$new("MS:1000584", "mzML format")
@@ -521,7 +522,7 @@ MzQCanalysisSoftware = R6Class(
     value = 'character',        # optional
     
     # Methods
-    # defaults are required, otherwise refClasses do not work.
+    # defaults are required.
     initialize = function(accession = NA_character_,
                           name = NA_character_,
                           version = NA_character_,
@@ -583,8 +584,8 @@ MzQCanalysisSoftware = R6Class(
     }
   )
 )
-setMethod(asJSON, 'MzQCanalysisSoftware', function(x, ...) x$toJSON(...))
-#MzQCanalysisSoftware$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+#setMethod(asJSON, 'MzQCanalysisSoftware', function(x, ...) x$toJSON(...))
+asJSON.MzQCanalysisSoftware = function(x, ...) x$toJSON(...)
 
 
 #'
@@ -684,8 +685,8 @@ MzQCmetadata = R6Class(
     }
   )
 )
-setMethod(asJSON, 'MzQCmetadata', function(x, ...) x$toJSON(...))
-#MzQCmetadata$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+#setMethod(asJSON, 'MzQCmetadata', function(x, ...) x$toJSON(...))
+asJSON.MzQCmetadata = function(x, ...) x$toJSON(...)
 
 ################################################################################################################################
 #################################################################################################################################'
@@ -784,8 +785,8 @@ MzQCqualityMetric = R6Class(
     }
   )
 )
-setMethod(asJSON, 'MzQCqualityMetric', function(x, ...) x$toJSON(...))
-#MzQCqualityMetric$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+#setMethod(asJSON, 'MzQCqualityMetric', function(x, ...) x$toJSON(...))
+asJSON.MzQCqualityMetric = function(x, ...) x$toJSON(...)
 
 
 #a_qc_metric = MzQCqualityMetric$new("acc", "nnam")
@@ -889,8 +890,8 @@ MzQCbaseQuality = R6Class(
     }
   )
 )
-setMethod(asJSON, 'MzQCbaseQuality', function(x, ...) x$toJSON(...))
-#MzQCbaseQuality$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+#setMethod(asJSON, 'MzQCbaseQuality', function(x, ...) x$toJSON(...))
+asJSON.MzQCbaseQuality = function(x, ...) x$toJSON(...)
 
 
 #' Extract a certain metric from a runQuality's list of MzQCqualityMetric
@@ -1107,5 +1108,5 @@ MzQCmzQC = R6Class(
     }
   )
 )
-setMethod(asJSON, 'MzQCmzQC', function(x, ...) x$toJSON(...))
-#MzQCmzQC$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+#setMethod(asJSON, 'MzQCmzQC', function(x, ...) x$toJSON(...))
+asJSON.MzQCmzQC = function(x, ...) x$toJSON(...)
