@@ -2,16 +2,16 @@
 ## Author: Chris Bielow
 ##
 ## This file implements the basic mzQC data structures (see mzQC specification document)
-## using R's ReferenceClasses for tighter control over input/output and invariants.
+## using R's R6 Classes for tighter control over input/output and invariants.
 ##
-## We provide initialize() functions for all RefClasses to enable unnamed construction (shorter syntax)
+## We provide initialize() functions for all R6 Classes to enable unnamed construction (shorter syntax)
 ##
 
 library('R6')
 
 ##
 # Defining this function to enable overload
-# e.g. setMethod('asJSON', 'mzQC', function(x, ...) x$toJSON())
+# e.g. setMethod(asJSON, 'mzQC', function(x, ...) x$toJSON())
 #  which allows to use
 # jsonlite::toJSON(mzQC$new(content))
 asJSON <- jsonlite:::asJSON
@@ -27,7 +27,7 @@ asJSON <- jsonlite:::asJSON
 #' The function provides detailed error messages that include the path to the invalid field,
 #' making it easier to identify validation issues in complex nested structures.
 #'
-#' @param x An mzQC refclass (or list of them), which will be subjected to validation
+#' @param x An mzQC R6 class (or list of them), which will be subjected to validation
 #' @param parent_context Internal parameter used to track the path in nested validations
 #'
 #' @examples
@@ -61,12 +61,21 @@ isValidMzQC = function(x, parent_context = NULL)
     }
     return(all(idx))
   }
-  if (!inherits(x, "envRefClass")) {
+  # All objects created from R6 class should be environments
+  if (!(typeof(x) == "environment"))
+  {
     output <- capture.output(str(x))
-    cat(paste0("Error: variable '", output, "' is not a RefClass, but should be!"))
+    cat(paste0("Error: variable '", output, "' is not a R6 object, but should be!"))
     return(FALSE)
   }
-  if (!("isValid" %in% x$getRefClass()$methods())) {
+  if (!inherits(x, "R6")) {
+    output <- capture.output(str(x))
+    cat(paste0("Error: variable '", output, "' is not a R6 class, but should be!"))
+    return(FALSE)
+  }
+  # "If x does not have member called 'isValid' or
+  # x$isValid is not a function, do"
+  if (!inherits(x$isValid, "function")) {
     stop("Invalid object: does not support 'isValid()'")
   }
   
@@ -166,8 +175,13 @@ fromDatatoMzQC = function(mzqc_class, data, context = NULL)
 #'
 MzQCDateTime = R6Class(
   'MzQCDateTime',
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+
   public = list(
-    # Fields
+		# Fields
     datetime = 'character',
     
     # Methods
@@ -195,7 +209,8 @@ MzQCDateTime = R6Class(
     }
   )
 )
-MzQCDateTime$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+setMethod(asJSON, 'MzQCDateTime', function(x, ...) x$toJSON(...))
+#MzQCDateTime$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #'
@@ -216,6 +231,11 @@ MzQCDateTime$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 #'
 MzQCcontrolledVocabulary = R6Class(
   'MzQCcontrolledVocabulary',
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   public = list(
     # Fields
     name = 'character',
@@ -265,7 +285,8 @@ MzQCcontrolledVocabulary = R6Class(
     }
   )
 )
-MzQCcontrolledVocabulary$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+setMethod(asJSON, 'MzQCcontrolledVocabulary', function(x, ...) x$toJSON(...))
+#MzQCcontrolledVocabulary$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #'
@@ -287,6 +308,11 @@ MzQCcontrolledVocabulary$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 #'
 MzQCcvParameter = R6Class(
   'MzQCcvParameter',
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   public = list(
 
     # Fields
@@ -341,7 +367,8 @@ MzQCcvParameter = R6Class(
     }
   )
 )
-MzQCcvParameter$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+setMethod(asJSON, 'MzQCcvParameter', function(x, ...) x$toJSON(...))
+#MzQCcvParameter$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #'
@@ -358,6 +385,11 @@ MzQCcvParameter$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 #'
 MzQCinputFile = R6Class(
   'MzQCinputFile',
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   public = list(
     
     # Fields
@@ -435,7 +467,8 @@ MzQCinputFile = R6Class(
     }
   )
 )
-MzQCinputFile$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+setMethod(asJSON, 'MzQCinputFile', function(x, ...) x$toJSON(...))
+#MzQCinputFile$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 #
 # file_format = MzQCcvParameter$new("MS:1000584", "mzML format")
@@ -472,6 +505,11 @@ MzQCinputFile$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 #'
 MzQCanalysisSoftware = R6Class(
   'MzQCanalysisSoftware',
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   public = list(
     
     # Fields
@@ -545,7 +583,8 @@ MzQCanalysisSoftware = R6Class(
     }
   )
 )
-MzQCanalysisSoftware$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+setMethod(asJSON, 'MzQCanalysisSoftware', function(x, ...) x$toJSON(...))
+#MzQCanalysisSoftware$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #'
@@ -561,6 +600,11 @@ MzQCanalysisSoftware$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 #'
 MzQCmetadata = R6Class(
   'MzQCmetadata',
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   public = list(
     
     # Fields
@@ -640,7 +684,8 @@ MzQCmetadata = R6Class(
     }
   )
 )
-MzQCmetadata$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+setMethod(asJSON, 'MzQCmetadata', function(x, ...) x$toJSON(...))
+#MzQCmetadata$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 ################################################################################################################################
 #################################################################################################################################'
@@ -658,6 +703,11 @@ MzQCmetadata$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 #'
 MzQCqualityMetric = R6Class(
   'MzQCqualityMetric',
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   public = list(
     
     # Fields
@@ -734,7 +784,8 @@ MzQCqualityMetric = R6Class(
     }
   )
 )
-MzQCqualityMetric$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+setMethod(asJSON, 'MzQCqualityMetric', function(x, ...) x$toJSON(...))
+#MzQCqualityMetric$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #a_qc_metric = MzQCqualityMetric$new("acc", "nnam")
@@ -753,6 +804,11 @@ MzQCqualityMetric$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 #'
 MzQCbaseQuality = R6Class(
   'MzQCbaseQuality',
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   public = list(
     
     # Fields
@@ -833,7 +889,8 @@ MzQCbaseQuality = R6Class(
     }
   )
 )
-MzQCbaseQuality$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+setMethod(asJSON, 'MzQCbaseQuality', function(x, ...) x$toJSON(...))
+#MzQCbaseQuality$set('public', 'asJSON', function(x, ...) x$toJSON(...))
 
 
 #' Extract a certain metric from a runQuality's list of MzQCqualityMetric
@@ -863,6 +920,11 @@ NULL
 #'
 MzQCrunQuality =  R6Class(
   "MzQCrunQuality",
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   inherit = MzQCbaseQuality
 )
 
@@ -877,6 +939,11 @@ MzQCrunQuality =  R6Class(
 #'
 MzQCsetQuality =  R6Class(
   "MzQCsetQuality",
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   inherit = MzQCbaseQuality
 )
 
@@ -900,7 +967,13 @@ MzQCsetQuality =  R6Class(
 #'
 MzQCmzQC = R6Class(
   'MzQCmzQC',
+  
+  # Options
+  portable = FALSE,
+  cloneable = FALSE,
+  
   public = list(
+
     # Fields
     version = 'character',
     creationDate = 'MzQCDateTime',
@@ -1034,4 +1107,5 @@ MzQCmzQC = R6Class(
     }
   )
 )
-MzQCmzQC$set('public', 'asJSON', function(x, ...) x$toJSON(...))
+setMethod(asJSON, 'MzQCmzQC', function(x, ...) x$toJSON(...))
+#MzQCmzQC$set('public', 'asJSON', function(x, ...) x$toJSON(...))
