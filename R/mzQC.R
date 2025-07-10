@@ -209,7 +209,6 @@ MzQCDateTime = R6Class(
     }
   )
 )
-#setMethod(asJSON, 'MzQCDateTime', function(x, ...) x$toJSON(...))
 asJSON.MzQCDateTime = function(x, ...) x$toJSON(...)
 
 
@@ -285,7 +284,6 @@ MzQCcontrolledVocabulary = R6Class(
     }
   )
 )
-#setMethod(asJSON, 'MzQCcontrolledVocabulary', function(x, ...) x$toJSON(...))
 asJSON.MzQCcontrolledVocabulary = function(x, ...) x$toJSON(...)
 
 
@@ -367,7 +365,6 @@ MzQCcvParameter = R6Class(
     }
   )
 )
-#setMethod(asJSON, 'MzQCcvParameter', function(x, ...) x$toJSON(...))
 asJSON.MzQCcvParameter = function(x, ...) x$toJSON(...)
 
 
@@ -467,7 +464,6 @@ MzQCinputFile = R6Class(
     }
   )
 )
-#setMethod(asJSON, 'MzQCinputFile', function(x, ...) x$toJSON(...))
 asJSON.MzQCinputFile = function(x, ...) x$toJSON(...)
 
 
@@ -584,7 +580,6 @@ MzQCanalysisSoftware = R6Class(
     }
   )
 )
-#setMethod(asJSON, 'MzQCanalysisSoftware', function(x, ...) x$toJSON(...))
 asJSON.MzQCanalysisSoftware = function(x, ...) x$toJSON(...)
 
 
@@ -685,7 +680,6 @@ MzQCmetadata = R6Class(
     }
   )
 )
-#setMethod(asJSON, 'MzQCmetadata', function(x, ...) x$toJSON(...))
 asJSON.MzQCmetadata = function(x, ...) x$toJSON(...)
 
 ################################################################################################################################
@@ -785,7 +779,6 @@ MzQCqualityMetric = R6Class(
     }
   )
 )
-#setMethod(asJSON, 'MzQCqualityMetric', function(x, ...) x$toJSON(...))
 asJSON.MzQCqualityMetric = function(x, ...) x$toJSON(...)
 
 
@@ -890,7 +883,6 @@ MzQCbaseQuality = R6Class(
     }
   )
 )
-#setMethod(asJSON, 'MzQCbaseQuality', function(x, ...) x$toJSON(...))
 asJSON.MzQCbaseQuality = function(x, ...) x$toJSON(...)
 
 
@@ -1108,5 +1100,4 @@ MzQCmzQC = R6Class(
     }
   )
 )
-#setMethod(asJSON, 'MzQCmzQC', function(x, ...) x$toJSON(...))
 asJSON.MzQCmzQC = function(x, ...) x$toJSON(...)
