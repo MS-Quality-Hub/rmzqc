@@ -159,7 +159,7 @@ fromDatatoMzQC = function(mzqc_class, data, context = NULL)
 #' The format is "%Y-%m-%dT%H:%M:%S".
 #'
 #' @field datetime A correctly formatted date time (use as read-only)
-#'
+#' 
 #' @examples
 #'    dt1 = MzQCDateTime$new("1900-01-01")  ## yields "1900-01-01T00:00:00Z"
 #'    dt2 = MzQCDateTime$new(Sys.time())
@@ -181,27 +181,48 @@ MzQCDateTime = R6Class(
   cloneable = FALSE,
 
   public = list(
-		# Fields
+		## Fields
     datetime = 'character',
     
-    # Methods
+    ## Methods
+    
+    #' @description
+    #' Constructor
+    #' @param date Optional POSIXct value for initialization of field datetime. Defaults to Sys.time()
     initialize = function(date = as.character(Sys.time()))
     {
       self$set(date)
     },
+    
+    #' @description
+    #' Sets datetime value
+    #' @param date New date-time
     set = function(date)
     {
       self$datetime = format(as.POSIXct(date, tz = "UTC"), "%Y-%m-%dT%H:%M:%SZ")  # using ISO8601 format with UTC time
     },
+    
+    #' @description
+    #' Verifies validity of the object
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     isValid = function( context = "MzQCDateTime")
     {
       return(TRUE) ## always valid, because it's designed that way
     },
+    
+    #' @description
+    #' Creates JSON file from this object.
+    #' @param ... Optional parameters for jsonlite:::asJSON()
     toJSON = function( ...)
     {
       if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
       return(jsonlite:::asJSON(self$datetime, ...))
     },
+    
+    #' @description
+    #' Sets data for this object from plain named lists of R objects
+    #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     fromData = function( data, context = "MzQCDateTime")
     {
       self$set(data)
@@ -209,8 +230,9 @@ MzQCDateTime = R6Class(
     }
   )
 )
+setOldClass("MzQCDateTime")
 asJSON.MzQCDateTime = function(x, ...) x$toJSON(...)
-
+setMethod("asJSON", "MzQCDateTime", asJSON.MzQCDateTime)
 
 #'
 #' A controlled vocabulary document, usually pointing to an .obo file
@@ -236,18 +258,28 @@ MzQCcontrolledVocabulary = R6Class(
   cloneable = FALSE,
   
   public = list(
-    # Fields
+    ## Fields
     name = 'character',
     uri = 'character',
     version = 'character',    # optional
     
-    # Methods
+    ## Methods
+    
+    #' @description
+    #' Constructor
+    #' @param name Optional string value for initialization of field name
+    #' @param uri Optional string value for initialization of field uri
+    #' @param version Optional string value for initialization of field version
     initialize = function(name = NA_character_, uri = NA_character_, version = NA_character_)
     {
       self$name = name
       self$uri = uri
       self$version = version
     },
+    
+    #' @description
+    #' Verifies validity of the object
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     isValid = function( context = "MzQCcontrolledVocabulary") {
       if (isUndefined(self$name, context = context)) {
         return(FALSE)
@@ -257,6 +289,10 @@ MzQCcontrolledVocabulary = R6Class(
       }
       return(TRUE)
     },
+    
+    #' @description
+    #' Creates JSON file from this object.
+    #' @param ... Optional parameters for jsonlite:::asJSON()
     toJSON = function( ...)
     {
       if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
@@ -266,6 +302,11 @@ MzQCcontrolledVocabulary = R6Class(
                "version" = self$version)
       return (jsonlite:::asJSON(r, ...))
     },
+    
+    #' @description
+    #' Sets data for this object from plain named lists of R objects
+    #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     fromData = function( data, context = "MzQCcontrolledVocabulary")
     {
       # Define expected fields
@@ -284,7 +325,9 @@ MzQCcontrolledVocabulary = R6Class(
     }
   )
 )
+setOldClass("MzQCcontrolledVocabulary")
 asJSON.MzQCcontrolledVocabulary = function(x, ...) x$toJSON(...)
+setMethod("asJSON", "MzQCcontrolledVocabulary", asJSON.MzQCcontrolledVocabulary)
 
 
 #'
@@ -313,13 +356,20 @@ MzQCcvParameter = R6Class(
   
   public = list(
 
-    # Fields
+    ## Fields
     accession = 'character',
     name = 'character',
     value = 'ANY',              # optional
     description = 'character',   # optional
     
-    # Methods
+    ## Methods
+    
+    #' @description
+    #' Constructor
+    #' @param accession Optional string value for initialization of field accession
+    #' @param name Optional string value for initialization of field name
+    #' @param value Optional value for initialization of field value
+    #' @param description Optional string value for initialization of field description
     initialize = function(accession = NA_character_, name = NA_character_, value = NA, description = NA_character_)
     {
       self$accession = accession
@@ -327,6 +377,10 @@ MzQCcvParameter = R6Class(
       self$value = value
       self$description = description
     },
+    
+    #' @description
+    #' Verifies validity of the object
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     isValid = function( context = "MzQCcvParameter") {
       if (isUndefined(self$accession, context = context)) {
         return(FALSE)
@@ -336,6 +390,10 @@ MzQCcvParameter = R6Class(
       }
       return(TRUE)
     },
+    
+    #' @description
+    #' Creates JSON file from this object.
+    #' @param ... Optional parameters for jsonlite:::asJSON()
     toJSON = function( ...)
     {
       if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
@@ -346,6 +404,11 @@ MzQCcvParameter = R6Class(
       if (!isUndefined(self$description, verbose = FALSE)) r["description"] = self$description
       return (jsonlite:::asJSON(r, ...))
     },
+    
+    #' @description
+    #' Sets data for this object from plain named lists of R objects
+    #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     fromData = function( data, context = "MzQCcvParameter")
     {
       # Define expected fields
@@ -365,7 +428,9 @@ MzQCcvParameter = R6Class(
     }
   )
 )
+setOldClass("MzQCcvParameter")
 asJSON.MzQCcvParameter = function(x, ...) x$toJSON(...)
+setMethod("asJSON", "MzQCcvParameter", asJSON.MzQCcvParameter)
 
 
 #'
@@ -389,14 +454,20 @@ MzQCinputFile = R6Class(
   
   public = list(
     
-    # Fields
+    ## Fields
     name = 'character',
     location = 'character',
     fileFormat = 'MzQCcvParameter',
     fileProperties = 'list',         # array of MzQCcvParameter, optional
 
-    # Methods
-    # defaults are required.
+    ## Methods
+
+    #' @description
+    #' Constructor
+    #' @param name Optional string value for initialization of field name
+    #' @param location Optional string value for initialization of field location
+    #' @param fileFormat Optional MzQCcvParameter value for initialization of field fileFormat
+    #' @param fileProperties Optional list value for initialization of field fileProperties
     initialize = function(name = NA_character_, location = NA_character_, fileFormat = MzQCcvParameter$new(), fileProperties = list())
     {
       self$name = name
@@ -404,6 +475,10 @@ MzQCinputFile = R6Class(
       self$fileFormat = fileFormat
       self$fileProperties = fileProperties
     },
+    
+    #' @description
+    #' Verifies validity of the object
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     isValid = function( context = "MzQCinputFile")
     {
       if (isUndefined(self$name, context = context)) {
@@ -428,6 +503,10 @@ MzQCinputFile = R6Class(
       # Check fileProperties with proper context
       return(isValidMzQC(self$fileProperties, parent_context = paste0(context, "$fileProperties"))) ## TRUE for empty list, which is ok
     },
+    
+    #' @description
+    #' Creates JSON file from this object.
+    #' @param ... Optional parameters for jsonlite:::asJSON()
     toJSON = function( ...)
     {
       if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
@@ -435,6 +514,11 @@ MzQCinputFile = R6Class(
       if (length(self$fileProperties) > 0) r$fileProperties = self$fileProperties
       return (jsonlite:::asJSON(r, ...))
     },
+    
+    #' @description
+    #' Sets data for this object from plain named lists of R objects
+    #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     fromData = function( data, context = "MzQCinputFile")
     {
       # Define expected fields
@@ -464,7 +548,9 @@ MzQCinputFile = R6Class(
     }
   )
 )
+setOldClass("MzQCinputFile")
 asJSON.MzQCinputFile = function(x, ...) x$toJSON(...)
+setMethod("asJSON", "MzQCinputFile", asJSON.MzQCinputFile)
 
 
 #
@@ -509,7 +595,7 @@ MzQCanalysisSoftware = R6Class(
   
   public = list(
     
-    # Fields
+    ## Fields
     accession = 'character',
     name = 'character',
     version = 'character',
@@ -517,8 +603,16 @@ MzQCanalysisSoftware = R6Class(
     description = 'character',  # optional
     value = 'character',        # optional
     
-    # Methods
-    # defaults are required.
+    ## Methods
+
+    #' @description
+    #' Constructor
+    #' @param accession Optional string value for initialization of field accession
+    #' @param name Optional string value for initialization of field name
+    #' @param version Optional string value for initialization of field version
+    #' @param uri Optional string value for initialization of field uri
+    #' @param description Optional string value for initialization of field description
+    #' @param value Optional string value for initialization of field value
     initialize = function(accession = NA_character_,
                           name = NA_character_,
                           version = NA_character_,
@@ -534,6 +628,10 @@ MzQCanalysisSoftware = R6Class(
       self$description = description
       self$value = value
     },
+    
+    #' @description
+    #' Verifies validity of the object
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     isValid = function( context = "MzQCanalysisSoftware")
     {
       if (isUndefined(self$accession, context = context)) {
@@ -547,6 +645,10 @@ MzQCanalysisSoftware = R6Class(
       }
       return(TRUE)
     },
+    
+    #' @description
+    #' Creates JSON file from this object.
+    #' @param ... Optional parameters for jsonlite:::asJSON()
     toJSON = function( ...)
     {
       if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
@@ -559,6 +661,11 @@ MzQCanalysisSoftware = R6Class(
       if (!isUndefined(self$value, verbose = FALSE)) r$value = self$value
       return (jsonlite:::asJSON(r, ...))
     },
+    
+    #' @description
+    #' Sets data for this object from plain named lists of R objects
+    #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     fromData = function( data, context = "MzQCanalysisSoftware")
     {
       # Define expected fields
@@ -580,7 +687,9 @@ MzQCanalysisSoftware = R6Class(
     }
   )
 )
+setOldClass("MzQCanalysisSoftware")
 asJSON.MzQCanalysisSoftware = function(x, ...) x$toJSON(...)
+setMethod("asJSON", "MzQCanalysisSoftware", asJSON.MzQCanalysisSoftware)
 
 
 #'
@@ -603,13 +712,20 @@ MzQCmetadata = R6Class(
   
   public = list(
     
-    # Fields
+    ## Fields
     label = 'character',
     inputFiles = 'list',       # array of MzQCinputFile
     analysisSoftware = 'list', # array of MzQCanalysisSoftware
     cvParameters = 'list',     # optional array of MzQCcvParameter
 
-    # Methods
+    ## Methods
+    
+    #' @description
+    #' Constructor
+    #' @param label Optional string value for initialization of field label
+    #' @param inputFiles Optional list value for initialization of field inputFiles
+    #' @param analysisSoftware Optional list value for initialization of field analysisSoftware
+    #' @param cvParameters Optional list value for initialization of field cvParameters
     initialize = function(label = NA_character_, inputFiles = list(), analysisSoftware = list(), cvParameters = list())
     {
       self$label = label
@@ -617,6 +733,10 @@ MzQCmetadata = R6Class(
       self$analysisSoftware = analysisSoftware
       self$cvParameters = cvParameters
     },
+    
+    #' @description
+    #' Verifies validity of the object
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     isValid = function( context = "MzQCmetadata")
     {
       if (isUndefined(self$label, context = context)) {
@@ -640,6 +760,10 @@ MzQCmetadata = R6Class(
       
       return(TRUE)
     },
+    
+    #' @description
+    #' Creates JSON file from this object.
+    #' @param ... Optional parameters for jsonlite:::asJSON()
     toJSON = function( ...)
     {
       if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
@@ -651,6 +775,11 @@ MzQCmetadata = R6Class(
       if (length(self$cvParameters) > 0 ) r$cvParameters = list(self$cvParameters) ## extra list for the enclosing '[ ... ]'
       return (jsonlite:::asJSON(r, ...))
     },
+    
+    #' @description
+    #' Sets data for this object from plain named lists of R objects
+    #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     fromData = function( data, context = "MzQCmetadata")
     {
       # Define expected fields
@@ -680,7 +809,9 @@ MzQCmetadata = R6Class(
     }
   )
 )
+setOldClass("MzQCmetadata")
 asJSON.MzQCmetadata = function(x, ...) x$toJSON(...)
+setMethod("asJSON", "MzQCmetadata", asJSON.MzQCmetadata)
 
 ################################################################################################################################
 #################################################################################################################################'
@@ -705,14 +836,22 @@ MzQCqualityMetric = R6Class(
   
   public = list(
     
-    # Fields
+    ## Fields
     accession = 'character',
     name = 'character',
     description = 'character', # optional
     value = 'ANY',             # optional value of unspecified type
     unit = 'list',              # optional array of MzQCcvParameter
 
-    # Methods
+    ## Methods
+    
+    #' @description
+    #' Constructor
+    #' @param accession Optional string value for initialization of field accession
+    #' @param name Optional string value for initialization of field name
+    #' @param description Optional string value for initialization of field description
+    #' @param value Optional value for initialization of field value
+    #' @param unit Optional unit value for initialization of field unit
     initialize = function(accession = NA_character_, name = NA_character_, description = NA_character_, value = NA, unit = list())
     {
       self$accession = accession
@@ -721,6 +860,10 @@ MzQCqualityMetric = R6Class(
       if (!missing(value)) self$value = value else self$value = NA  ## need to set as NA explicitly, because the default value 'uninitialized class ANY' cannot be converted to JSON
       self$unit = unit
     },
+    
+    #' @description
+    #' Verifies validity of the object
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     isValid = function( context = "MzQCqualityMetric")
     {
       if (isUndefined(self$accession, context = context)) {
@@ -739,6 +882,10 @@ MzQCqualityMetric = R6Class(
       
       return(TRUE)
     },
+    
+    #' @description
+    #' Creates JSON file from this object.
+    #' @param ... Optional parameters for jsonlite:::asJSON()
     toJSON = function( ...)
     {
       if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
@@ -751,6 +898,11 @@ MzQCqualityMetric = R6Class(
       if (length(self$unit) > 0) r$unit = self$unit  ## optional
       return (jsonlite:::asJSON(r, ...))
     },
+    
+    #' @description
+    #' Sets data for this object from plain named lists of R objects
+    #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     fromData = function( data, context = "MzQCqualityMetric")
     {
       # Define expected fields
@@ -779,7 +931,9 @@ MzQCqualityMetric = R6Class(
     }
   )
 )
+setOldClass("MzQCqualityMetric")
 asJSON.MzQCqualityMetric = function(x, ...) x$toJSON(...)
+setMethod("asJSON", "MzQCqualityMetric", asJSON.MzQCqualityMetric)
 
 
 #a_qc_metric = MzQCqualityMetric$new("acc", "nnam")
@@ -805,16 +959,25 @@ MzQCbaseQuality = R6Class(
   
   public = list(
     
-    # Fields
+    ## Fields
     metadata = 'MzQCmetadata',
     qualityMetrics = 'list', # array of MzQCqualityMetric
 
-    # Methods
+    ## Methods
+    
+    #' @description
+    #' Constructor
+    #' @param metadata Optional MzQCmetadata value for initialization of field metadata
+    #' @param qualityMetrics Optional list value for initialization of field qualityMetrics
     initialize = function(metadata = MzQCmetadata$new(), qualityMetrics = list())
     {
       self$metadata = metadata
       self$qualityMetrics = qualityMetrics
     },
+    
+    #' @description
+    #' Verifies validity of the object
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     isValid = function( context = "MzQCbaseQuality")
     {
       # Check metadata with proper context
@@ -830,6 +993,11 @@ MzQCbaseQuality = R6Class(
       
       return(TRUE)
     },
+    
+    #' @description
+    #' Fetches metrics which match specified accession or name from the object.
+    #' @param accession Search by accession
+    #' @param name Search by name
     getMetric = function( accession = NULL, name = NULL) {
       if (! xor(is.null(accession), is.null(name)))
       {
@@ -854,6 +1022,10 @@ MzQCbaseQuality = R6Class(
       }
       results_filtered
     },
+    
+    #' @description
+    #' Creates JSON file from this object.
+    #' @param ... Optional parameters for jsonlite:::asJSON()
     toJSON = function( ...)
     {
       if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
@@ -862,6 +1034,11 @@ MzQCbaseQuality = R6Class(
                "qualityMetrics" = self$qualityMetrics)
       return (jsonlite:::asJSON(r, ...))
     },
+    
+    #' @description
+    #' Sets data for this object from plain named lists of R objects
+    #' @param mdata A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     fromData = function( mdata, context = "MzQCbaseQuality")
     {
       
@@ -883,7 +1060,9 @@ MzQCbaseQuality = R6Class(
     }
   )
 )
+setOldClass("MzQCbaseQuality")
 asJSON.MzQCbaseQuality = function(x, ...) x$toJSON(...)
+setMethod("asJSON", "MzQCbaseQuality", asJSON.MzQCbaseQuality)
 
 
 #' Extract a certain metric from a runQuality's list of MzQCqualityMetric
@@ -920,6 +1099,7 @@ MzQCrunQuality =  R6Class(
   
   inherit = MzQCbaseQuality
 )
+setOldClass("MzQCrunQuality")
 
 #'
 #' A setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
@@ -939,6 +1119,7 @@ MzQCsetQuality =  R6Class(
   
   inherit = MzQCbaseQuality
 )
+setOldClass("MzQCsetQuality")
 
 ###########################################################################
 
@@ -967,7 +1148,7 @@ MzQCmzQC = R6Class(
   
   public = list(
 
-    # Fields
+    ## Fields
     version = 'character',
     creationDate = 'MzQCDateTime',
     contactName = 'character',            # optional
@@ -977,7 +1158,18 @@ MzQCmzQC = R6Class(
     setQualities = 'list',                # array of MzQCsetQuality
     controlledVocabularies = 'list',     # array of MzQCcontrolledVocabulary
     
-    # Methods
+    ## Methods
+    
+    #' @description
+    #' Constructor
+    #' @param version Optional string value for initialization of field version
+    #' @param creationDate Optional MzQCDateTime value for initialization of field creationDate
+    #' @param contactName Optional string value for initialization of field contactName
+    #' @param contactAddress Optional string value for initialization of field contactAddress
+    #' @param description Optional string value for initialization of field description
+    #' @param runQualities Optional list value for initialization of field runQualities
+    #' @param setQualities Optional list value for initialization of field setQualities
+    #' @param controlledVocabularies Optional list value for initialization of field controlledVocabularies
     initialize = function(version = NA_character_,
                           creationDate = MzQCDateTime$new(),
                           contactName = NA_character_,
@@ -996,6 +1188,10 @@ MzQCmzQC = R6Class(
       self$setQualities = setQualities
       self$controlledVocabularies = controlledVocabularies
     },
+    
+    #' @description
+    #' Verifies validity of the object
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     isValid = function( context = "MzQCmzQC")
     {
       if (isUndefined(self$version, context = context))
@@ -1033,6 +1229,10 @@ MzQCmzQC = R6Class(
   
       return(TRUE)
     },
+    
+    #' @description
+    #' Creates JSON file from this object.
+    #' @param ... Optional parameters for jsonlite:::asJSON()
     toJSON = function( ...)
     {
       if (!isValidMzQC(self)) stop(paste0("Object of class '", class(self), "' is not in a valid state for writing to JSON"))
@@ -1048,6 +1248,11 @@ MzQCmzQC = R6Class(
       r$controlledVocabularies = self$controlledVocabularies
       return (jsonlite:::asJSON(list("mzQC" = r), ...))
     },
+    
+    #' @description
+    #' Sets data for this object from plain named lists of R objects
+    #' @param data A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'
+    #' @param context Optional string describing location in mzQC structure that is used for more informative warning texts.
     fromData = function( data, context = "MzQCmzQC")
     {
       # Check if mzQC root exists
@@ -1100,4 +1305,6 @@ MzQCmzQC = R6Class(
     }
   )
 )
+setOldClass("MzQCmzQC")
 asJSON.MzQCmzQC = function(x, ...) x$toJSON(...)
+setMethod("asJSON", "MzQCmzQC", asJSON.MzQCmzQC)

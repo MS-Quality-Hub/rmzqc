@@ -7,7 +7,8 @@ test_that("isValidMzQC provides detailed error messages", {
   # Capture the warning message
   expect_warning(
     result <- isValidMzQC(invalid_param),
-    "MzQCcvParameter\\$name is NA/NULL"
+    "MzQCcvParameter$self$name is NA/NULL",
+    fixed = TRUE
   )
 
   # Check that validation fails
@@ -23,7 +24,9 @@ test_that("isValidMzQC provides detailed error messages", {
   })
   expect_false(result)
   expect_length(warnings, 1)
-  expect_match(warnings[1], "MzQCcvParameter\\$name is NA/NULL")
+  expect_match(warnings[1],
+               "MzQCcvParameter$self$name is NA/NULL",
+               fixed = TRUE)
 
 
   # Test with a more complex nested structure
@@ -47,7 +50,8 @@ test_that("isValidMzQC provides detailed error messages", {
   # Capture the warning message
   expect_warning(
     result <- isValidMzQC(metadata),
-    "MzQCmetadata\\$label is NA/NULL"
+    "MzQCmetadata$self$label is NA/NULL",
+    fixed = TRUE
   )
 
   # Check that validation fails
@@ -67,7 +71,8 @@ test_that("isValidMzQC provides detailed error messages", {
   # Capture the warning message
   expect_warning(
     result <- isValidMzQC(metadata2),
-    "MzQCmetadata$analysisSoftware[1]$MzQCanalysisSoftware$version is NA/NULL", fixed = TRUE
+    "MzQCmetadata$analysisSoftware[1]$MzQCanalysisSoftware$self$version is NA/NULL",
+    fixed = TRUE
   )
 
   # Check that validation fails
@@ -122,7 +127,8 @@ test_that("Complex nested validation provides clear path to invalid field", {
   # Capture the warning message
   expect_warning(
     result <- isValidMzQC(mzqc),
-    "MzQCmzQC$runQualities[1]$MzQCrunQuality$qualityMetrics[1]$MzQCqualityMetric$name is NA/NULL", fixed = TRUE
+    "MzQCmzQC$runQualities[1]$MzQCrunQuality$qualityMetrics[1]$MzQCqualityMetric$self$name is NA/NULL",
+    fixed = TRUE
   )
 
   # Check that validation fails
