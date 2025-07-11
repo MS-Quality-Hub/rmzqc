@@ -62,9 +62,9 @@ Constructor
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{version}}{Optional string value for initialization of field version}
+\item{\code{version}}{String value for initialization of field version}
 
-\item{\code{creationDate}}{Optional MzQCDateTime value for initialization of field creationDate}
+\item{\code{creationDate}}{MzQCDateTime value for initialization of field creationDate}
 
 \item{\code{contactName}}{Optional string value for initialization of field contactName}
 

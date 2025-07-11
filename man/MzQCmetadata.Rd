@@ -47,11 +47,11 @@ Constructor
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{label}}{Optional string value for initialization of field label}
+\item{\code{label}}{String value for initialization of field label}
 
 \item{\code{inputFiles}}{Optional list value for initialization of field inputFiles}
 
-\item{\code{analysisSoftware}}{Optional list value for initialization of field analysisSoftware}
+\item{\code{analysisSoftware}}{Optonal list value for initialization of field analysisSoftware}
 
 \item{\code{cvParameters}}{Optional list value for initialization of field cvParameters}
 }

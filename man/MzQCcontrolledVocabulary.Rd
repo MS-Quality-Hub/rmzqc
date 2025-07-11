@@ -51,9 +51,9 @@ Constructor
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{Optional string value for initialization of field name}
+\item{\code{name}}{String value for initialization of field name}
 
-\item{\code{uri}}{Optional string value for initialization of field uri}
+\item{\code{uri}}{String value for initialization of field uri}
 
 \item{\code{version}}{Optional string value for initialization of field version}
 }

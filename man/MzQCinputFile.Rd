@@ -48,9 +48,9 @@ Constructor
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{Optional string value for initialization of field name}
+\item{\code{name}}{String value for initialization of field name}
 
-\item{\code{location}}{Optional string value for initialization of field location}
+\item{\code{location}}{String value for initialization of field location}
 
 \item{\code{fileFormat}}{Optional MzQCcvParameter value for initialization of field fileFormat}
 

@@ -51,9 +51,9 @@ Constructor
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{accession}}{Optional string value for initialization of field accession}
+\item{\code{accession}}{String value for initialization of field accession}
 
-\item{\code{name}}{Optional string value for initialization of field name}
+\item{\code{name}}{String value for initialization of field name}
 
 \item{\code{description}}{Optional string value for initialization of field description}
 

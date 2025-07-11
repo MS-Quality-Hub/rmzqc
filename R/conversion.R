@@ -139,7 +139,7 @@ toAnalysisSoftware = function(id, version = "unknown", uri = NULL, value = NA_ch
     ## not found?
     if (uri == entry$def) uri = NA_character_;
   }
-  MzQCanalysisSoftware(accession = entry$id, name = entry$name, version = as.character(version), uri = uri, description = entry$def, value = value)
+  MzQCanalysisSoftware$new(accession = entry$id, name = entry$name, version = as.character(version), uri = uri, description = entry$def, value = value)
 }
 
 
