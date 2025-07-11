@@ -7,7 +7,6 @@
 ## We provide initialize() functions for all R6 Classes to enable unnamed construction (shorter syntax)
 ##
 
-library('R6')
 
 ##
 # Defining this function to enable overload
@@ -181,7 +180,7 @@ MzQCDateTime = R6Class(
   cloneable = FALSE,
 
   public = list(
-		## Fields
+    ## Fields
     datetime = 'character',
     
     ## Methods
