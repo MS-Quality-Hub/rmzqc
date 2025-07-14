@@ -10,8 +10,8 @@
 
 ##
 # Defining this function to enable overload
-# e.g. setMethod(asJSON, 'mzQC', function(x, ...) x$toJSON())
-#  which allows to use
+# (see example under class MzQCDateTime)
+# which allows to use
 # jsonlite::toJSON(mzQC$new(content))
 asJSON <- jsonlite:::asJSON
 
