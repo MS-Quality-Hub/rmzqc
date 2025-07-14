@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCqualityMetric}
 \alias{MzQCqualityMetric}
+\alias{MzQCqualityMetric-class}
 \title{The central class to store QC information}
 \description{
 The central class to store QC information

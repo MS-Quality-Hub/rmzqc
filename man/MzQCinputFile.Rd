@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCinputFile}
 \alias{MzQCinputFile}
+\alias{MzQCinputFile-class}
 \title{An inputfile within metadata for a run/setQuality}
 \description{
 An inputfile within metadata for a run/setQuality

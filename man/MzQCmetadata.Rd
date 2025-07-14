@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCmetadata}
 \alias{MzQCmetadata}
+\alias{MzQCmetadata-class}
 \title{The metadata for a run/setQuality}
 \description{
 The metadata for a run/setQuality

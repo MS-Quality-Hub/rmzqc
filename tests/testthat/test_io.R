@@ -24,9 +24,9 @@ test_that("readMZQC and writeMZQC - check for extra data in mzQC file and warn",
   ## add extra data, which is out-of-spec
   json_raw$mzQC$newData = list("one", 2)
   json_raw$mzQC$runQualities[[1]]$metadata$stuff = 1:5
-  ## test the warning messages(see tests/thestthat/_snaps/io.md)
-  expect_snapshot(
-    readMZQCFromJSON(json_raw),
-    cran = TRUE
-  )
+  ## test the warning messages(see tests/thestthat/output_snaps/io_warns.md)
+  verify_output(
+    # Finds a path to tests/testthat
+    test_path("output_snaps/io_warns.md"),
+    readMZQCFromJSON(json_raw))
 })

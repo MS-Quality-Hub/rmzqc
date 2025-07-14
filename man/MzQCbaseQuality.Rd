@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCbaseQuality}
 \alias{MzQCbaseQuality}
+\alias{MzQCbaseQuality-class}
 \title{Base class of runQuality/setQuality}
 \description{
 Base class of runQuality/setQuality

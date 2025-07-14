@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCrunQuality}
 \alias{MzQCrunQuality}
+\alias{MzQCrunQuality-class}
 \title{A runQuality object. Use to report metrics for individual runs which are independent of other runs.}
 \description{
 The object is an alias for MzQCbaseQuality.

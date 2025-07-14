@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCDateTime}
 \alias{MzQCDateTime}
+\alias{MzQCDateTime-class}
 \title{An mzQC-formatted date+time in ISO8601 format, as required by the mzQC spec doc.}
 \description{
 An mzQC-formatted date+time in ISO8601 format, as required by the mzQC spec doc.

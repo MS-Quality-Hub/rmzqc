@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCsetQuality}
 \alias{MzQCsetQuality}
+\alias{MzQCsetQuality-class}
 \title{A setQuality object. Use it for metrics which are specific to sets, i.e. only for values which
 only make sense in the set context and cannot be stored as runQuality (see mzQC spec doc).}
 \description{

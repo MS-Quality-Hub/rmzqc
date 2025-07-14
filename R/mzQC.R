@@ -169,6 +169,7 @@ fromDatatoMzQC = function(mzqc_class, data, context = NULL)
 #'    dt2$fromData(jsonlite::fromJSON(jsonlite::toJSON(dt1)))
 #     dt1$datetime == dt2$datetime    ## TRUE
 #'
+#' @aliases MzQCDateTime-class
 #' @exportClass MzQCDateTime
 #' @export MzQCDateTime
 #'
@@ -229,6 +230,10 @@ MzQCDateTime = R6Class(
     }
   )
 )
+# Note: since the following creates an S4 counterpart of
+# this class, in documentation an alias needs to be added
+# such as: @aliases <classname>-class
+# See documentation of the above class for an example.
 setOldClass("MzQCDateTime")
 asJSON.MzQCDateTime = function(x, ...) x$toJSON(...)
 setMethod("asJSON", "MzQCDateTime", asJSON.MzQCDateTime)
@@ -246,6 +251,7 @@ setMethod("asJSON", "MzQCDateTime", asJSON.MzQCDateTime)
 #'     "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.129/psi-ms.obo",
 #'     "4.1.129")
 #'
+#' @aliases MzQCcontrolledVocabulary-class
 #' @exportClass MzQCcontrolledVocabulary
 #' @export MzQCcontrolledVocabulary
 #'
@@ -343,6 +349,7 @@ setMethod("asJSON", "MzQCcontrolledVocabulary", asJSON.MzQCcontrolledVocabulary)
 #'                       c(0.2959, 5969.8172))
 #'   isValidMzQC(MzQCcvParameter$new("MS:0000000"))
 #'
+#' @aliases MzQCcvParameter-class
 #' @exportClass MzQCcvParameter
 #' @export MzQCcvParameter
 #'
@@ -441,6 +448,7 @@ setMethod("asJSON", "MzQCcvParameter", asJSON.MzQCcvParameter)
 #' @field fileProperties An array of MzQCcvParameter, usually with 'accession', 'name' and 'value'. Recommended are at least two entries:
 #'        a) Completion time of the input file (MS:1000747) and b) Checksum of the input file (any child of: MS:1000561 ! data file checksum type).
 #'
+#' @aliases MzQCinputFile-class
 #' @exportClass MzQCinputFile
 #' @export MzQCinputFile
 #'
@@ -582,6 +590,7 @@ setMethod("asJSON", "MzQCinputFile", asJSON.MzQCinputFile)
 #' @field description (optional) Definition of the controlled vocabulary term.
 #' @field value (optional) Name of the software tool.
 #'
+#' @aliases MzQCanalysisSoftware-class
 #' @exportClass MzQCanalysisSoftware
 #' @export MzQCanalysisSoftware
 #'
@@ -699,6 +708,7 @@ setMethod("asJSON", "MzQCanalysisSoftware", asJSON.MzQCanalysisSoftware)
 #' @field analysisSoftware Array/list of MzQCanalysisSoftware objects
 #' @field cvParameters (optional) Array of cvParameters objects
 #'
+#' @aliases MzQCmetadata-class
 #' @exportClass MzQCmetadata
 #' @export MzQCmetadata
 #'
@@ -823,6 +833,7 @@ setMethod("asJSON", "MzQCmetadata", asJSON.MzQCmetadata)
 #'        The structure is not checked by our mzQC implementation and must be handled by the caller, see \code{\link{toQCMetric}}.
 #' @field unit (optional) Array of unit(s), stored as MzQcvParameter
 #'
+#' @aliases MzQCqualityMetric-class
 #' @exportClass MzQCqualityMetric
 #' @export MzQCqualityMetric
 #'
@@ -946,6 +957,7 @@ setMethod("asJSON", "MzQCqualityMetric", asJSON.MzQCqualityMetric)
 #' @field metadata The metadata for this run/setQuality
 #' @field qualityMetrics Array of MzQCqualityMetric objects
 #'
+#' @aliases MzQCbaseQuality-class
 #' @exportClass MzQCbaseQuality
 #' @export MzQCbaseQuality
 #'
@@ -1086,6 +1098,7 @@ NULL
 #'
 #' The object is an alias for MzQCbaseQuality.
 #'
+#' @aliases MzQCrunQuality-class
 #' @exportClass MzQCrunQuality
 #' @export MzQCrunQuality
 #'
@@ -1106,6 +1119,7 @@ setOldClass("MzQCrunQuality")
 #'
 #' The object is an alias for MzQCbaseQuality.
 #'
+#' @aliases MzQCsetQuality-class
 #' @exportClass MzQCsetQuality
 #' @export MzQCsetQuality
 #'
@@ -1135,6 +1149,7 @@ setOldClass("MzQCsetQuality")
 #' @field setQualities Array of MzQCsetQuality
 #' @field controlledVocabularies Array of CV domains used (obo files)
 #'
+#' @aliases MzQCmzQC-class
 #' @exportClass MzQCmzQC
 #' @export MzQCmzQC
 #'

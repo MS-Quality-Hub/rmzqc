@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCcvParameter}
 \alias{MzQCcvParameter}
+\alias{MzQCcvParameter-class}
 \title{A controlled vocabulary parameter, as detailed in the OBO file}
 \description{
 A controlled vocabulary parameter, as detailed in the OBO file

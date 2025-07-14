@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCcontrolledVocabulary}
 \alias{MzQCcontrolledVocabulary}
+\alias{MzQCcontrolledVocabulary-class}
 \title{A controlled vocabulary document, usually pointing to an .obo file}
 \description{
 A controlled vocabulary document, usually pointing to an .obo file

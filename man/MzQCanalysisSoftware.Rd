@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCanalysisSoftware}
 \alias{MzQCanalysisSoftware}
+\alias{MzQCanalysisSoftware-class}
 \title{Details of the software used to create the QC metrics}
 \description{
 Details of the software used to create the QC metrics

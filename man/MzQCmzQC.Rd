@@ -2,6 +2,7 @@
 % Please edit documentation in R/mzQC.R
 \name{MzQCmzQC}
 \alias{MzQCmzQC}
+\alias{MzQCmzQC-class}
 \title{Root element of an mzQC document}
 \description{
 Root element of an mzQC document
