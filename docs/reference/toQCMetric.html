@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rmzqc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,67 +96,66 @@ The following requirements for values apply:</p><ul><li><p>single value: R singl
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>   <span class="co">## single value</span></span></span>
 <span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:4000059"</span>, value <span class="op">=</span> <span class="fl">13405</span><span class="op">)</span> <span class="co"># number of MS1 spectra</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reference class object of class "MzQCqualityMetric"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "accession":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "MS:4000059"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "name":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "number of MS1 spectra"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "description":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\"The number of MS1 events in the run.\" [PSI:MS]"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "value":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 13405</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "unit":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> list()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;MzQCqualityMetric&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     accession: MS:4000059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     description: "The number of MS1 events in the run." [PSI:MS]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fromData: function (data, context = "MzQCqualityMetric") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (accession = NA_character_, name = NA_character_, description = NA_character_, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     isValid: function (context = "MzQCqualityMetric") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     name: number of MS1 spectra</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     self: MzQCqualityMetric, R6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     toJSON: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     unit: list</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     value: 13405</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>   <span class="co">## n-tuple</span></span></span>
 <span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:4000051"</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">31.3</span>, <span class="fl">35.99</span>, <span class="fl">38.44</span><span class="op">)</span><span class="op">)</span> <span class="co"># XIC-FWHM quantiles</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reference class object of class "MzQCqualityMetric"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "accession":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "MS:4000051"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "name":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "XIC-FWHM quantiles"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "description":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\"The first to n-th quantile of peak widths for XICs. A metric's value triplet represents the related QuaMeter metrics of XIC-FWHM-Q1,Q2,Q3.\" [PSI:MS]"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "value":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 31.30 35.99 38.44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "unit":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> list()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;MzQCqualityMetric&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     accession: MS:4000051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     description: "The first to n-th quantile of peak widths for XICs. A m ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fromData: function (data, context = "MzQCqualityMetric") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (accession = NA_character_, name = NA_character_, description = NA_character_, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     isValid: function (context = "MzQCqualityMetric") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     name: XIC-FWHM quantiles</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     self: MzQCqualityMetric, R6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     toJSON: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     unit: list</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     value: 31.3 35.99 38.44</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>   <span class="co">## table</span></span></span>
 <span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:4000063"</span>,  <span class="co"># MS2 known precursor charges fractions</span></span></span>
 <span class="r-in"><span>              value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"MS:1000041"</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span></span>
 <span class="r-in"><span>                           <span class="st">"UO:0000191"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reference class object of class "MzQCqualityMetric"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "accession":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "MS:4000063"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "name":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "MS2 known precursor charges fractions"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "description":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\"The fraction of MS/MS precursors of the corresponding charge. The fractions [0,1] are given in the 'Fraction' column, corresponding charges in the 'Charge state' column. The highest charge state is to be interpreted as that charge state or higher.\" [PSI:MS]"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "value":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`MS:1000041`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`UO:0000191`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7 0.6 0.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "unit":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> list()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;MzQCqualityMetric&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     accession: MS:4000063</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     description: "The fraction of MS/MS precursors of the corresponding c ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fromData: function (data, context = "MzQCqualityMetric") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (accession = NA_character_, name = NA_character_, description = NA_character_, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     isValid: function (context = "MzQCqualityMetric") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     name: MS2 known precursor charges fractions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     self: MzQCqualityMetric, R6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     toJSON: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     unit: list</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     value: list</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>   <span class="co">## test an invalid CV accession/id</span></span></span>
 <span class="r-in"><span>   <span class="fu">toQCMetric</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:0000"</span>, value <span class="op">=</span> <span class="st">"ID_is_not_valid"</span>, allow_unknown_id <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Could not find id 'MS:0000' in CV list (length: 6807)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reference class object of class "MzQCqualityMetric"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "accession":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "MS:0000"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "name":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "description":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "value":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ID_is_not_valid"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "unit":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> list()</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Could not find id 'MS:0000' in CV list (length: 6813)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;MzQCqualityMetric&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     accession: MS:0000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     description: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fromData: function (data, context = "MzQCqualityMetric") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (accession = NA_character_, name = NA_character_, description = NA_character_, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     isValid: function (context = "MzQCqualityMetric") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     name: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     self: MzQCqualityMetric, R6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     toJSON: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     unit: list</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     value: ID_is_not_valid</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>   <span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span>   <span class="co">## matrix (MS:4000006): there is no example in the CV yet, so this cannot be tested)</span></span></span>

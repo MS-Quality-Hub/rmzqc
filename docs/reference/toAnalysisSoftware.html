@@ -9,7 +9,7 @@ create an 'analysisSoftware' node for mzQC"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">rmzqc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,20 +80,20 @@ create an 'analysisSoftware' node for mzQC</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="co"># use 'version = packageVersion("PTXQC")' if the package is installed</span></span></span>
 <span class="r-in"><span> <span class="fu">toAnalysisSoftware</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:1003162"</span>, version <span class="op">=</span> <span class="st">"1.0.12"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.194/psi-ms.obo' ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reference class object of class "MzQCanalysisSoftware"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "accession":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "MS:1003162"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "name":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "PTX-QC"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "version":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1.0.12"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "uri":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://github.com/cbielow/PTXQC/"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "description":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\"Proteomics (PTX) - QualityControl (QC) software for QC report generation and visualization.\" [DOI:10.1021/acs.jproteome.5b00780, PMID:26653327, https://github.com/cbielow/PTXQC/]"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Field "value":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.195/psi-ms.obo' ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;MzQCanalysisSoftware&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     accession: MS:1003162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     description: "Proteomics (PTX) - QualityControl (QC) software for QC  ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fromData: function (data, context = "MzQCanalysisSoftware") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (accession = NA_character_, name = NA_character_, version = NA_character_, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     isValid: function (context = "MzQCanalysisSoftware") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     name: PTX-QC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     self: MzQCanalysisSoftware, R6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     toJSON: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     uri: https://github.com/cbielow/PTXQC/</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     value: NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     version: 1.0.12</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
