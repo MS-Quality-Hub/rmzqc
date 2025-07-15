@@ -34,6 +34,7 @@ A controlled vocabulary document, usually pointing to an .obo file
 \item \href{#method-MzQCcontrolledVocabulary-isValid}{\code{MzQCcontrolledVocabulary$isValid()}}
 \item \href{#method-MzQCcontrolledVocabulary-toJSON}{\code{MzQCcontrolledVocabulary$toJSON()}}
 \item \href{#method-MzQCcontrolledVocabulary-fromData}{\code{MzQCcontrolledVocabulary$fromData()}}
+\item \href{#method-MzQCcontrolledVocabulary-clone}{\code{MzQCcontrolledVocabulary$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -110,6 +111,23 @@ Sets data for this object from plain named lists of R objects
 \item{\code{data}}{A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'}
 
 \item{\code{context}}{Optional string describing location in mzQC structure that is used for more informative warning texts.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MzQCcontrolledVocabulary-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-MzQCcontrolledVocabulary-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MzQCcontrolledVocabulary$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

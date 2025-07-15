@@ -178,7 +178,7 @@ MzQCDateTime = R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   public = list(
     ## Fields
@@ -260,7 +260,7 @@ MzQCcontrolledVocabulary = R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   public = list(
     ## Fields
@@ -358,7 +358,7 @@ MzQCcvParameter = R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   public = list(
 
@@ -457,7 +457,7 @@ MzQCinputFile = R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   public = list(
 
@@ -599,7 +599,7 @@ MzQCanalysisSoftware = R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   public = list(
 
@@ -717,7 +717,7 @@ MzQCmetadata = R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   public = list(
 
@@ -842,7 +842,7 @@ MzQCqualityMetric = R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   public = list(
 
@@ -966,7 +966,7 @@ MzQCbaseQuality = R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   public = list(
 
@@ -1107,7 +1107,7 @@ MzQCrunQuality =  R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   inherit = MzQCbaseQuality
 )
@@ -1128,7 +1128,7 @@ MzQCsetQuality =  R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   inherit = MzQCbaseQuality
 )
@@ -1158,7 +1158,7 @@ MzQCmzQC = R6Class(
 
   # Options
   portable = FALSE,
-  cloneable = FALSE,
+  cloneable = TRUE,
 
   public = list(
 

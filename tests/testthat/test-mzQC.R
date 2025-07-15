@@ -58,3 +58,17 @@ test_that("MzQCbaseQuality::getMetric = function(.self, accession = NULL, name =
   expect_equal(extracted_metrics[[1]]$accession, "MS:4000059")
   expect_equal(extracted_metrics[[1]]$name, "number of MS1 spectra")
 })
+
+
+
+
+test_that("MzQCqualityMetric::clone()", {
+  ## ensure that cloning creates a true copy
+  template_proteinCount = rmzqc::getQualityMetricTemplate("MS:1002406") # count of identified clusters
+  clone1 = template_proteinCount$clone();
+  clone2 = template_proteinCount$clone();
+  clone1$value = 1;
+  clone2$value = 2;
+  expect_equal(clone1$value, 1)
+  expect_equal(clone2$value, 2)
+})

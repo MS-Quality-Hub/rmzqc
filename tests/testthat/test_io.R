@@ -25,8 +25,8 @@ test_that("readMZQC and writeMZQC - check for extra data in mzQC file and warn",
   json_raw$mzQC$newData = list("one", 2)
   json_raw$mzQC$runQualities[[1]]$metadata$stuff = 1:5
   ## test the warning messages(see tests/thestthat/output_snaps/io_warns.md)
-  verify_output(
+  testthat::verify_output(
     # Finds a path to tests/testthat
-    test_path("output_snaps/io_warns.md"),
+    testthat::test_path("output_snaps/io_warns.md"),
     readMZQCFromJSON(json_raw))
 })

@@ -11,3 +11,38 @@ The object is an alias for MzQCbaseQuality.
 \section{Super class}{
 \code{\link[rmzqc:MzQCbaseQuality]{rmzqc::MzQCbaseQuality}} -> \code{MzQCsetQuality}
 }
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-MzQCsetQuality-clone}{\code{MzQCsetQuality$clone()}}
+}
+}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="rmzqc" data-topic="MzQCbaseQuality" data-id="fromData"><a href='../../rmzqc/html/MzQCbaseQuality.html#method-MzQCbaseQuality-fromData'><code>rmzqc::MzQCbaseQuality$fromData()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rmzqc" data-topic="MzQCbaseQuality" data-id="getMetric"><a href='../../rmzqc/html/MzQCbaseQuality.html#method-MzQCbaseQuality-getMetric'><code>rmzqc::MzQCbaseQuality$getMetric()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rmzqc" data-topic="MzQCbaseQuality" data-id="initialize"><a href='../../rmzqc/html/MzQCbaseQuality.html#method-MzQCbaseQuality-initialize'><code>rmzqc::MzQCbaseQuality$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rmzqc" data-topic="MzQCbaseQuality" data-id="isValid"><a href='../../rmzqc/html/MzQCbaseQuality.html#method-MzQCbaseQuality-isValid'><code>rmzqc::MzQCbaseQuality$isValid()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rmzqc" data-topic="MzQCbaseQuality" data-id="toJSON"><a href='../../rmzqc/html/MzQCbaseQuality.html#method-MzQCbaseQuality-toJSON'><code>rmzqc::MzQCbaseQuality$toJSON()</code></a></span></li>
+</ul>
+</details>
+}}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MzQCsetQuality-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-MzQCsetQuality-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MzQCsetQuality$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

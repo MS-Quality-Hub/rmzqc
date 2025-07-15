@@ -62,7 +62,7 @@
                         <h4 data-toc-skip class="author">Chris Bielow <a href="mailto:chris.bielow@fu-berlin.de" class="email">chris.bielow@fu-berlin.de</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2025-07-14</h4>
+            <h4 data-toc-skip class="date">2025-07-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MS-Quality-hub/rmzqc/blob/HEAD/vignettes/using_a_custom_cv.Rmd" class="external-link"><code>vignettes/using_a_custom_cv.Rmd</code></a></small>
       <div class="d-none name"><code>using_a_custom_cv.Rmd</code></div>
@@ -91,6 +91,7 @@ document is accurate.</p>
 <pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.195/psi-ms.obo' ...</span></span></code></pre>
 <pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
 <span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
 <span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
 <span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
 <span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>
@@ -105,6 +106,7 @@ document is accurate.</p>
 <pre><code><span><span class="co">## &lt;MzQCqualityMetric&gt;</span></span>
 <span><span class="co">##   Public:</span></span>
 <span><span class="co">##     accession: MS:4000059</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
 <span><span class="co">##     description: "The number of MS1 events in the run." [PSI:MS]</span></span>
 <span><span class="co">##     fromData: function (data, context = "MzQCqualityMetric") </span></span>
 <span><span class="co">##     initialize: function (accession = NA_character_, name = NA_character_, description = NA_character_, </span></span>
@@ -129,6 +131,7 @@ rmzqc package (which may not contain the latest CV terms)</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
 <span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
 <span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
 <span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
 <span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>
@@ -146,6 +149,7 @@ rmzqc package (which may not contain the latest CV terms)</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
 <span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
 <span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
 <span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
 <span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>
@@ -167,6 +171,7 @@ file:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
 <span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
 <span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
 <span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
 <span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>
@@ -184,6 +189,7 @@ file:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
 <span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
 <span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
 <span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
 <span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>

@@ -73,6 +73,7 @@ A controlled vocabulary document, usually pointing to an .obo file"></head><body
 <li><p><a href="#method-MzQCcontrolledVocabulary-isValid"><code>MzQCcontrolledVocabulary$isValid()</code></a></p></li>
 <li><p><a href="#method-MzQCcontrolledVocabulary-toJSON"><code>MzQCcontrolledVocabulary$toJSON()</code></a></p></li>
 <li><p><a href="#method-MzQCcontrolledVocabulary-fromData"><code>MzQCcontrolledVocabulary$fromData()</code></a></p></li>
+<li><p><a href="#method-MzQCcontrolledVocabulary-clone"><code>MzQCcontrolledVocabulary$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-MzQCcontrolledVocabulary-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Constructor</p><div class="section">
@@ -153,6 +154,22 @@ A controlled vocabulary document, usually pointing to an .obo file"></head><body
 </dl><p></p></div>
 </div>
 
+</div><p></p><hr><a id="method-MzQCcontrolledVocabulary-clone"></a><div class="section">
+<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p>The objects of this class are cloneable with this method.</p><div class="section">
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MzQCcontrolledVocabulary</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>deep</code></dt>
+<dd><p>Whether to make a deep clone.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
 </div>
 
     </div>
@@ -165,6 +182,7 @@ A controlled vocabulary document, usually pointing to an .obo file"></head><body
 <span class="r-in"><span>    <span class="st">"4.1.129"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;MzQCcontrolledVocabulary&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fromData: function (data, context = "MzQCcontrolledVocabulary") </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     isValid: function (context = "MzQCcontrolledVocabulary") </span>

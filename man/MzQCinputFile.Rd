@@ -30,6 +30,7 @@ a) Completion time of the input file (MS:1000747) and b) Checksum of the input f
 \item \href{#method-MzQCinputFile-isValid}{\code{MzQCinputFile$isValid()}}
 \item \href{#method-MzQCinputFile-toJSON}{\code{MzQCinputFile$toJSON()}}
 \item \href{#method-MzQCinputFile-fromData}{\code{MzQCinputFile$fromData()}}
+\item \href{#method-MzQCinputFile-clone}{\code{MzQCinputFile$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -109,6 +110,23 @@ Sets data for this object from plain named lists of R objects
 \item{\code{data}}{A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'}
 
 \item{\code{context}}{Optional string describing location in mzQC structure that is used for more informative warning texts.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MzQCinputFile-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-MzQCinputFile-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MzQCinputFile$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

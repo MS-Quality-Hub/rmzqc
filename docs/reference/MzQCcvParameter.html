@@ -77,6 +77,7 @@ A controlled vocabulary parameter, as detailed in the OBO file"></head><body>
 <li><p><a href="#method-MzQCcvParameter-isValid"><code>MzQCcvParameter$isValid()</code></a></p></li>
 <li><p><a href="#method-MzQCcvParameter-toJSON"><code>MzQCcvParameter$toJSON()</code></a></p></li>
 <li><p><a href="#method-MzQCcvParameter-fromData"><code>MzQCcvParameter$fromData()</code></a></p></li>
+<li><p><a href="#method-MzQCcvParameter-clone"><code>MzQCcvParameter$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-MzQCcvParameter-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Constructor</p><div class="section">
@@ -162,6 +163,22 @@ A controlled vocabulary parameter, as detailed in the OBO file"></head><body>
 </dl><p></p></div>
 </div>
 
+</div><p></p><hr><a id="method-MzQCcvParameter-clone"></a><div class="section">
+<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p>The objects of this class are cloneable with this method.</p><div class="section">
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MzQCcvParameter</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>deep</code></dt>
+<dd><p>Whether to make a deep clone.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
 </div>
 
     </div>
@@ -174,6 +191,7 @@ A controlled vocabulary parameter, as detailed in the OBO file"></head><body>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;MzQCcvParameter&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     accession: MS:4000070</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     description: NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fromData: function (data, context = "MzQCcvParameter") </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (accession = NA_character_, name = NA_character_, value = NA, </span>
