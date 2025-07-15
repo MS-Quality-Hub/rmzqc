@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rmzqc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
                         <h4 data-toc-skip class="author">Chris Bielow <a href="mailto:chris.bielow@fu-berlin.de" class="email">chris.bielow@fu-berlin.de</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2025-06-16</h4>
+            <h4 data-toc-skip class="date">2025-07-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MS-Quality-hub/rmzqc/blob/HEAD/vignettes/basic_guide.Rmd" class="external-link"><code>vignettes/basic_guide.Rmd</code></a></small>
       <div class="d-none name"><code>basic_guide.Rmd</code></div>
@@ -117,11 +117,11 @@ depending on context. In short: <code>null</code> may become an
 <span><span class="va">raw_file</span> <span class="op">=</span> <span class="fu"><a href="../reference/localFileToURI.html">localFileToURI</a></span><span class="op">(</span><span class="st">"c:\\data\\special.raw"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">file_format</span> <span class="op">=</span> <span class="fu"><a href="../reference/getCVTemplate.html">getCVTemplate</a></span><span class="op">(</span>accession <span class="op">=</span> <span class="fu"><a href="../reference/filenameToCV.html">filenameToCV</a></span><span class="op">(</span><span class="va">raw_file</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.194/psi-ms.obo' ...</span></span></code></pre>
+<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.195/psi-ms.obo' ...</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ptxqc_software</span> <span class="op">=</span> <span class="fu"><a href="../reference/toAnalysisSoftware.html">toAnalysisSoftware</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:1003162"</span>, version <span class="op">=</span> <span class="st">"1.0.13"</span><span class="op">)</span> <span class="co">## you could use 'version = packageVersion("PTXQC")' to automate further</span></span>
-<span><span class="va">run1_qc</span> <span class="op">=</span> <span class="va"><a href="../reference/MzQCrunQuality-class.html">MzQCrunQuality</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>metadata <span class="op">=</span> <span class="va"><a href="../reference/MzQCmetadata-class.html">MzQCmetadata</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>label <span class="op">=</span> <span class="va">raw_file</span>,</span>
-<span>                         inputFiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va"><a href="../reference/MzQCinputFile-class.html">MzQCinputFile</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">raw_file</span><span class="op">)</span>,</span>
+<span><span class="va">run1_qc</span> <span class="op">=</span> <span class="va"><a href="../reference/MzQCrunQuality.html">MzQCrunQuality</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>metadata <span class="op">=</span> <span class="va"><a href="../reference/MzQCmetadata.html">MzQCmetadata</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>label <span class="op">=</span> <span class="va">raw_file</span>,</span>
+<span>                         inputFiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va"><a href="../reference/MzQCinputFile.html">MzQCinputFile</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">raw_file</span><span class="op">)</span>,</span>
 <span>                                                             <span class="va">raw_file</span>,</span>
 <span>                                                             <span class="va">file_format</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                         analysisSoftware <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ptxqc_software</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -130,8 +130,8 @@ depending on context. In short: <code>null</code> may become an
 <span>                                               <span class="op">)</span></span>
 <span>                         <span class="op">)</span></span>
 <span></span>
-<span><span class="va">mzQC_document</span> <span class="op">=</span> <span class="va"><a href="../reference/MzQCmzQC-class.html">MzQCmzQC</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>version <span class="op">=</span> <span class="st">"1.0.0"</span>, </span>
-<span>                             creationDate <span class="op">=</span> <span class="va"><a href="../reference/MzQCDateTime-class.html">MzQCDateTime</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>, </span>
+<span><span class="va">mzQC_document</span> <span class="op">=</span> <span class="va"><a href="../reference/MzQCmzQC.html">MzQCmzQC</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>version <span class="op">=</span> <span class="st">"1.0.0"</span>, </span>
+<span>                             creationDate <span class="op">=</span> <span class="va"><a href="../reference/MzQCDateTime.html">MzQCDateTime</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>, </span>
 <span>                             contactName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.info.html" class="external-link">Sys.info</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="st">"user"</span><span class="op">]</span>, </span>
 <span>                             contactAddress <span class="op">=</span> <span class="st">"test@user.info"</span>, </span>
 <span>                             description <span class="op">=</span> <span class="st">"A minimal mzQC test document with bogus data"</span>,</span>
@@ -150,7 +150,7 @@ depending on context. In short: <code>null</code> may become an
 <span></span>
 <span><span class="co">## print some basic stats</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">gettextf</a></span><span class="op">(</span><span class="st">"This mzQC was created on %s and has %d quality metric(s) in total."</span>, <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html" class="external-link">dQuote</a></span><span class="op">(</span><span class="va">mq</span><span class="op">$</span><span class="va">creationDate</span><span class="op">$</span><span class="va">datetime</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mq</span><span class="op">$</span><span class="va">runQualities</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mq</span><span class="op">$</span><span class="va">setQualities</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "This mzQC was created on \"2025-06-16T00:00:00Z\" and has 1 quality metric(s) in total."</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "This mzQC was created on \"2025-07-15T00:00:00Z\" and has 1 quality metric(s) in total."</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="different-value-types-single-value-n-tuple-table-matrix-for-qualitymetrics">Different Value Types (single value, n-tuple, table, matrix) for
@@ -227,7 +227,7 @@ make one up:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">qualityMetric_matrix</span> <span class="op">=</span> <span class="fu"><a href="../reference/toQCMetric.html">toQCMetric</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:40000??"</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>, allow_unknown_id <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in CV$byID(id): Could not find id 'MS:40000??' in CV list (length:</span></span>
-<span><span class="co">## 6807)</span></span></code></pre>
+<span><span class="co">## 6813)</span></span></code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">qualityMetric_matrix</span><span class="op">$</span><span class="va">name</span> <span class="op">=</span> <span class="st">"unknown metric"</span></span>
 <span><span class="co">## let's look at how this looks in JSON </span></span>

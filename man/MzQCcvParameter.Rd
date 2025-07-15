@@ -36,6 +36,7 @@ A controlled vocabulary parameter, as detailed in the OBO file
 \item \href{#method-MzQCcvParameter-isValid}{\code{MzQCcvParameter$isValid()}}
 \item \href{#method-MzQCcvParameter-toJSON}{\code{MzQCcvParameter$toJSON()}}
 \item \href{#method-MzQCcvParameter-fromData}{\code{MzQCcvParameter$fromData()}}
+\item \href{#method-MzQCcvParameter-clone}{\code{MzQCcvParameter$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -115,6 +116,23 @@ Sets data for this object from plain named lists of R objects
 \item{\code{data}}{A datastructure of R lists/arrays as obtained by 'jsonlite::fromJSON()'}
 
 \item{\code{context}}{Optional string describing location in mzQC structure that is used for more informative warning texts.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MzQCcvParameter-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-MzQCcvParameter-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MzQCcvParameter$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

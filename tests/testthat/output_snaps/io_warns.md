@@ -7,6 +7,7 @@ Warning: Unexpected field(s) found in data for class 'MzQCmetadata' in MzQCmzQC$
 
 <MzQCmzQC>
   Public:
+    clone: function (deep = FALSE) 
     contactAddress: test@user.info
     contactName: bielow
     controlledVocabularies: list

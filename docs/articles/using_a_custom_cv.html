@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rmzqc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
                         <h4 data-toc-skip class="author">Chris Bielow <a href="mailto:chris.bielow@fu-berlin.de" class="email">chris.bielow@fu-berlin.de</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2025-06-16</h4>
+            <h4 data-toc-skip class="date">2025-07-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MS-Quality-hub/rmzqc/blob/HEAD/vignettes/using_a_custom_cv.Rmd" class="external-link"><code>vignettes/using_a_custom_cv.Rmd</code></a></small>
       <div class="d-none name"><code>using_a_custom_cv.Rmd</code></div>
@@ -88,28 +88,34 @@ document is accurate.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MS-Quality-hub/rmzqc" class="external-link">rmzqc</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.194/psi-ms.obo' ...</span></span></code></pre>
-<pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
-<span><span class="co">## Field "name":</span></span>
-<span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
-<span><span class="co">## Field "uri":</span></span>
-<span><span class="co">## [1] "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.194/psi-ms.obo"</span></span>
-<span><span class="co">## Field "version":</span></span>
-<span><span class="co">## [1] "4.1.194"</span></span></code></pre>
+<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.195/psi-ms.obo' ...</span></span></code></pre>
+<pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
+<span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
+<span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
+<span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     name: Proteomics Standards Initiative Mass Spectrometry Ontology</span></span>
+<span><span class="co">##     self: MzQCcontrolledVocabulary, R6</span></span>
+<span><span class="co">##     toJSON: function (...) </span></span>
+<span><span class="co">##     uri: https://github.com/HUPO-PSI/psi-ms-CV/releases/download/ ...</span></span>
+<span><span class="co">##     version: 4.1.195</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## test if the default CV is usable</span></span>
 <span><span class="fu"><a href="../reference/toQCMetric.html">toQCMetric</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"MS:4000059"</span>, value <span class="op">=</span> <span class="fl">13405</span><span class="op">)</span> <span class="co">## number of MS1 scans</span></span></code></pre></div>
-<pre><code><span><span class="co">## Reference class object of class "MzQCqualityMetric"</span></span>
-<span><span class="co">## Field "accession":</span></span>
-<span><span class="co">## [1] "MS:4000059"</span></span>
-<span><span class="co">## Field "name":</span></span>
-<span><span class="co">## [1] "number of MS1 spectra"</span></span>
-<span><span class="co">## Field "description":</span></span>
-<span><span class="co">## [1] "\"The number of MS1 events in the run.\" [PSI:MS]"</span></span>
-<span><span class="co">## Field "value":</span></span>
-<span><span class="co">## [1] 13405</span></span>
-<span><span class="co">## Field "unit":</span></span>
-<span><span class="co">## list()</span></span></code></pre>
+<pre><code><span><span class="co">## &lt;MzQCqualityMetric&gt;</span></span>
+<span><span class="co">##   Public:</span></span>
+<span><span class="co">##     accession: MS:4000059</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
+<span><span class="co">##     description: "The number of MS1 events in the run." [PSI:MS]</span></span>
+<span><span class="co">##     fromData: function (data, context = "MzQCqualityMetric") </span></span>
+<span><span class="co">##     initialize: function (accession = NA_character_, name = NA_character_, description = NA_character_, </span></span>
+<span><span class="co">##     isValid: function (context = "MzQCqualityMetric") </span></span>
+<span><span class="co">##     name: number of MS1 spectra</span></span>
+<span><span class="co">##     self: MzQCqualityMetric, R6</span></span>
+<span><span class="co">##     toJSON: function (...) </span></span>
+<span><span class="co">##     unit: list</span></span>
+<span><span class="co">##     value: 13405</span></span></code></pre>
 <p>However, if you happen to run this code without an internet
 connection, it will fall back to the PSI-MS CV which is shipped with the
 rmzqc package (which may not contain the latest CV terms)</p>
@@ -117,19 +123,23 @@ rmzqc package (which may not contain the latest CV terms)</p>
 <code class="sourceCode R"><span><span class="co">## With internet:</span></span>
 <span><span class="va">myCV</span> <span class="op">=</span> <span class="fu"><a href="../reference/getCVSingleton.html">getCVSingleton</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">myCV</span><span class="op">$</span><span class="fu">setData</span><span class="op">(</span><span class="fu"><a href="../reference/getCVDictionary.html">getCVDictionary</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">)</span> <span class="co">## this is done internally by default when you load the package</span></span></code></pre></div>
-<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.194/psi-ms.obo' ...</span></span></code></pre>
+<pre><code><span><span class="co">## Downloading obo from 'https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.195/psi-ms.obo' ...</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Number of entries in latest CV: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVSingleton.html">getCVSingleton</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">getCV</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Number of entries in latest CV:  6807</span></span></code></pre>
+<pre><code><span><span class="co">## Number of entries in latest CV:  6813</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
-<span><span class="co">## Field "name":</span></span>
-<span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
-<span><span class="co">## Field "uri":</span></span>
-<span><span class="co">## [1] "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.194/psi-ms.obo"</span></span>
-<span><span class="co">## Field "version":</span></span>
-<span><span class="co">## [1] "4.1.194"</span></span></code></pre>
+<pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
+<span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
+<span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
+<span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     name: Proteomics Standards Initiative Mass Spectrometry Ontology</span></span>
+<span><span class="co">##     self: MzQCcontrolledVocabulary, R6</span></span>
+<span><span class="co">##     toJSON: function (...) </span></span>
+<span><span class="co">##     uri: https://github.com/HUPO-PSI/psi-ms-CV/releases/download/ ...</span></span>
+<span><span class="co">##     version: 4.1.195</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## simulate missing internet connection by invoking the function manually</span></span>
 <span><span class="va">myCV</span><span class="op">$</span><span class="fu">setData</span><span class="op">(</span><span class="fu"><a href="../reference/getCVDictionary.html">getCVDictionary</a></span><span class="op">(</span><span class="st">"local"</span><span class="op">)</span><span class="op">)</span></span>
@@ -137,13 +147,17 @@ rmzqc package (which may not contain the latest CV terms)</p>
 <pre><code><span><span class="co">## Number of entries in local CV:  6806</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
-<span><span class="co">## Field "name":</span></span>
-<span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
-<span><span class="co">## Field "uri":</span></span>
-<span><span class="co">## [1] "https://github.com/HUPO-PSI/psi-ms-CV/releases/download/v4.1.193/psi-ms.obo"</span></span>
-<span><span class="co">## Field "version":</span></span>
-<span><span class="co">## [1] "4.1.193"</span></span></code></pre>
+<pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
+<span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
+<span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
+<span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     name: Proteomics Standards Initiative Mass Spectrometry Ontology</span></span>
+<span><span class="co">##     self: MzQCcontrolledVocabulary, R6</span></span>
+<span><span class="co">##     toJSON: function (...) </span></span>
+<span><span class="co">##     uri: https://github.com/HUPO-PSI/psi-ms-CV/releases/download/ ...</span></span>
+<span><span class="co">##     version: 4.1.193</span></span></code></pre>
 <p>Now, the package’s PSI-MS CV might still not suit you, and you want
 to use the latest unpublished CV, which you downloaded somewhere, or
 which you handcrafted for testing. Then simply use a custom .obo
@@ -155,13 +169,17 @@ file:</p>
 <pre><code><span><span class="co">## Number of entries in custom CV:  6806</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
-<span><span class="co">## Field "name":</span></span>
-<span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
-<span><span class="co">## Field "uri":</span></span>
-<span><span class="co">## [1] "C:/Users/bielow/AppData/Local/Temp/Rtmpi6o6Cl/temp_libpath3edc75c22fc5/rmzqc/./cv/psi-ms.obo"</span></span>
-<span><span class="co">## Field "version":</span></span>
-<span><span class="co">## [1] "4.1.193"</span></span></code></pre>
+<pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
+<span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
+<span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
+<span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     name: Proteomics Standards Initiative Mass Spectrometry Ontology</span></span>
+<span><span class="co">##     self: MzQCcontrolledVocabulary, R6</span></span>
+<span><span class="co">##     toJSON: function (...) </span></span>
+<span><span class="co">##     uri: C:/Users/bielow/AppData/Local/R/win-library/4.4/rmzqc/./ ...</span></span>
+<span><span class="co">##     version: 4.1.193</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## you may want to change the CV-entries, or URI or version manually, before creating an mzQC file:</span></span>
 <span><span class="va">newCV</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>CV <span class="op">=</span> <span class="va">myCV</span><span class="op">$</span><span class="fu">getData</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">CV</span>, </span>
@@ -169,13 +187,17 @@ file:</p>
 <span>             version <span class="op">=</span> <span class="st">"9.9.2"</span><span class="op">)</span></span>
 <span><span class="va">myCV</span><span class="op">$</span><span class="fu">setData</span><span class="op">(</span><span class="va">newCV</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCVInfo.html">getCVInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Reference class object of class "MzQCcontrolledVocabulary"</span></span>
-<span><span class="co">## Field "name":</span></span>
-<span><span class="co">## [1] "Proteomics Standards Initiative Mass Spectrometry Ontology"</span></span>
-<span><span class="co">## Field "uri":</span></span>
-<span><span class="co">## [1] "https://myURI.com"</span></span>
-<span><span class="co">## Field "version":</span></span>
-<span><span class="co">## [1] "9.9.2"</span></span></code></pre>
+<pre><code><span><span class="co">## &lt;MzQCcontrolledVocabulary&gt;</span></span>
+<span><span class="co">##   Public:</span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
+<span><span class="co">##     fromData: function (data, context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     initialize: function (name = NA_character_, uri = NA_character_, version = NA_character_) </span></span>
+<span><span class="co">##     isValid: function (context = "MzQCcontrolledVocabulary") </span></span>
+<span><span class="co">##     name: Proteomics Standards Initiative Mass Spectrometry Ontology</span></span>
+<span><span class="co">##     self: MzQCcontrolledVocabulary, R6</span></span>
+<span><span class="co">##     toJSON: function (...) </span></span>
+<span><span class="co">##     uri: https://myURI.com</span></span>
+<span><span class="co">##     version: 9.9.2</span></span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
