@@ -7,7 +7,7 @@
 isValidMzQC(x, parent_context = NULL)
 }
 \arguments{
-\item{x}{An mzQC refclass (or list of them), which will be subjected to validation}
+\item{x}{An mzQC R6 class (or list of them), which will be subjected to validation}
 
 \item{parent_context}{Internal parameter used to track the path in nested validations}
 }

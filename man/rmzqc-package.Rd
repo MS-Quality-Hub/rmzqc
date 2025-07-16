@@ -22,6 +22,7 @@ Useful links:
 Other contributors:
 \itemize{
   \item David Jimenez-Morales \email{biodavidjm@gmail.com} (\href{https://orcid.org/0000-0003-4356-6461}{ORCID}) [reviewer, contributor]
+  \item Jeremi Maciejewski \email{jeremi.maciejewski5002@gmail.com} [contributor]
 }
 
 }

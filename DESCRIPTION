@@ -1,7 +1,7 @@
 Package: rmzqc
 Title: Creation, Reading and Validation of 'mzqc' Files 
-Version: 0.6.1
-Date: 2025-06-16
+Version: 0.7.0
+Date: 2025-07-14
 Authors@R: 
     c(person("Chris", "Bielow", 
               email = "chris.bielow@bsc.fu-berlin.de", 
@@ -10,7 +10,10 @@ Authors@R:
       person("David", "Jimenez-Morales", 
               email = "biodavidjm@gmail.com", 
               role = c("rev", "ctb"), 
-              comment = c(ORCID = "0000-0003-4356-6461")))
+              comment = c(ORCID = "0000-0003-4356-6461")),
+      person("Jeremi", "Maciejewski",
+              email = "jeremi.maciejewski5002@gmail.com",
+              role = c("ctb")))
 Description: Reads, writes and validates 'mzQC' files. The 'mzQC' format is a 
   standardized file format for the exchange, transmission, and archiving of 
   quality metrics derived from biological mass spectrometry data, as defined 

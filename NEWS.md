@@ -6,6 +6,11 @@ are marked with '#<number>', e.g. '(#25)' refers to https://github.com/MS-Qualit
 
 Versions uploaded to CRAN are marked with [CRAN].
 
+# [CRAN] version 0.7.0 (2025/07/14)
+
+* 4x parsing speed improvement when loading mzQC files (#27)
+
+
 # version 0.6.1 (2025/06/02)
 
 * updated to fixed mzQC Schema ('label' is now required as demanded by the mzQC specification)
