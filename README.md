@@ -5,6 +5,13 @@
 
 An R package for reading, validating, and writing `mzQC` files.
 
+## Citation
+
+rmzqc was published in
+[Communicating Mass Spectrometry Quality Information in mzQC with Python, R, and Java. J. Am. Soc. Mass Spectrom. (2024) 35 (8): 1875–1882.](https://doi.org/10.1021/jasms.4c00174)
+
+
+
 ## Installation
 
 You can grab `rmzqc` from either CRAN or GitHub. GitHub installation will give you the latest package; the CRAN version might be a little older, but is faster to install. 
